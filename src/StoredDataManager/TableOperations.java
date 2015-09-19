@@ -233,6 +233,195 @@ public class TableOperations {
         
     }
     
+    
+    public BTreeMap <Integer,Register> joinLogic(BTreeMap<Integer,Register> pDatosTable1, 
+            BTreeMap<Integer,Register> pDatosTable2, int pColumnaCondicionPos1,int pColumnaCondicionPos2 , ArrayList<ArrayList<Integer>> ColumnsToSelect,DB thedb){
+        
+        BTreeMap <Integer,Register> tmp = thedb.treeMapCreate("tmp").keySerializer(BTreeKeySerializer.INTEGER)
+                    .makeOrGet();
+        int tail;
+        int backupInt=0;
+        Boolean insertedFlag=false;
+        
+        
+        for (int i = 0; i < pDatosTable2.size(); i++) {
+            for (int j = 0; j <pDatosTable1.size() ; j++) {
+                    if(pDatosTable1.ceilingEntry(j).getValue()._register[pColumnaCondicionPos1].equals(pDatosTable2.ceilingEntry(i).getValue()._register[pColumnaCondicionPos2])){
+                        tail=tmp.size();
+                        
+                        ArrayList<String> tmpRegister= new ArrayList<>();    
+                         
+                        for (int k = 0; k < ColumnsToSelect.get(0).size(); k++) {
+                            tmpRegister.add(pDatosTable1.ceilingEntry(j).getValue()._register[ColumnsToSelect.get(0).get(k)]);
+                        }
+                        
+                        for (int k = 0; k < ColumnsToSelect.get(1).size(); k++) {
+                            tmpRegister.add(pDatosTable2.ceilingEntry(i).getValue()._register[ColumnsToSelect.get(1).get(k)]);
+
+                        }
+                         
+                        System.out.println("Register with Select"+tmpRegister.get(0));
+                        
+                        System.out.println("Register with Select"+tmpRegister.get(1));
+                        
+                        //System.out.println("Register with Select"+tmpRegister.get(2));
+                         
+                        
+                        tmp.put(tail, new Register(pDatosTable1.ceilingEntry(j).getValue()._register));     
+                        //backupInt++;
+                        //insertedFlag=true;
+                    }
+                    
+            }
+            
+           // if(insertedFlag==true || pDatosTable1.ceilingEntry(backupInt-1).getValue()._register[pColumnaCondicionPos1].equals(pDatosTable2.ceilingEntry(i).getValue()._register[pColumnaCondicionPos1]) ){
+            //    tail=tmp.size();
+            //    tmp.put(tail, new Register(pDatosTable2.ceilingEntry(i).getValue()._register));
+          //      insertedFlag=false;
+            //}
+        }
+        
+        //System.out.println("Primer dato join"+tmp.ceilingEntry(0).getValue()._register[1]);
+        //System.out.println("Segundo dato join"+tmp.ceilingEntry(1).getValue()._register[1]);
+        //System.out.println("Tercer dato join"+tmp.ceilingEntry(2).getValue()._register[1]);
+        //System.out.println("Cuarto dato join"+tmp.ceilingEntry(3).getValue()._register[1]);
+        
+        return tmp;
+        
+        /*for (int i = 0; i <pDatosTable2.size() ; i++) {
+            if(pDatosTable2.ceilingEntry(i).getValue()._register[pColumnaCondicionPos2].equals(pDatosTable1.ceilingEntry(0).getValue()._register[pColumnaCondicionPos2])){
+            tail=tmp.size();
+            System.out.println("Tail"+tail);
+            tmp.put(tail, new Register(pDatosTable2.ceilingEntry(i).getValue()._register));
+            i++;
+            //System.out.println("Dato Join"+tmp.ceilingEntry(1).getValue()._register[1]);
+            }  
+        }
+        
+        //System.out.println("Primer dato join"+tmp.ceilingEntry(0).getValue()._register[0]);
+        
+        
+        return tmp;*/
+    
+    }
+    
+     public ArrayList<String[]> selectJoin(String[] pColSelect1, String[] pColSelect2,String pSchema, 
+            String pTable1, String pTable2,String ColumnJoin,int[] pTipoCondiciones){
+        
+        String[][] metadataTable1 = getMetaDataTable(pSchema, pTable1);
+        
+        
+        if (metadataTable1!=null){
+            File file = new File(Constants.DATABASE+pTable1);
+            
+            try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
+                BTreeMap <Integer,Register> primary = thedb.treeMapCreate("pri")
+                        .keySerializer(BTreeKeySerializer.INTEGER)
+                        .makeOrGet();
+                
+                int tail = primary.size();
+                /*if (pColSelect[0].equals("*")){
+                    pColSelect = md[0];
+                }*/
+                ArrayList<String[]> salida = new ArrayList<>();
+                
+                //System.out.println("metadata" +md[0][0]);
+                    
+                         File fileToJoin = new File(Constants.DATABASE+pTable2);
+                         try(DB thedbToJoin = DBMaker.fileDB(fileToJoin).closeOnJvmShutdown().make()){
+                            BTreeMap <Integer,Register> primarytoJoin = thedbToJoin.treeMapCreate("pri")
+                            .keySerializer(BTreeKeySerializer.INTEGER)
+                            .makeOrGet(); 
+                            
+                            String[][] metadataTable2 = getMetaDataTable(pSchema, pTable2);
+                            
+                            //System.out.println("Metadata table FUNC:"+metadataTable2[0][2]);
+                            String columnToJoinVerif="";
+                            int posColumnToJoin=0;
+                            
+                            ArrayList<ArrayList<Integer>> ColumnsToSelect= new ArrayList<ArrayList<Integer>>();
+                            
+                            ArrayList<Integer> ColumnsToSelectTab1 = new ArrayList<Integer> ();
+                                
+                            ArrayList<Integer> ColumnsToSelectTab2 = new ArrayList<Integer> ();
+                            
+                            
+                            for (int j = 0; j <pColSelect1.length; j++) {
+                                for (int k = 0; k <metadataTable1[0].length; k++) {
+                                    if(pColSelect1[j].equals(metadataTable1[0][k])){
+                                        ColumnsToSelectTab1.add(k);
+                                    } 
+                                }                               
+                            }
+                            for (int j = 0; j <pColSelect2.length; j++) {
+                                for (int k = 0; k <metadataTable2[0].length; k++) {
+                                    if(pColSelect2[j].equals(metadataTable2[0][k])){
+                                        ColumnsToSelectTab2.add(k);
+                                    } 
+                                }                               
+                            }        
+                            ColumnsToSelect.add(ColumnsToSelectTab1);
+                            ColumnsToSelect.add(ColumnsToSelectTab2);
+
+                            for (int j = 0; j <metadataTable1[0].length; j++) {
+                                if(metadataTable1[0][j].equals(ColumnJoin)){
+                                    columnToJoinVerif=metadataTable1[0][j];
+                                    posColumnToJoin=j;
+                                }
+                                
+                            }                 
+                            for (int j = 0; j <metadataTable1[0].length; j++) {
+                                if(metadataTable1[0][j].equals(ColumnJoin)){
+                                    columnToJoinVerif=metadataTable1[0][j];
+                                    posColumnToJoin=j;
+                                }                              
+                            }
+                             int posColumnToJoin2=0;
+                             
+                            for (int j = 0; j <metadataTable2[0].length; j++) {
+                                
+                                if(metadataTable2[0][j].equals(ColumnJoin)){
+                                    columnToJoinVerif=metadataTable2[0][j];
+                                    posColumnToJoin2=j;
+                                }      
+                            }
+                           
+                            
+                            if(columnToJoinVerif.equals("")==true){
+                                return null;
+                            }
+                            else{
+                                //System.out.println("DATOS TABLA 2" + primarytoJoin.ceilingEntry(0).getValue()._register[posColumnToJoin]);
+                                BTreeMap <Integer,Register> myJoinSelect=joinLogic(primary, primarytoJoin, posColumnToJoin,posColumnToJoin2,ColumnsToSelect,thedb);
+                                System.out.println("Printing my Join Select Data"+myJoinSelect.ceilingEntry(0).getValue()._register[0]);
+                                
+                                return salida;
+                                
+                                
+                                
+                            }
+
+                                           
+                            
+                            
+  
+                         }
+                         
+          
+
+            }
+            catch(Exception e){
+                System.out.println("n1");
+                return null;
+            }
+        }
+        System.out.println("n2");
+        return null;
+ 
+    }
+    
+    
+    
     public boolean update(String pCol, String pValor, String pSchema, String pTable, String[] pColumnasCondiciones,
             String[] pDatosCondiciones, int[] pTipoCondiciones){
         
