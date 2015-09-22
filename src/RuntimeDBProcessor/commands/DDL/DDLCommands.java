@@ -9,7 +9,7 @@ import org.mapdb.BTreeMap;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import urSQL.Constants.Constants;
-import urSQL.StoreDataManager.TableOperations;
+import StoredDataManager.TableOperations;
 import urSQL.tipos.NULL;
 import urSQL.tipos.VARCHAR;
 import urSQL.tipos.typeData;

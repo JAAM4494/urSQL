@@ -1,7 +1,7 @@
 package RuntimeDBProcessor.commands.DML;
 
 import urSQL.Constants.Constants;
-import urSQL.StoreDataManager.TableOperations;
+import StoredDataManager.TableOperations;
 import urSQL.tipos.*;
 
 /**

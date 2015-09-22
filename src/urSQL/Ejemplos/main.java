@@ -6,7 +6,7 @@ import org.mapdb.Serializer;
 import urSQL.Constants.Constants;
 import RuntimeDBProcessor.commands.DDL.DDLCommands;
 import RuntimeDBProcessor.commands.DML.DMLCommands;
-import urSQL.StoreDataManager.TableOperations;
+import StoredDataManager.TableOperations;
 
 /**
  *
