@@ -10,6 +10,7 @@ import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import urSQL.Constants.Constants;
 import StoredDataManager.TableOperations;
+import urSQL.tipos.INTEGER;
 import urSQL.tipos.NULL;
 import urSQL.tipos.VARCHAR;
 import urSQL.tipos.typeData;
@@ -42,8 +43,10 @@ public class DDLCommands {
         /* ESTE METODO VA EN LOS DE EDWIN */
         String[] cols = {"tableFK-VARCHAR-NOT NULL", "colFK-VARCHAR-NOT NULL", "tableREF-VARCHAR-NOT NULL", "colREF-VARCHAR-NOT NULL"};
         String[] cols2 = {"Comando-VARCHAR-NOT NULL", "Argumento-VARCHAR-NOT NULL", "Estado-VARCHAR-NOT NULL", "Error-VARCHAR-NULL"};
+        String[] cols3 = {"Id-INTEGER-NOT NULL", "Error-VARCHAR-NOT NULL", "Comando-VARCHAR-NOT NULL", "Descrip-VARCHAR-NULL"};
         updateMETADATA(Constants.CONSTRAIT_CATALOG, cols, ""); 
-        updateMETADATA(Constants.HISTORY_CATALOG, cols2, ""); 
+        updateMETADATA(Constants.HISTORY_CATALOG, cols2, "");
+        updateMETADATA(Constants.LOG_ERRORS, cols3, ""); 
         //Agregar la de index
         
     }
@@ -71,7 +74,9 @@ public class DDLCommands {
         //Sino existe es un error
         else{
             //PONER ERROR QUE ES EN VERDAD
-            typeData[] r1 = {new VARCHAR("CREATE_TABLE"), new VARCHAR(pTable), new VARCHAR("Error"), new VARCHAR("# Error")};
+            typeData[] r = {new NULL(), new INTEGER("-1"), new VARCHAR("CREATE_TABLE"), new VARCHAR("No se actualizo la metadata")};
+            t.insert(Constants.LOG_ERRORS, r, true);//new VARCHAR(Integer.toString(t.getTail()))
+            typeData[] r1 = {new VARCHAR("CREATE_TABLE"), new VARCHAR(pTable), new VARCHAR("Error"), new VARCHAR(Integer.toString(t.getTail()))};
             t.insert(Constants.HISTORY_CATALOG, r1, false);
             salida = -1;
         }
@@ -103,7 +108,9 @@ public class DDLCommands {
             return 0;//0 -> proceso satisfactorio
         }
         else{
-                        typeData[] r = {new VARCHAR("DROP_TABLE"), new VARCHAR(pTable), new VARCHAR("Error"), new VARCHAR("# Error")};
+            typeData[] r_a = {new NULL(), new INTEGER("-1"), new VARCHAR("DROP_TABLE"), new VARCHAR("La tabla no estaba en la tabla de la metadata")};
+            t.insert(Constants.LOG_ERRORS, r_a, true);//new VARCHAR(Integer.toString(t.getTail()))
+            typeData[] r = {new VARCHAR("DROP_TABLE"), new VARCHAR(pTable), new VARCHAR("Error"), new VARCHAR(Integer.toString(t.getTail()))};
             t.insert(Constants.HISTORY_CATALOG, r, false);
             return -1;//-1 -> No estaba la tabla en la metadata
         }
@@ -119,7 +126,6 @@ public class DDLCommands {
      *        -1 -> Existen datos en la columna FK que en la referenciada no
      *        -2 -> Nombre de tabla o columa no existen de la tabla de REF
      *        -3 -> Nombre de tabla o columa no existen de la tabla de FK
-     *        -4 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
      */
     public int createAlterTable(String pTable, String pFKColum, String pTableColumn){
         
@@ -144,6 +150,9 @@ public class DDLCommands {
                         }
                     }
                     if(j==sizeA2){
+                        typeData[] r_a = {new NULL(), new INTEGER("-1"), new VARCHAR("ALTER_TABLE"), 
+                            new VARCHAR("Existen datos en la columna "+pFKColum+", que en la referenciada no")};
+                        t.insert(Constants.LOG_ERRORS, r_a, true);
                         salida = -1;//-1 -> Existen datos en la columna FK que en la referenciada no
                         break;
                     }
@@ -151,30 +160,35 @@ public class DDLCommands {
             }
             else{
                 salida = -2;//-2 -> Nombre de tabla o columa no existen de la tabla de REF
+                typeData[] r_a = {new NULL(), new INTEGER("-3"), new VARCHAR("ALTER_TABLE"), 
+                    new VARCHAR("Nombre de tabla o columa no existen de la tabla a referenciar")};
+                t.insert(Constants.LOG_ERRORS, r_a, true);
             }
         }
         else{
             salida = -3;//-3 -> Nombre de tabla o columa no existen de la tabla de FK
+            typeData[] r_a = {new NULL(), new INTEGER("-3"), new VARCHAR("ALTER_TABLE"), 
+                new VARCHAR("Nombre de tabla o columa no existen de la tabla de en la la restriccion")};
+            t.insert(Constants.LOG_ERRORS, r_a, true);
         }
         
         if (salida==0){       
             typeData[] r1 = {new VARCHAR("ALTER_TABLE"), new VARCHAR(pTable), new VARCHAR("Correct"), new NULL()};
-            t.insert(Constants.HISTORY_CATALOG, r1, false);       
+            t.insert(Constants.HISTORY_CATALOG, r1, false);     
+            typeData[] value = {new VARCHAR(pTable), new VARCHAR(pFKColum), new VARCHAR(ptc[0]),new VARCHAR(ptc[1])};
+            t.insert(Constants.CONSTRAIT_CATALOG, value, false);
         }
         else{
-            typeData[] r1 = {new VARCHAR("ALTER_TABLE"), new VARCHAR(pTable), new VARCHAR("Error"), new VARCHAR(Integer.toString(salida))};
-            t.insert(Constants.HISTORY_CATALOG, r1, false);    
+            typeData[] r1 = {new VARCHAR("ALTER_TABLE"), new VARCHAR(pTable), new VARCHAR("Error"), new VARCHAR(Integer.toString(t.getTail()))};
+            t.insert(Constants.HISTORY_CATALOG, r1, false);
+            
         }
         
         typeData[] r2 = {new VARCHAR("ADD_CONSTRAINT"), new VARCHAR(pFKColum), new NULL(), new NULL()};
         t.insert(Constants.HISTORY_CATALOG, r2, false);        
         typeData[] r3 = {new VARCHAR("REFERENCES"), new VARCHAR(pTableColumn), new NULL(), new NULL()};
         t.insert(Constants.HISTORY_CATALOG, r3, false);                  
-
-        typeData[] value = {new VARCHAR(pTable), new VARCHAR(pFKColum), new VARCHAR(ptc[0]),new VARCHAR(ptc[1])};
-        if (!t.insert(Constants.CONSTRAIT_CATALOG, value, false)){
-            salida = -4;//-4 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
-        }
+        
         return salida;
           
     } 
@@ -267,11 +281,12 @@ public class DDLCommands {
             if (!plan.equals("NULO")){
                 
                 String planActual=plan;
+                Metadata m = new Metadata("NULL", "NULL", "NULL", "NULL", "NULL");
                 for(int j=i;j<tail;j++){
                     
                     plan = primary.ceilingEntry(j).getValue()._id;
                     if(plan.equals(planActual)){
-                        primary.remove(j);
+                        primary.replace(j, m);
                         thedb.commit();
                     }
                     else{

@@ -159,7 +159,17 @@ public class TableOperations {
 
     int nColumnas = pRegistroDatos.length;
     int nColumnasCondiciones = pColumnasCondiciones.length;
-
+    
+    int h;
+    for(h=0; h<nColumnas; h++){
+        if(!pRegistroDatos[h].getDate().equals("NULL")){
+            break;
+        }
+    }
+    if (h==nColumnas){
+        return false;
+    }
+    
     //Si no hay datos para buscar
     if (nColumnasCondiciones == 0){
         return true;
@@ -285,7 +295,8 @@ public class TableOperations {
 
                             }
                             if (k==larDates){
-                                sal[j] = "NULL";
+                                return new ArrayList<>();
+                                //sal[j] = "NULL";
                                 //Aqui es que no se encuentra la col a seleccionar
                             }
                         }
@@ -358,7 +369,6 @@ public class TableOperations {
             }
             
             if(!verificarREF(pSchema, pTable, pColumns)){
-                System.out.println("Error FK");
                 return -3; //-3 -> Error la col a actualizar es referenciada en otra tabla
             }
             
@@ -428,7 +438,7 @@ public class TableOperations {
      * @param pOpes operadores con los que se van a comparar los dato
      * @param pTipoCondiciones condiciones un 1 es un AND, un 2 un OR
      * @return  Mayor a 0 -> Cantidad de registros borrados
-     *          -1 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada
+     *          -1 -> Error en la IR, posee columnas referenciadas
      *          -2 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
      *          -3 -> no se encontro la tabla en la que se va a insertar
      */
@@ -440,8 +450,7 @@ public class TableOperations {
         if (md!=null){
 
             if(!verificarREF(pSchema, pTable, md[0])){
-                System.out.println("Error ref");
-                return -1;//-1 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada
+                return -1;//-1 -> Error en la IR, posee columnas referenciadas
             }
             
             File file = new File(Constants.DATABASE+pTable);
@@ -474,7 +483,7 @@ public class TableOperations {
                 return -2;//-2 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
             }
         }
-        return -3;//-3 -> no se encontro la tabla en la que se va a insertar
+        return -3;//-3 -> no se encontro la tabla en la que se va a borrar
     
     
     

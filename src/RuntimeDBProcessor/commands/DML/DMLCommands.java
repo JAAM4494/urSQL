@@ -9,14 +9,19 @@ import urSQL.tipos.*;
  */
 public class DMLCommands {
     
-    private final String _schema;
+    private String _schema;
     private final TableOperations _tableOp;
     
-    public DMLCommands(String pSchema){
-        _schema = pSchema;
+    
+    public DMLCommands(){
         _tableOp = new TableOperations();
     }
     
+    public void setDatabase(String pSchemaName){
+        
+        _schema = pSchemaName;
+        
+    }
     /**
      * Inserta un registro en de la tabla indicada, ademas crea el plan de ejecucion, e inserta en el 
      * catalogo de historia
@@ -24,7 +29,7 @@ public class DMLCommands {
      * @param pColumns String[] en la que vienen las columanas a insertar
      * @param pValues String[] con los valores de las columnas a insertar
      * @return 0 -> proceso satisfactorio
-              -1 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada
+              -1 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada FALTA
               -2 -> no se encontro la tabla en la que se va a insertar
               -3 -> Error de la llave primaria el dato esta repetido
               -4 -> Error el dato no es del tipo correspondiente 1232->SQL
@@ -39,8 +44,11 @@ public class DMLCommands {
             _tableOp.insert(Constants.HISTORY_CATALOG, r1, false);
         }
         else{
+            typeData[] r_a = {new NULL(), new INTEGER(Integer.toString(proceso)), new VARCHAR("INSERT_INTO"), 
+                new VARCHAR("Revisar la descripcion del error en la documentacion")};
+            _tableOp.insert(Constants.LOG_ERRORS, r_a, true);
             typeData[] r1 = {new VARCHAR("INSERT_INTO"), new VARCHAR(pTable), 
-                new VARCHAR("Error"), new VARCHAR(Integer.toOctalString(proceso))};
+                new VARCHAR("Error"), new VARCHAR(Integer.toString(_tableOp.getTail()))};
             _tableOp.insert(Constants.HISTORY_CATALOG, r1, false);
         }
         
@@ -65,7 +73,7 @@ public class DMLCommands {
      * @param pOpes operadores con los que se van a comparar los dato
      * @param pTipoCondiciones condiciones un 1 es un AND, un 2 un OR
      * @return Mayor a 0 -> Cantidad de registros actualizados
-     *         -1 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada
+     *         -1 -> Error en la IR, el dato que se va a actualizar no esta en la columna referenciada
      *         -2 -> Error de la llave primaria el dato esta repetido
      *         -3 -> Error la col a actualizar es referenciada en otra tabla
      *         -4 -> Error el dato no admite nulos 1048->SQL
@@ -83,8 +91,11 @@ public class DMLCommands {
              _tableOp.insert(Constants.HISTORY_CATALOG, r1, false);
         }
         else{
+            typeData[] r_a = {new NULL(), new INTEGER(Integer.toString(salida)), new VARCHAR("UPDATE"), 
+                new VARCHAR("Revisar la descripcion del error en la documentacion")};
+            _tableOp.insert(Constants.LOG_ERRORS, r_a, true);//new VARCHAR(Integer.toString(t.getTail()))
             typeData[] r1 = {new VARCHAR("UPDATE"), new VARCHAR(pTable), 
-            new VARCHAR("Error"), new VARCHAR(Integer.toOctalString(salida))};
+            new VARCHAR("Error"), new VARCHAR(Integer.toString(_tableOp.getTail()))};
             _tableOp.insert(Constants.HISTORY_CATALOG, r1, false);
         }
         typeData[] r2 = {new VARCHAR("SET"), new VARCHAR(pCol+"="+pValor), new NULL(), new NULL()};
@@ -101,9 +112,9 @@ public class DMLCommands {
      * @param pOpes operadores con los que se van a comparar los dato
      * @param pTipoCondiciones condiciones un 1 es un AND, un 2 un OR
      * @return  Mayor a 0 -> Cantidad de registros borrados
-     *          -1 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada
+     *          -1 -> Error en la IR,posee columnas referenciadas
      *          -2 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
-     *          -3 -> no se encontro la tabla en la que se va a insertar
+     *          -3 -> no se encontro la tabla en la que se va a borrar
      */
     public int deleteFrom(String pTable, String[] pColumnasCondiciones,
             String[] pDatosCondiciones,String[] pOpes, int[] pTipoCondiciones){
@@ -114,8 +125,11 @@ public class DMLCommands {
              _tableOp.insert(Constants.HISTORY_CATALOG, r1, false);
         }
         else{
+            typeData[] r_a = {new NULL(), new INTEGER(Integer.toString(salida)), new VARCHAR("DELETE"), 
+                new VARCHAR("Revisar la descripcion del error en la documentacion")};
+            _tableOp.insert(Constants.LOG_ERRORS, r_a, true);
             typeData[] r1 = {new VARCHAR("DELETE"), new NULL(), 
-            new VARCHAR("Error"), new VARCHAR(Integer.toOctalString(salida))};
+            new VARCHAR("Error"), new VARCHAR(Integer.toString(_tableOp.getTail()))};
             _tableOp.insert(Constants.HISTORY_CATALOG, r1, false);
         }
         
