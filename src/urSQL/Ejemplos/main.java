@@ -14,7 +14,6 @@ import StoredDataManager.TableOperations;
  */
 public class main {
     public static void main(String[] args) {
-           
         TableOperations to = new TableOperations();
         DDLCommands ddl = new DDLCommands();
         ddl.setDatabase("TEC_DB");
@@ -32,8 +31,6 @@ public class main {
         System.out.println(ddl.createTable("Estudiantes", str , "Carne"));
         Funciones.recorrerArchivo2("TEC_DB");
         */
-        
-        
         //INSERTAR
         /*String[] datosC = {"1111", "Aaron", "20"};
         String[] datosC2 = {"2222", "Ariel", "18"};
