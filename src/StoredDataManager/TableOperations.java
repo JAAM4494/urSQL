@@ -1,43 +1,45 @@
-/*
- * Copyright 2015 Aaron Elizondo.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package StoredDataManager;
 
-import RuntimeDBProcessor.commands.DDL.Constants;
-import SystemCatalog.Metadata;
 import java.io.File;
 import java.util.ArrayList;
 import org.mapdb.BTreeKeySerializer;
 import org.mapdb.BTreeMap;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
+import urSQL.Constants.Constants;
+import RuntimeDBProcessor.commands.DDL.Metadata;
+import urSQL.tipos.*;
 
 /**
- *
  * @author Aaron Elizondo
  */
 public class TableOperations {
     
-    public boolean insert(String pTable, String[] pValues){
+    private int _tail;
+    
+    public int getTail(){
+        return _tail;
+    }
+    
+    /**
+     * Inserta un registro en una determinada tabla
+     * @param pTable Tabla a insertar el registro
+     * @param pValues Registro que se desea insertar
+     * @param pFlag
+     * @return boolean true: si el proceso se ejecuto satisfactoriamente, false en caso contrario
+     */
+    public boolean insert(String pTable, typeData[] pValues, boolean pFlag){
         File file = new File(Constants.DATABASE+pTable);
         try(DB thedb = DBMaker.newFileDB(file).closeOnJvmShutdown().make()){
-            BTreeMap <Integer,Register> primary = thedb.treeMapCreate("pri")
+            BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
                     .keySerializer(BTreeKeySerializer.INTEGER)
                     .makeOrGet();
             int tail = primary.size();
-            primary.put(tail, new Register(pValues));
+            _tail = tail;
+            if(pFlag){
+                pValues[0] = new VARCHAR(Integer.toString(tail));
+            }
+            primary.put(tail, pValues);
             thedb.commit();
             return true;
         }
@@ -46,42 +48,114 @@ public class TableOperations {
         }
     }
     
-    public boolean insertINTO(String pSchema, String pTable, String[] pColumns, String[] pValues){
+    /**
+     * Inserta un registro en de la tabla indicada
+     * @param pSchema Esquema de la table en que se va insertar
+     * @param pTable Table en la que se va a insertar el registro
+     * @param pColumns String[] en la que vienen las columanas a insertar
+     * @param pValues String[] con los valores de las columnas a insertar
+     * @return 0 -> proceso satisfactorio
+              -1 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada
+              -2 -> no se encontro la tabla en la que se va a insertar
+              -3 -> Error de la llave primaria el dato esta repetido
+              -4 -> Error el dato no es del tipo correspondiente 1232->SQL
+              -5 -> Error el dato no admite nulos 1048->SQL
+              -6 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
+     */
+    public int insertINTO(String pSchema, String pTable, String[] pColumns, String[] pValues){
         
+        //Verifica la IR
+        if(!verificarFK(pSchema, pTable, pColumns, pValues)){
+            return -1; //-1 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada
+        }
+        
+        //Obtiene la metadata de la tabla
         String[][] metadata = getMetaDataTable(pSchema, pTable);
+        
+        if (metadata==null){
+            return -2;//-2 -> no se encontro la tabla en la que se va a insertar
+        }
+        
         int largoC = pColumns.length;
         int largoDatos = metadata[0].length;
-        String[] salida = new String[largoDatos];
-        
+        typeData[] salida = new typeData[largoDatos];
         for (int i=0; i<largoDatos; i++){
             int j;
             for (j=0; j<largoC; j++){
                 
+                //Si es la columna en la que se va a insertar
                 if (pColumns[j].equals(metadata[0][i])){        
-                    //Antes de aqui hay que verificar los tipos
-                    salida[i] = pValues[j];
-                    break;
+                    
+                    // si i es igual a 0, se trata de la PK por lo que se valida
+                    if(i==0){
+                        
+                        String [] col = {pColumns[j]};
+                        String [] datos = {pValues[j]};
+                        String [] ope = {"="};
+                        int [] condi = {};
+                        //Se hace un select para verificar que no se repitan los datos
+                        ArrayList<String[]> ar = select(col, pSchema, pTable, col, datos, ope, condi);
+                        
+                        if(!ar.isEmpty()){
+                            return -3;//-3 -> Error de la llave primaria el dato esta repetido
+                        }
+                    }
+                    
+                    if(metadata[1][i].equals("INTEGER")){
+                        salida[i] = new INTEGER(pValues[j]);
+                    }
+                    if(metadata[1][i].equals("VARCHAR")){
+                        salida[i] = new VARCHAR(pValues[j]);
+                    }
+                    
+                    //agregar los otros tipos
+                    
+                    if(salida[i].verificarTipo()){
+                        break;
+                    }
+                    else{
+                        return -4;//-4 -> Error el dato no es del tipo correspondiente 1232->SQL
+                    }
                 }
                 
             }
             
+            //Verifica que el dato acepte nulos, sino lanza un error
             if (j==largoC){
-                //Aqui hay que verificar nullability
-                salida[i] = "NULL";
+               
+                if(metadata[2][i].equals("NULL")){
+                    salida[i] = new NULL();
+                }
+                else{
+                    return -5;//-5 -> Error el dato no admite nulos 1048->SQL
+                }
+                
             }
             
         }
-        for (int k=0; k<largoDatos; k++){
-            System.out.print(salida[k]+"  ");
+        if(insert(pTable,salida,false)){
+             return 0;//0 -> proceso satisfactorio
         }
-
-        return insert(pTable,salida);
+        else{
+            return -6;//-6 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
+        }
+       
         
         
     }
     
-    public boolean where(String[] pRegistroDatos, String[] pRegistroCols, String[] pColumnasCondiciones,
-            String[] pDatosCondiciones, int[] pTipoCondiciones){
+    /**
+     * Verifica que un determinado registro cumpla con las condiciones a seleccionar
+     * @param pRegistroDatos Registro que se va a comparar para ver si cumple con las condiciones
+     * @param pRegistroCols Todas las columanas de la table
+     * @param pColumnasCondiciones Columnas que se van a comparar
+     * @param pDatosCondiciones Datos que se van a comparar con los del registro
+     * @param pOpes operadores con los que se van a comparar los dato
+     * @param pTipoCondiciones condiciones un 1 es un AND, un 2 un OR
+     * @return un boolean true en caso de cumplir las condicones, false en caso contrario
+     */
+    public boolean where(typeData[] pRegistroDatos, String[] pRegistroCols, String[] pColumnasCondiciones,
+            String[] pDatosCondiciones,String[] pOpes, int[] pTipoCondiciones){
 
     int nColumnas = pRegistroDatos.length;
     int nColumnasCondiciones = pColumnasCondiciones.length;
@@ -96,19 +170,18 @@ public class TableOperations {
     boolean condicionAnterior = false;
     boolean condicionActual = false;
     int k = 0;
-    
+
     for (int i=0; (i<nColumnasCondiciones && salida); i++){
 
         for (int j=0; j<nColumnas; j++){
             //Si el nombre de la columnas es igual
-
             if(pRegistroCols[j].equals(pColumnasCondiciones[i])){
-
                 //Si es la primera iteracion
                 if (primeraIteracion){
 
                     //Si los datos cumplen con la condicion ya sea = <> > >= < <= la condicion es verdadera
-                    if (pRegistroDatos[j].equals(pDatosCondiciones[i])){
+                    boolean a = pRegistroDatos[j].verificarTipo(pDatosCondiciones[i]);
+                    if (a && pRegistroDatos[j].comparar(pDatosCondiciones[i], pOpes[i])){
                         condicionAnterior = true;
 
                         //Si no hay mas condiciones, retorna true, ya que se cumplio
@@ -133,7 +206,8 @@ public class TableOperations {
                 //Si no es la primera iteracion
                 else{
                     //Si los datos cumplen con la condicion ya sea = <> > >= < <= la condicion actual es verdadera
-                    condicionActual = pRegistroDatos[j].equals(pDatosCondiciones[i]);
+                    boolean a = pRegistroDatos[j].verificarTipo(pDatosCondiciones[i]);
+                    condicionActual = (a && pRegistroDatos[j].comparar(pDatosCondiciones[i], pOpes[i]));
 
                     //Si la condicion es un AND
                     if (pTipoCondiciones[k++] == 1){
@@ -175,25 +249,26 @@ public class TableOperations {
 }
     
     public ArrayList<String[]> select(String[] pColSelect, String pSchema, String pTable, String[] pColumnasCondiciones,
-            String[] pDatosCondiciones, int[] pTipoCondiciones){
+            String[] pDatosCondiciones, String[] pOpes, int[] pTipoCondiciones){
         
         String[][] md = getMetaDataTable(pSchema, pTable);
+        ArrayList<String[]> salida = new ArrayList<>();
         if (md!=null){
             File file = new File(Constants.DATABASE+pTable);
             try(DB thedb = DBMaker.newFileDB(file).closeOnJvmShutdown().make()){
-                BTreeMap <Integer,Register> primary = thedb.treeMapCreate("pri")
+                BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
                         .keySerializer(BTreeKeySerializer.INTEGER)
                         .makeOrGet();
 
                 int tail = primary.size();
-                /*if (pColSelect[0].equals("*")){
+                
+                if(pColSelect[0].equals("=")){
                     pColSelect = md[0];
-                }*/
-                ArrayList<String[]> salida = new ArrayList<>();
+                }
 
                 for (int i=0; i<tail; i++){
-                    String[] dates = primary.ceilingEntry(i).getValue()._register;
-                    boolean w = where(dates, md[0], pColumnasCondiciones, pDatosCondiciones, pTipoCondiciones);
+                    typeData[] register = primary.ceilingEntry(i).getValue();
+                    boolean w = where(register, md[0], pColumnasCondiciones, pDatosCondiciones, pOpes, pTipoCondiciones);
                     if(w){
  
                         int larDates = md[0].length;
@@ -204,7 +279,7 @@ public class TableOperations {
                             for (k=0; k<larDates; k++){
 
                                 if (pColSelect[j].equals(md[0][k])){
-                                   sal[j] = dates[k];
+                                   sal[j] = register[k].getDate();
                                    break;
                                 }
 
@@ -214,10 +289,13 @@ public class TableOperations {
                                 //Aqui es que no se encuentra la col a seleccionar
                             }
                         }
+
                         salida.add(sal);
                     }
 
                 }
+                
+                
                 return salida;
 
 
@@ -225,212 +303,68 @@ public class TableOperations {
             }
             catch(Exception e){
                 System.out.println("n1");
-                return null;
+                return salida;
             }
         }
         System.out.println("n2");
-        return null;
+        return salida;
         
     }
     
-    
-    public BTreeMap <Integer,Register> joinLogic(BTreeMap<Integer,Register> pDatosTable1, 
-            BTreeMap<Integer,Register> pDatosTable2, int pColumnaCondicionPos1,int pColumnaCondicionPos2 , ArrayList<ArrayList<Integer>> ColumnsToSelect,DB thedb){
+    /**
+     * Actualiza todos los registros que cumplan con las condiciones
+     * @param pCol Columna a setear
+     * @param pValor Nuevo valor a setear
+     * @param pSchema Esquema en el que se va a trabajar
+     * @param pTable Tabla en la que se va a trabajar
+     * @param pColumnasCondiciones Columnas que se van a comparar
+     * @param pDatosCondiciones Datos que se van a comparar con los del registro
+     * @param pOpes operadores con los que se van a comparar los dato
+     * @param pTipoCondiciones condiciones un 1 es un AND, un 2 un OR
+     * @return Mayor a 0 -> Cantidad de registros actualizados
+     *         -1 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada
+     *         -2 -> Error de la llave primaria el dato esta repetido
+     *         -3 -> Error la col a actualizar es referenciada en otra tabla
+     *         -4 -> Error el dato no admite nulos 1048->SQL
+     *         -5 -> Error el dato no es del tipo correspondiente 1232->SQL
+     *         -6 -> No esta la columna
+     *         -7 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
+     *         -8 -> no se encontro la tabla en la que se va a insertar
+     */
+    public int update(String pCol, String pValor, String pSchema, String pTable, String[] pColumnasCondiciones,
+            String[] pDatosCondiciones,String[] pOpes, int[] pTipoCondiciones){
         
-        BTreeMap <Integer,Register> tmp = thedb.treeMapCreate("tmp").keySerializer(BTreeKeySerializer.INTEGER)
-                    .makeOrGet();
-        int tail;
-        int backupInt=0;
-        Boolean insertedFlag=false;
-        
-        
-        for (int i = 0; i < pDatosTable2.size(); i++) {
-            for (int j = 0; j <pDatosTable1.size() ; j++) {
-                    if(pDatosTable1.ceilingEntry(j).getValue()._register[pColumnaCondicionPos1].equals(pDatosTable2.ceilingEntry(i).getValue()._register[pColumnaCondicionPos2])){
-                        tail=tmp.size();
-                        
-                        ArrayList<String> tmpRegister= new ArrayList<>();    
-                         
-                        for (int k = 0; k < ColumnsToSelect.get(0).size(); k++) {
-                            tmpRegister.add(pDatosTable1.ceilingEntry(j).getValue()._register[ColumnsToSelect.get(0).get(k)]);
-                        }
-                        
-                        for (int k = 0; k < ColumnsToSelect.get(1).size(); k++) {
-                            tmpRegister.add(pDatosTable2.ceilingEntry(i).getValue()._register[ColumnsToSelect.get(1).get(k)]);
-
-                        }
-                         
-                        System.out.println("Register with Select"+tmpRegister.get(0));
-                        
-                        System.out.println("Register with Select"+tmpRegister.get(1));
-                        
-                        //System.out.println("Register with Select"+tmpRegister.get(2));
-                         
-                        
-                        tmp.put(tail, new Register(pDatosTable1.ceilingEntry(j).getValue()._register));     
-                        //backupInt++;
-                        //insertedFlag=true;
-                    }
-                    
-            }
-            
-           // if(insertedFlag==true || pDatosTable1.ceilingEntry(backupInt-1).getValue()._register[pColumnaCondicionPos1].equals(pDatosTable2.ceilingEntry(i).getValue()._register[pColumnaCondicionPos1]) ){
-            //    tail=tmp.size();
-            //    tmp.put(tail, new Register(pDatosTable2.ceilingEntry(i).getValue()._register));
-          //      insertedFlag=false;
-            //}
+        //Verifica la IR
+        String[] pColumns = { pCol };
+        String[] pValues = { pValor };
+        if(!verificarFK(pSchema, pTable, pColumns, pValues)){
+            return -1;//-1 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada
         }
         
-        //System.out.println("Primer dato join"+tmp.ceilingEntry(0).getValue()._register[1]);
-        //System.out.println("Segundo dato join"+tmp.ceilingEntry(1).getValue()._register[1]);
-        //System.out.println("Tercer dato join"+tmp.ceilingEntry(2).getValue()._register[1]);
-        //System.out.println("Cuarto dato join"+tmp.ceilingEntry(3).getValue()._register[1]);
-        
-        return tmp;
-        
-        /*for (int i = 0; i <pDatosTable2.size() ; i++) {
-            if(pDatosTable2.ceilingEntry(i).getValue()._register[pColumnaCondicionPos2].equals(pDatosTable1.ceilingEntry(0).getValue()._register[pColumnaCondicionPos2])){
-            tail=tmp.size();
-            System.out.println("Tail"+tail);
-            tmp.put(tail, new Register(pDatosTable2.ceilingEntry(i).getValue()._register));
-            i++;
-            //System.out.println("Dato Join"+tmp.ceilingEntry(1).getValue()._register[1]);
-            }  
-        }
-        
-        //System.out.println("Primer dato join"+tmp.ceilingEntry(0).getValue()._register[0]);
-        
-        
-        return tmp;*/
-    
-    }
-    
-     public ArrayList<String[]> selectJoin(String[] pColSelect1, String[] pColSelect2,String pSchema, 
-            String pTable1, String pTable2,String ColumnJoin,int[] pTipoCondiciones){
-        
-        String[][] metadataTable1 = getMetaDataTable(pSchema, pTable1);
-        
-        
-        if (metadataTable1!=null){
-            File file = new File(Constants.DATABASE+pTable1);
-            
-            try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
-                BTreeMap <Integer,Register> primary = thedb.treeMapCreate("pri")
-                        .keySerializer(BTreeKeySerializer.INTEGER)
-                        .makeOrGet();
-                
-                int tail = primary.size();
-                /*if (pColSelect[0].equals("*")){
-                    pColSelect = md[0];
-                }*/
-                ArrayList<String[]> salida = new ArrayList<>();
-                
-                //System.out.println("metadata" +md[0][0]);
-                    
-                         File fileToJoin = new File(Constants.DATABASE+pTable2);
-                         try(DB thedbToJoin = DBMaker.fileDB(fileToJoin).closeOnJvmShutdown().make()){
-                            BTreeMap <Integer,Register> primarytoJoin = thedbToJoin.treeMapCreate("pri")
-                            .keySerializer(BTreeKeySerializer.INTEGER)
-                            .makeOrGet(); 
-                            
-                            String[][] metadataTable2 = getMetaDataTable(pSchema, pTable2);
-                            
-                            //System.out.println("Metadata table FUNC:"+metadataTable2[0][2]);
-                            String columnToJoinVerif="";
-                            int posColumnToJoin=0;
-                            
-                            ArrayList<ArrayList<Integer>> ColumnsToSelect= new ArrayList<ArrayList<Integer>>();
-                            
-                            ArrayList<Integer> ColumnsToSelectTab1 = new ArrayList<Integer> ();
-                                
-                            ArrayList<Integer> ColumnsToSelectTab2 = new ArrayList<Integer> ();
-                            
-                            
-                            for (int j = 0; j <pColSelect1.length; j++) {
-                                for (int k = 0; k <metadataTable1[0].length; k++) {
-                                    if(pColSelect1[j].equals(metadataTable1[0][k])){
-                                        ColumnsToSelectTab1.add(k);
-                                    } 
-                                }                               
-                            }
-                            for (int j = 0; j <pColSelect2.length; j++) {
-                                for (int k = 0; k <metadataTable2[0].length; k++) {
-                                    if(pColSelect2[j].equals(metadataTable2[0][k])){
-                                        ColumnsToSelectTab2.add(k);
-                                    } 
-                                }                               
-                            }        
-                            ColumnsToSelect.add(ColumnsToSelectTab1);
-                            ColumnsToSelect.add(ColumnsToSelectTab2);
-
-                            for (int j = 0; j <metadataTable1[0].length; j++) {
-                                if(metadataTable1[0][j].equals(ColumnJoin)){
-                                    columnToJoinVerif=metadataTable1[0][j];
-                                    posColumnToJoin=j;
-                                }
-                                
-                            }                 
-                            for (int j = 0; j <metadataTable1[0].length; j++) {
-                                if(metadataTable1[0][j].equals(ColumnJoin)){
-                                    columnToJoinVerif=metadataTable1[0][j];
-                                    posColumnToJoin=j;
-                                }                              
-                            }
-                             int posColumnToJoin2=0;
-                             
-                            for (int j = 0; j <metadataTable2[0].length; j++) {
-                                
-                                if(metadataTable2[0][j].equals(ColumnJoin)){
-                                    columnToJoinVerif=metadataTable2[0][j];
-                                    posColumnToJoin2=j;
-                                }      
-                            }
-                           
-                            
-                            if(columnToJoinVerif.equals("")==true){
-                                return null;
-                            }
-                            else{
-                                //System.out.println("DATOS TABLA 2" + primarytoJoin.ceilingEntry(0).getValue()._register[posColumnToJoin]);
-                                BTreeMap <Integer,Register> myJoinSelect=joinLogic(primary, primarytoJoin, posColumnToJoin,posColumnToJoin2,ColumnsToSelect,thedb);
-                                System.out.println("Printing my Join Select Data"+myJoinSelect.ceilingEntry(0).getValue()._register[0]);
-                                
-                                return salida;
-                                
-                                
-                                
-                            }
-
-                                           
-                            
-                            
-  
-                         }
-                         
-          
-
-            }
-            catch(Exception e){
-                System.out.println("n1");
-                return null;
-            }
-        }
-        System.out.println("n2");
-        return null;
- 
-    }
-    
-    
-    
-    public boolean update(String pCol, String pValor, String pSchema, String pTable, String[] pColumnasCondiciones,
-            String[] pDatosCondiciones, int[] pTipoCondiciones){
-        
+        //obtiene la metadata de la tabla
         String[][] md = getMetaDataTable(pSchema, pTable);
-        
+           
         if (md!=null){
+            
+            //Verifica que la llave no se repita
+            if(pCol.equals(md[0][0])){
+                String [] col = {pCol};
+                String [] datos = {pValor};
+                String [] ope = {"="};
+                int [] condi = {};
+                if(!select(col, pSchema, pTable, col, datos, ope, condi).isEmpty()){
+                    return -2;//-2 -> Error de la llave primaria el dato esta repetido
+                }                           
+            }
+            
+            if(!verificarREF(pSchema, pTable, pColumns)){
+                System.out.println("Error FK");
+                return -3; //-3 -> Error la col a actualizar es referenciada en otra tabla
+            }
+            
             File file = new File(Constants.DATABASE+pTable);
             try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
-                BTreeMap <Integer,Register> primary = thedb.treeMapCreate("pri")
+                BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
                         .keySerializer(BTreeKeySerializer.INTEGER)
                         .makeOrGet();
 
@@ -443,77 +377,158 @@ public class TableOperations {
                         break;
                     }
                 }
+                int nR = 0;
                 if (j!=larDates){
 
                     for (int i=0; i<tail; i++){
-                        String[] dates = primary.ceilingEntry(i).getValue()._register;
-                        boolean w = where(dates, md[0], pColumnasCondiciones, pDatosCondiciones, pTipoCondiciones);
+                        typeData[] register = primary.ceilingEntry(i).getValue();
+
+                        boolean w = where(register, md[0], pColumnasCondiciones, pDatosCondiciones, pOpes, pTipoCondiciones);
                         if(w){
-                            dates[j] = pValor;
-                            primary.replace(i, new Register(dates));
-                            thedb.commit();
-                            System.out.println("Se actualizo un registro");
+
+                            if(register[j].verificarTipo(pValor)){
+                                if(pValor.equals("NULL")){
+                                    if (md[2][j].equals("NOT NULL")){
+                                        return -4;//-4 -> Error el dato no admite nulos 1048->SQL
+                                    }
+                                }
+                                
+                                register[j].setDate(pValor);
+                                primary.replace(i, register);
+                                thedb.commit();
+                                nR++;
+                            }
+                            else{
+                                return -5;//-5 -> Error el dato no es del tipo correspondiente 1232->SQL
+                            }
+                            
                         }
 
                     }
+                    return nR;
                 }
                 else{
-                    System.out.println("No esta la columnas");
-                    //aqui va un erroor
+                    return -6;//-6 -> No esta la columna
                 }
 
             }
             catch(Exception e){
-                System.out.println("n1");
+                return -7;//-7 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
             }
         }
-        System.out.println("n2");
-        return false;
+        return -8;//-8 -> no se encontro la tabla en la que se va a insertar
     }
     
-    public boolean delete(String pSchema, String pTable, String[] pColumnasCondiciones,
-            String[] pDatosCondiciones, int[] pTipoCondiciones){
+    /**
+     * Borra todos los registros que cumplan con las condiciones
+     * @param pSchema esquema de la tabla a trabajar
+     * @param pTable tabla en la que se va a trabajar
+     * @param pColumnasCondiciones Columnas que se van a comparar
+     * @param pDatosCondiciones Datos que se van a comparar con los del registro
+     * @param pOpes operadores con los que se van a comparar los dato
+     * @param pTipoCondiciones condiciones un 1 es un AND, un 2 un OR
+     * @return  Mayor a 0 -> Cantidad de registros borrados
+     *          -1 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada
+     *          -2 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
+     *          -3 -> no se encontro la tabla en la que se va a insertar
+     */
+    public int delete(String pSchema, String pTable, String[] pColumnasCondiciones,
+            String[] pDatosCondiciones, String[] pOpes, int[] pTipoCondiciones){
         
         String[][] md = getMetaDataTable(pSchema, pTable);
-        
+        int nR=0;
         if (md!=null){
+
+            if(!verificarREF(pSchema, pTable, md[0])){
+                System.out.println("Error ref");
+                return -1;//-1 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada
+            }
             
             File file = new File(Constants.DATABASE+pTable);
             try(DB thedb = DBMaker.newFileDB(file).closeOnJvmShutdown().make()){
-                BTreeMap <Integer,Register> primary = thedb.treeMapCreate("pri")
+                BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
                         .keySerializer(BTreeKeySerializer.INTEGER)
                         .makeOrGet();
 
                 int tail = primary.size();
                 
                 int larDates = md[0].length;
-                String[] registerVacio = new String[larDates];
+                typeData[] registerVacio = new typeData[larDates];
                 for (int j=0; j<larDates; j++){    
-                    registerVacio[j] = "#|VACIO|#";
+                    registerVacio[j] = new NULL();
                 }
 
                 for (int i=0; i<tail; i++){
-                    String[] dates = primary.ceilingEntry(i).getValue()._register;
-                    boolean w = where(dates, md[0], pColumnasCondiciones, pDatosCondiciones, pTipoCondiciones);
+                    typeData[] dates = primary.ceilingEntry(i).getValue();
+                    boolean w = where(dates, md[0], pColumnasCondiciones, pDatosCondiciones,pOpes, pTipoCondiciones);
                     if(w){
-                        primary.replace(i, new Register(registerVacio));
+                        primary.replace(i, registerVacio);
                         thedb.commit();
-                        System.out.println("Se Borro un registro");
+                        nR++;
                     }
                 }
+                return nR;
+                
             }
             catch(Exception e){
-                System.out.println("n1");
+                return -2;//-2 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
             }
         }
-        System.out.println("n2");
-        return false;
+        return -3;//-3 -> no se encontro la tabla en la que se va a insertar
     
     
     
     }
     
-    public String[][] getMetaDataTable(String pSchema, String pTable){
+    private boolean verificarFK(String pSchema, String pTabla, String[] pColumnas, String[] pValores){
+        
+        String[] colSELECT = {"tableREF", "colREF"};
+        String[] colCondis = {"tableFK", "colFK"};
+        String[] datos = {pTabla, ""};
+        String[] opes = {"=","="};
+        int[] condis = {1};
+   
+        int largo =  pColumnas.length;
+        for (int i=0; i<largo; i++){
+            datos[1] = pColumnas[i];
+            ArrayList<String[]> s = select(colSELECT, pSchema, Constants.CONSTRAIT_CATALOG, colCondis, datos, opes, condis);
+            if(s.size()>0){
+
+                String[] col = {s.get(0)[1]};
+                String[] dato = {pValores[i]};
+                String[] ope = {"="};
+                int[] condi = {};
+                ArrayList<String[]> s2 = select(col, pSchema, s.get(0)[0], col, dato, ope, condi);
+                if(s2.isEmpty()){
+                    return false;
+                }
+            }
+        }
+        return true;
+        
+    }
+    
+    private boolean verificarREF(String pSchema, String pTabla, String[] pColumnas){
+        
+        String[] colCondis = {"tableREF", "colREF"};
+        String[] colSELECT = {"tableFK", "colFK"};
+        String[] datos = {pTabla, ""};
+        String[] opes = {"=","="};
+        int[] condis = {1};
+   
+        int largo =  pColumnas.length;
+        for (int i=0; i<largo; i++){
+            datos[1] = pColumnas[i];
+            ArrayList<String[]> s = select(colSELECT, pSchema, Constants.CONSTRAIT_CATALOG, colCondis, datos, opes, condis);
+            if(!s.isEmpty()){
+                return false;
+            }
+        }
+        return true;
+        
+    }
+    
+    private String[][] getMetaDataTable(String pSchema, String pTable){
         
         ArrayList<Metadata> m = getMetaDataTable2(pSchema, pTable);
       
@@ -541,7 +556,7 @@ public class TableOperations {
         return null;
     }
     
-    public ArrayList<Metadata> getMetaDataTable2(String pSchema, String pTable){
+    private ArrayList<Metadata> getMetaDataTable2(String pSchema, String pTable){
         File file = new File(Constants.DATABASE+pSchema);
         try(DB thedb = DBMaker.newFileDB(file).closeOnJvmShutdown().make()){
             BTreeMap <Integer,Metadata> primary = thedb.treeMapCreate("pri")
@@ -556,9 +571,7 @@ public class TableOperations {
                         int j;
                         for(j=i+1;j<tail; j++){
                             Metadata m2 = primary.ceilingEntry(j).getValue();
-                            
                             if(m._id.equals(m2._id)){
- 
                                 cols.add(m2);
                             }
                             else{
@@ -576,7 +589,6 @@ public class TableOperations {
             
         }
         catch(Exception e){
-            System.out.println("n2");
             return null;
             //AQUI VA UN ERROR O MENSAJE DE QUE NO SE ENCONTRO LA DATABASE
         }

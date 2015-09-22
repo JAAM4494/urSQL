@@ -13,14 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package RuntimeDBProcessor.commands.DDL;
+package urSQL.tipos;
+
+
 
 /**
  *
  * @author Aaron Elizondo
  */
-public class Constants {
+public class NULL extends typeData{
+
     
-    public static final String DATABASE = "C:\\Users\\Aaron Elizondo\\Documents\\NetBeansProjects\\mapdb\\src\\test\\java\\brete\\";
-    public static final String HISTORY_CATALOG = "history_catalog";
+    public NULL(){
+        setDate("NULL");
+    }
+    @Override
+    public boolean comparar(String pDate, String pOperador) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean verificarTipo(String pData) {
+        return getDate().equals(pData);
+    }
+
+    @Override
+    public boolean verificarTipo() {
+        return getDate().equals("NULL");
+    }
+    
 }
