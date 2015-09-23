@@ -7,7 +7,7 @@ import org.mapdb.BTreeMap;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import urSQL.Constants.Constants;
-import RuntimeDBProcessor.commands.DDL.Metadata;
+import SystemCatalog.Metadata;
 import urSQL.tipos.*;
 
 /**
@@ -15,7 +15,7 @@ import urSQL.tipos.*;
  */
 public class TableOperations {
     
-    private int _tail;
+    private static int _tail;
     
     public int getTail(){
         return _tail;
@@ -30,7 +30,7 @@ public class TableOperations {
      */
     public boolean insert(String pTable, typeData[] pValues, boolean pFlag){
         File file = new File(Constants.DATABASE+pTable);
-        try(DB thedb = DBMaker.newFileDB(file).closeOnJvmShutdown().make()){
+        try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
             BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
                     .keySerializer(BTreeKeySerializer.INTEGER)
                     .makeOrGet();
@@ -55,8 +55,8 @@ public class TableOperations {
      * @param pColumns String[] en la que vienen las columanas a insertar
      * @param pValues String[] con los valores de las columnas a insertar
      * @return 0 -> proceso satisfactorio
-              -1 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada
-              -2 -> no se encontro la tabla en la que se va a insertar
+              -1 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada 1216
+              -2 -> no se encontro la tabla en la que se va a insertar 1146
               -3 -> Error de la llave primaria el dato esta repetido
               -4 -> Error el dato no es del tipo correspondiente 1232->SQL
               -5 -> Error el dato no admite nulos 1048->SQL
@@ -265,7 +265,7 @@ public class TableOperations {
         ArrayList<String[]> salida = new ArrayList<>();
         if (md!=null){
             File file = new File(Constants.DATABASE+pTable);
-            try(DB thedb = DBMaker.newFileDB(file).closeOnJvmShutdown().make()){
+            try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
                 BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
                         .keySerializer(BTreeKeySerializer.INTEGER)
                         .makeOrGet();
@@ -333,7 +333,7 @@ public class TableOperations {
      * @param pOpes operadores con los que se van a comparar los dato
      * @param pTipoCondiciones condiciones un 1 es un AND, un 2 un OR
      * @return Mayor a 0 -> Cantidad de registros actualizados
-     *         -1 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada
+     *         -1 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada 1216
      *         -2 -> Error de la llave primaria el dato esta repetido
      *         -3 -> Error la col a actualizar es referenciada en otra tabla
      *         -4 -> Error el dato no admite nulos 1048->SQL
@@ -438,7 +438,7 @@ public class TableOperations {
      * @param pOpes operadores con los que se van a comparar los dato
      * @param pTipoCondiciones condiciones un 1 es un AND, un 2 un OR
      * @return  Mayor a 0 -> Cantidad de registros borrados
-     *          -1 -> Error en la IR, posee columnas referenciadas
+     *          -1 -> Error en la IR, posee columnas referenciadas 1217
      *          -2 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
      *          -3 -> no se encontro la tabla en la que se va a insertar
      */
@@ -454,7 +454,7 @@ public class TableOperations {
             }
             
             File file = new File(Constants.DATABASE+pTable);
-            try(DB thedb = DBMaker.newFileDB(file).closeOnJvmShutdown().make()){
+            try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
                 BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
                         .keySerializer(BTreeKeySerializer.INTEGER)
                         .makeOrGet();
@@ -567,7 +567,7 @@ public class TableOperations {
     
     private ArrayList<Metadata> getMetaDataTable2(String pSchema, String pTable){
         File file = new File(Constants.DATABASE+pSchema);
-        try(DB thedb = DBMaker.newFileDB(file).closeOnJvmShutdown().make()){
+        try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
             BTreeMap <Integer,Metadata> primary = thedb.treeMapCreate("pri")
                     .keySerializer(BTreeKeySerializer.INTEGER)
                     .makeOrGet();
@@ -602,6 +602,149 @@ public class TableOperations {
             //AQUI VA UN ERROR O MENSAJE DE QUE NO SE ENCONTRO LA DATABASE
         }
     }
-
+    
+    public boolean verificarDBRepetidas(String pDBName){
+        File file = new File(Constants.DATABASE+Constants.DB);
+        try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
+            BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
+                    .keySerializer(BTreeKeySerializer.INTEGER)
+                    .makeOrGet();
+            int tail = primary.size();
+            
+            for(int i=0; i<tail;i++){
+                if (pDBName.equals(primary.ceilingEntry(i).getValue()[0].getDate())){
+                    return false;
+                }
+            }
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }
+    }
+    
+    public boolean borrarDatabase(String pDBName){
+        File file = new File(Constants.DATABASE+Constants.DB);
+        try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
+            BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
+                    .keySerializer(BTreeKeySerializer.INTEGER)
+                    .makeOrGet();
+            int tail = primary.size();
+            typeData[] tp = {new NULL()};
+            for(int i=0; i<tail;i++){
+                if (pDBName.equals(primary.ceilingEntry(i).getValue()[0].getDate())){
+                    primary.replace(i, tp);
+                    return true;
+                }
+            }
+            return false;
+        }
+        catch(Exception e){
+            return false;
+        }
+    }
+    
+    /**
+     * Inserta una nueva tabla en la metadata de la base
+     * @param pTable nombre de la tablas
+     * @param pSchema esquema de la metadata
+     * @param pColumnas Cnombres de las columnas de la tabla
+     * @param pPrimary nombre de la columna que es PK
+     * @return true si se inserta de forma satisfactoria, false en caso contrario
+     */
+    public boolean updateMETADATA(String pTable, String pSchema, String[] pColumnas, String pPrimary){
+        
+        File file = new File(Constants.DATABASE+pSchema);
+        try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
+            
+            BTreeMap <Integer, Metadata> primary = thedb.treeMapCreate("pri")
+                    .keySerializer(BTreeKeySerializer.INTEGER)
+                    .makeOrGet();
+            
+            int tail = primary.size();
+            int planID=1;
+            
+            if(tail>0){
+                String regiter = primary.ceilingEntry(tail-1).getValue()._id;
+                planID = Integer.parseInt(regiter)+1;                
+            }
+            
+            String id = Integer.toString(planID);
+                   
+            primary.put(tail, new Metadata(id, "TABLE", pTable, "", ""));
+            thedb.commit();
+            
+            int largo = pColumnas.length;
+            for(int i=0;i<largo;i++){
+                String col = pColumnas[i];
+                String[] data = col.split("-");
+                if(data[0].equals(pPrimary)){
+                    primary.put(tail+i+1, new Metadata(id, "PK", data[0], data[1], data[2]));
+                }
+                else{
+                    primary.put(tail+i+1, new Metadata(id, "COL", data[0], data[1], data[2]));
+                }
+                thedb.commit();
+            }
+            return true;
+        } 
+            
+        catch(Exception e){
+            return false;
+        }
+        
+    }
+     
+    /**
+     * Borra una tabla de la metadata del esquema en el cual se trabaja
+     * @param pTable tabla que se desea borrar
+     * @param pSchema Esquema de la tabla
+     * @return true si se borra de forma satisfactoria, false en caso contrario
+     */
+    public boolean deleteTableMetadata(String pTable, String pSchema){
+        
+        File file = new File(Constants.DATABASE+pSchema);
+        try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
+            
+            BTreeMap <Integer, Metadata> primary = thedb.treeMapCreate("pri")
+                    .keySerializer(BTreeKeySerializer.INTEGER)
+                    .makeOrGet();
+            
+            String plan = "NULO";
+            int tail = primary.size();
+            int i;
+            for(i=0;i<tail;i++){
+                if(primary.ceilingEntry(i).getValue()._name.equals(pTable)){
+                    plan = primary.ceilingEntry(i).getValue()._id;
+                    break;
+                }
+            }
+            if (!plan.equals("NULO") && Integer.parseInt(plan)>3){
+                
+                String planActual=plan;
+                Metadata m = new Metadata("NULL", "NULL", "NULL", "NULL", "NULL");
+                for(int j=i;j<tail;j++){
+                    
+                    plan = primary.ceilingEntry(j).getValue()._id;
+                    if(plan.equals(planActual)){
+                        primary.replace(j, m);
+                        thedb.commit();
+                    }
+                    else{
+                        break;
+                    }
+                }
+                
+            }
+            else{
+                return false;
+            }
+            
+        
+        }
+        
+        return true;
+    
+    }
 }
 

@@ -1,13 +1,7 @@
-//2 NOTAS
 package RuntimeDBProcessor.commands.DDL;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import org.mapdb.BTreeKeySerializer;
-import org.mapdb.BTreeMap;
-import org.mapdb.DB;
-import org.mapdb.DBMaker;
 import urSQL.Constants.Constants;
 import StoredDataManager.TableOperations;
 import urSQL.tipos.INTEGER;
@@ -20,34 +14,47 @@ import urSQL.tipos.typeData;
  */
 public class DDLCommands {
     
-    private String _schema;
+    private static String _schema;
     
     /**
      * Establece el esquema en el que se van a ejecutar los comandos DDL
      * @param pSchemaName Esquema en el que se van a realizar los cambios
      * @return INT 0 cuando el proceso se efectua correcto, -1 cuando es incorrecto
+     *            -1 cuando no existe el esquema 
      */
     public int setDatabase(String pSchemaName){
         
-        //NOTA: VERIFICAR QUE EL ESQUEMA EXISTE
-        _schema = pSchemaName;
         TableOperations t = new TableOperations();
-        typeData[] r1 = {new VARCHAR("SET_DATABASE"), new VARCHAR(pSchemaName), new VARCHAR("Correct"), new NULL()};
-        t.insert(Constants.HISTORY_CATALOG, r1, false);
-        return 0;//0 -> proceso correcto
+        if(!t.verificarDBRepetidas(pSchemaName)){
+            _schema = pSchemaName;
+            typeData[] r1 = {new VARCHAR("SET_DATABASE"), new VARCHAR(pSchemaName), new VARCHAR("Correct"), new NULL()};
+            t.insert(Constants.HISTORY_CATALOG, r1, false);
+            return 0;//0 -> proceso correcto
+        }
+        else{
+            typeData[] r = {new NULL(), new INTEGER("-1"), new VARCHAR("SET_DATABASE"), new VARCHAR("No existe la base de datos")};
+            t.insert(Constants.LOG_ERRORS, r, true);
+            typeData[] r1 = {new VARCHAR("SET_DATABASE"), new VARCHAR(pSchemaName), new VARCHAR("Error"), new VARCHAR(Integer.toString(t.getTail()))};
+            t.insert(Constants.HISTORY_CATALOG, r1, false);
+            return -1;
+        }
         
     }
     
-    public void createDatabase(){
+    public String getSchema(){
+        return _schema;
+    }
+    
+    public void createDatabase(String pSchemaName){
         
-        /* ESTE METODO VA EN LOS DE EDWIN */
-        String[] cols = {"tableFK-VARCHAR-NOT NULL", "colFK-VARCHAR-NOT NULL", "tableREF-VARCHAR-NOT NULL", "colREF-VARCHAR-NOT NULL"};
+        _schema = pSchemaName;
+        String[] cols1 = {"tableFK-VARCHAR-NOT NULL", "colFK-VARCHAR-NOT NULL", "tableREF-VARCHAR-NOT NULL", "colREF-VARCHAR-NOT NULL"};
         String[] cols2 = {"Comando-VARCHAR-NOT NULL", "Argumento-VARCHAR-NOT NULL", "Estado-VARCHAR-NOT NULL", "Error-VARCHAR-NULL"};
         String[] cols3 = {"Id-INTEGER-NOT NULL", "Error-VARCHAR-NOT NULL", "Comando-VARCHAR-NOT NULL", "Descrip-VARCHAR-NULL"};
-        updateMETADATA(Constants.CONSTRAIT_CATALOG, cols, ""); 
-        updateMETADATA(Constants.HISTORY_CATALOG, cols2, "");
-        updateMETADATA(Constants.LOG_ERRORS, cols3, ""); 
-        //Agregar la de index
+        TableOperations t = new TableOperations();
+        t.updateMETADATA(Constants.CONSTRAIT_CATALOG, _schema, cols1, ""); 
+        t.updateMETADATA(Constants.HISTORY_CATALOG, _schema, cols2, "");
+        t.updateMETADATA(Constants.LOG_ERRORS, _schema, cols3, ""); 
         
     }
     
@@ -62,9 +69,9 @@ public class DDLCommands {
     public int createTable(String pTable, String[] pColumnas, String pPrimary){
         
         //se inserta en la metadata
-        boolean bool = updateMETADATA(pTable, pColumnas, pPrimary);
-        int salida = 0;
         TableOperations t = new TableOperations();
+        boolean bool = t.updateMETADATA(pTable, _schema, pColumnas, pPrimary);
+        int salida = 0;
         
         //Si la tabla se inserta correctamente en la metadata
         if(bool){
@@ -100,8 +107,8 @@ public class DDLCommands {
      */
     public int dropTable(String pTable){
         
-        boolean bool = deleteTableMetadata(pTable);
         TableOperations t = new TableOperations();
+        boolean bool = t.deleteTableMetadata(pTable, _schema);
         if(bool){
             typeData[] r = {new VARCHAR("DROP_TABLE"), new VARCHAR(pTable), new VARCHAR("Correct"), new NULL()};
             t.insert(Constants.HISTORY_CATALOG, r, false);
@@ -121,23 +128,23 @@ public class DDLCommands {
      * Crea una nueva restricion(FK) en la tabla y columna seleccionada
      * @param pTable Tabla en la que se va hacer la FK
      * @param pFKColum Columna en la que se va a hacer un FK
-     * @param pTableColumn Tabla y columna que van a ser referenciadas
+     * @param pTableREF tabla a ser referenciada
+     * @param pREFColum Columna referenciada
      * @return 0 -> proceso satisfactorio
      *        -1 -> Existen datos en la columna FK que en la referenciada no
      *        -2 -> Nombre de tabla o columa no existen de la tabla de REF
      *        -3 -> Nombre de tabla o columa no existen de la tabla de FK
      */
-    public int createAlterTable(String pTable, String pFKColum, String pTableColumn){
+    public int createAlterTable(String pTable, String pFKColum, String pTableREF, String pREFColum){
         
         int salida = 0;
         TableOperations t = new TableOperations(); 
-        String[] ptc = pTableColumn.split("_");
         
         //Verifica la IR
         String[] str= {};int[] in = {};String[] col = {pFKColum};
         ArrayList<String[]> a1 = t.select(col, _schema, pTable, str, str, str, in);
-        String[] col2 = {ptc[1]};
-        ArrayList<String[]> a2 = t.select(col2, _schema, ptc[0], str, str, str, in);
+        String[] col2 = {pREFColum};
+        ArrayList<String[]> a2 = t.select(col2, _schema, pTableREF, str, str, str, in);
         if(!a1.isEmpty() && a1.size()>0 && a1.get(0).length == 1){
             if(!a2.isEmpty() && a2.size()>0 && a2.get(0).length == 1){
                 int sizeA1 = a1.size();
@@ -175,7 +182,7 @@ public class DDLCommands {
         if (salida==0){       
             typeData[] r1 = {new VARCHAR("ALTER_TABLE"), new VARCHAR(pTable), new VARCHAR("Correct"), new NULL()};
             t.insert(Constants.HISTORY_CATALOG, r1, false);     
-            typeData[] value = {new VARCHAR(pTable), new VARCHAR(pFKColum), new VARCHAR(ptc[0]),new VARCHAR(ptc[1])};
+            typeData[] value = {new VARCHAR(pTable), new VARCHAR(pFKColum), new VARCHAR(pTableREF),new VARCHAR(pREFColum)};
             t.insert(Constants.CONSTRAIT_CATALOG, value, false);
         }
         else{
@@ -186,7 +193,7 @@ public class DDLCommands {
         
         typeData[] r2 = {new VARCHAR("ADD_CONSTRAINT"), new VARCHAR(pFKColum), new NULL(), new NULL()};
         t.insert(Constants.HISTORY_CATALOG, r2, false);        
-        typeData[] r3 = {new VARCHAR("REFERENCES"), new VARCHAR(pTableColumn), new NULL(), new NULL()};
+        typeData[] r3 = {new VARCHAR("REFERENCES"), new VARCHAR(pTableREF+"."+pREFColum), new NULL(), new NULL()};
         t.insert(Constants.HISTORY_CATALOG, r3, false);                  
         
         return salida;
@@ -204,106 +211,6 @@ public class DDLCommands {
         //Falta meterla en la tabla de index        
     } 
     
-    /**
-     * Inserta una nueva tabla en la metadata de la base
-     * @param pTable nombre de la tablas
-     * @param pColumnas Cnombres de las columnas de la tabla
-     * @param pPrimary nombre de la columna que es PK
-     * @return true si se inserta de forma satisfactoria, false en caso contrario
-     */
-    private boolean updateMETADATA(String pTable, String[] pColumnas, String pPrimary){
-        
-        File file = new File(Constants.DATABASE+_schema);
-        try(DB thedb = DBMaker.newFileDB(file).closeOnJvmShutdown().make()){
-            
-            BTreeMap <Integer, Metadata> primary = thedb.treeMapCreate("pri")
-                    .keySerializer(BTreeKeySerializer.INTEGER)
-                    .makeOrGet();
-            
-            int tail = primary.size();
-            int planID=1;
-            
-            if(tail>0){
-                String regiter = primary.ceilingEntry(tail-1).getValue()._id;
-                planID = Integer.parseInt(regiter)+1;                
-            }
-            
-            String id = Integer.toString(planID);
-                   
-            primary.put(tail, new Metadata(id, "TABLE", pTable, "", ""));
-            thedb.commit();
-            
-            int largo = pColumnas.length;
-            for(int i=0;i<largo;i++){
-                String col = pColumnas[i];
-                String[] data = col.split("-");
-                if(data[0].equals(pPrimary)){
-                    primary.put(tail+i+1, new Metadata(id, "PK", data[0], data[1], data[2]));
-                }
-                else{
-                    primary.put(tail+i+1, new Metadata(id, "COL", data[0], data[1], data[2]));
-                }
-                thedb.commit();
-            }
-            return true;
-        } 
-            
-        catch(Exception e){
-            return false;
-        }
-        
-    }
-     
-    /**
-     * Borra una tabla de la metadata del esquema en el cual se trabaja
-     * @param pTable tabla que se desea borrar
-     * @return true si se borra de forma satisfactoria, false en caso contrario
-     */
-    public boolean deleteTableMetadata(String pTable){
-        
-        File file = new File(Constants.DATABASE+_schema);
-        try(DB thedb = DBMaker.newFileDB(file).closeOnJvmShutdown().make()){
-            
-            BTreeMap <Integer, Metadata> primary = thedb.treeMapCreate("pri")
-                    .keySerializer(BTreeKeySerializer.INTEGER)
-                    .makeOrGet();
-            
-            String plan = "NULO";
-            int tail = primary.size();
-            int i;
-            for(i=0;i<tail;i++){
-                if(primary.ceilingEntry(i).getValue()._name.equals(pTable)){
-                    plan = primary.ceilingEntry(i).getValue()._id;
-                    break;
-                }
-            }
-            //NOTA: QUE NO SE PUEDAN BORRAR LOS PRIMEROS CUATRO QUE SON DE LOS CATALOGOS
-            if (!plan.equals("NULO")){
-                
-                String planActual=plan;
-                Metadata m = new Metadata("NULL", "NULL", "NULL", "NULL", "NULL");
-                for(int j=i;j<tail;j++){
-                    
-                    plan = primary.ceilingEntry(j).getValue()._id;
-                    if(plan.equals(planActual)){
-                        primary.replace(j, m);
-                        thedb.commit();
-                    }
-                    else{
-                        break;
-                    }
-                }
-                
-            }
-            else{
-                return false;
-            }
-            
-        
-        }
-        
-        return true;
     
-    }
     
 }

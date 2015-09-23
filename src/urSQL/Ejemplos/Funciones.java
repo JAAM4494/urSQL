@@ -6,7 +6,7 @@ import org.mapdb.BTreeMap;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import urSQL.Constants.Constants;
-import RuntimeDBProcessor.commands.DDL.Metadata;
+import SystemCatalog.Metadata;
 import urSQL.tipos.typeData;
 
 /**
@@ -17,7 +17,7 @@ public class Funciones {
     
     static public void recorrerArchivo2(String pName){
         File file = new File(Constants.DATABASE+pName);
-        try(DB thedb = DBMaker.newFileDB(file).closeOnJvmShutdown().make()){
+        try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
             BTreeMap <Integer,Metadata> primary = thedb.treeMapCreate("pri")
                     .keySerializer(BTreeKeySerializer.INTEGER)
                     .makeOrGet();
@@ -34,7 +34,7 @@ public class Funciones {
     
     static public void recorrerArchivo(String pName){
         File file = new File(Constants.DATABASE+pName);
-        try(DB thedb = DBMaker.newFileDB(file).closeOnJvmShutdown().make()){
+        try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
             BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
                     .keySerializer(BTreeKeySerializer.INTEGER)
                     .makeOrGet();

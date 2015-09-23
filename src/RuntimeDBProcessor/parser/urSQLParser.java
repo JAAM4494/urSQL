@@ -1,10 +1,8 @@
 // $ANTLR 3.5.1 /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g 2015-09-23 14:55:07
 
-	package RuntimeDBProcessor.parser;
-	import RuntimeDBProcessor.*;
-   
+package RuntimeDBProcessor.parser;
 
-
+import RuntimeDBProcessor.*;
 import org.antlr.runtime.*;
 import java.util.Stack;
 import java.util.List;
@@ -735,7 +733,7 @@ public class urSQLParser extends Parser {
 			match(input,31,FOLLOW_31_in_dropTable267); 
 			Identifier6=(Token)match(input,Identifier,FOLLOW_Identifier_in_dropTable269); 
 
-					mainRuntime.dropTable((Identifier6!=null?Identifier6.getText():null));
+                            mainRuntime.dropTable((Identifier6!=null?Identifier6.getText():null));
 				
 			}
 

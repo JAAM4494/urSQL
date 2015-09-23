@@ -6,14 +6,11 @@
 
 package RuntimeDBProcessor;
 
-import RuntimeDBProcessor.commands.DDL.DDLCommands;
 import RuntimeDBProcessor.parser.urSQLLexer;
 import RuntimeDBProcessor.parser.urSQLParser;
-import StoredDataManager.TableOperations;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
-import urSQL.Ejemplos.main;
 
 /**
  *
@@ -30,11 +27,14 @@ public class RuntimePreParser {
        parserP.script();
        
     }
-    
-     public static void main(String[] args) throws RecognitionException {
+    //CREATE TABLE Hola AS (Nombre VARCHAR NOT NULL,Cedula INTEGER NOT NULL, PRIMARY KEY(Nombre));
+    //ALTER TABLE hola ADD CONSTRAINT FOREIGN KEY (colhola) REFERENCES hola2 (colhola2)
+    //UPDATE hola Set col=valor WHERE a=1 OR b=2
+    //INSERT INTO hola(col1, col2) VALUES (val1, val2, val3)
+    public static void main(String[] args) throws RecognitionException {
         RuntimePreParser prueba = new RuntimePreParser();
-        prueba.recievemsg("CREATE DATABASE mydb");  
-     }
+        prueba.recievemsg("UPDATE hola Set col=newVal WHERE a=1 OR b=2");  
+    }
     
     
     

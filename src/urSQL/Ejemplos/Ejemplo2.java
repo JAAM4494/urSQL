@@ -1,8 +1,8 @@
 package urSQL.Ejemplos;
 
+import RuntimeDBProcessor.commands.CLP.CLPCommands;
 import RuntimeDBProcessor.commands.DDL.DDLCommands;
 import RuntimeDBProcessor.commands.DML.DMLCommands;
-import StoredDataManager.TableOperations;
 import urSQL.Constants.Constants;
 
 /**
@@ -16,12 +16,13 @@ public class Ejemplo2 {
         
         DMLCommands dml = new DMLCommands();
         DDLCommands ddl = new DDLCommands();
-        ddl.setDatabase("TEC_DB");
-
-
+        CLPCommands clp = new CLPCommands();
+        
+        clp.createDatabase("TEC_DB");   
+        System.out.println(ddl.setDatabase("TEC_DB"));
+        Funciones.recorrerArchivo(Constants.DB);
+        
         /*
-        ddl.setDatabase("TEC_DB");
-        ddl.createDatabase();    
         String[] str = {"Carne-INTEGER-NOT NULL", "Nombre-VARCHAR-NULL", "Edad-INTEGER-NOT NULL"};
         System.out.println("CREATE TABLE "+ddl.createTable("Estudiantes", str , "Carne"));
         String[] str2 = {"ID-INTEGER-NOT NULL", "Nombre-VARCHAR-NULL", "Edad-INTEGER-NOT NULL"};
@@ -47,8 +48,9 @@ public class Ejemplo2 {
         System.out.println(dml.insert("Profes", colsCb, datosCb));
         System.out.println(dml.insert("Profes", colsCb, datosC2b));
         System.out.println(dml.insert("Profes", colsCb, datosC3b));
-
+        */
         
+        /*
         String[] datosC = {"Nereo"};
         String[] colsC = { "Nombre"};
         String[] opes = {"=",};
@@ -62,7 +64,7 @@ public class Ejemplo2 {
         //System.out.println(dml.insert("Cursos", colsc, datosC3c));
         */
         
-        Funciones.recorrerArchivo(Constants.HISTORY_CATALOG);
+        Funciones.recorrerArchivo("Estudiantes");
         System.out.println("");
         Funciones.recorrerArchivo(Constants.CONSTRAIT_CATALOG);
         System.out.println("");

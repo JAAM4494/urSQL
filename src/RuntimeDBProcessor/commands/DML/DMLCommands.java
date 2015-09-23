@@ -1,5 +1,6 @@
 package RuntimeDBProcessor.commands.DML;
 
+import RuntimeDBProcessor.commands.DDL.DDLCommands;
 import urSQL.Constants.Constants;
 import StoredDataManager.TableOperations;
 import urSQL.tipos.*;
@@ -9,19 +10,13 @@ import urSQL.tipos.*;
  */
 public class DMLCommands {
     
-    private String _schema;
     private final TableOperations _tableOp;
-    
+    private final DDLCommands _ddl = new DDLCommands();
     
     public DMLCommands(){
         _tableOp = new TableOperations();
     }
-    
-    public void setDatabase(String pSchemaName){
-        
-        _schema = pSchemaName;
-        
-    }
+
     /**
      * Inserta un registro en de la tabla indicada, ademas crea el plan de ejecucion, e inserta en el 
      * catalogo de historia
@@ -37,8 +32,8 @@ public class DMLCommands {
               -6 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
      */
     public int insert(String pTable, String[] pColumns, String[] pValues){ 
-        
-        int proceso = _tableOp.insertINTO(_schema, pTable, pColumns, pValues);
+        System.out.println(_ddl.getSchema());
+        int proceso = _tableOp.insertINTO(_ddl.getSchema(), pTable, pColumns, pValues);
         if(proceso==0){
             typeData[] r1 = {new VARCHAR("INSERT_INTO"), new VARCHAR(pTable), new VARCHAR("Correct"), new NULL()};
             _tableOp.insert(Constants.HISTORY_CATALOG, r1, false);
@@ -85,7 +80,7 @@ public class DMLCommands {
     public int updateTable(String pCol, String pValor, String pTable, String[] pColumnasCondiciones,
             String[] pDatosCondiciones,String[] pOpes, int[] pTipoCondiciones){
         
-        int salida = _tableOp.update(pCol, pValor, _schema, pTable, pColumnasCondiciones, pDatosCondiciones, pOpes, pTipoCondiciones);
+        int salida = _tableOp.update(pCol, pValor, _ddl.getSchema(), pTable, pColumnasCondiciones, pDatosCondiciones, pOpes, pTipoCondiciones);
         if (salida>0){
             typeData[] r1 = {new VARCHAR("UPDATE"), new VARCHAR(pTable), new VARCHAR("Correct"), new NULL()};
              _tableOp.insert(Constants.HISTORY_CATALOG, r1, false);
@@ -119,7 +114,7 @@ public class DMLCommands {
     public int deleteFrom(String pTable, String[] pColumnasCondiciones,
             String[] pDatosCondiciones,String[] pOpes, int[] pTipoCondiciones){
         
-        int salida = _tableOp.delete(_schema, pTable, pColumnasCondiciones, pDatosCondiciones, pOpes, pTipoCondiciones);
+        int salida = _tableOp.delete(_ddl.getSchema(), pTable, pColumnasCondiciones, pDatosCondiciones, pOpes, pTipoCondiciones);
         if (salida>0){
             typeData[] r1 = {new VARCHAR("DELETE"), new NULL(), new VARCHAR("Correct"), new NULL()};
              _tableOp.insert(Constants.HISTORY_CATALOG, r1, false);
