@@ -1,4 +1,4 @@
-// $ANTLR 3.5.1 /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g 2015-09-22 22:52:12
+// $ANTLR 3.5.1 /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g 2015-09-22 23:00:40
 
 	package RuntimeDBProcessor.parser;
 	import RuntimeDBProcessor.*;
@@ -1066,34 +1066,34 @@ public class urSQLParser extends Parser {
 
 				
 					
-						if((id1!=null?id1.getText():null).equals("")!=true){
+						if((id1!=null?id1.getText():null)!=null){
 							ColumnsSelect.add((id1!=null?id1.getText():null));
 
 						}
-						if((id2!=null?id2.getText():null).equals("")!=true){
+						if((id2!=null?id2.getText():null)!=null){
 							ColumnsSelect.add((id2!=null?id2.getText():null));
 						}
 						
-						if((id3!=null?id3.getText():null).equals("")!=true){
+						if((id3!=null?id3.getText():null)!=null){
 							ColumnsSelect.add(".");
 							ColumnsSelect.add((id3!=null?id3.getText():null));
 						}
 						
-						if((id4!=null?id4.getText():null).equals("")!=true){
+						if((id4!=null?id4.getText():null)!=null){
 							ColumnsSelect.add((id4!=null?id4.getText():null));
 						}
-						if((id5!=null?id5.getText():null).equals("")!=true){
+						if((id5!=null?id5.getText():null)!=null){
 							ColumnsSelect.add(".");
 							ColumnsSelect.add((id5!=null?id5.getText():null));
 						}
-						if((Ag!=null?Ag.getText():null).equals("")!=true){
+						if((Ag!=null?Ag.getText():null)!=null){
 							ColumnsSelect.add("Aggregate Function");
 							ColumnsSelect.add((Ag!=null?Ag.getText():null));
 						}
 						ColumnsSelect.add("FROM");
 						ColumnsSelect.add((fromId!=null?fromId.getText():null));
 						
-						if((id6!=null?id6.getText():null).equals("")!=true){
+						if((id6!=null?id6.getText():null)!=null){
 							ColumnsSelect.add("GROUP BY");
 							ColumnsSelect.add((Ag!=null?Ag.getText():null));
 						}	

@@ -33,7 +33,7 @@ public class RuntimePreParser {
     
      public static void main(String[] args) throws RecognitionException {
         RuntimePreParser prueba = new RuntimePreParser();
-        prueba.recievemsg("INSERT INTO mytable(column1,column2) VALUES (valor1,valor2)");  
+        prueba.recievemsg("CREATE DATABASE mydb");  
      }
     
     

@@ -59,6 +59,7 @@ public class RuntimeDB {
         }
         
         public void setDB(String pSchema){
+           System.out.println("pSchema" +pSchema);
            // _jsonResponse=_clp.Stop();
             
             
@@ -105,12 +106,17 @@ public class RuntimeDB {
             
             for (int i = 0; i < pDelete.size(); i++) {
                   System.out.println(" El:" +pDelete.get(i));  
-            }
-            
+            }    
         }
         
          public void insertInto (ArrayList<String> pDelete){
+            for (int i = 0; i < pDelete.size(); i++) {
+                  System.out.println(" El:" +pDelete.get(i));  
+            }
             
+        }
+         
+         public void select (ArrayList<String> pDelete){
             for (int i = 0; i < pDelete.size(); i++) {
                   System.out.println(" El:" +pDelete.get(i));  
             }
