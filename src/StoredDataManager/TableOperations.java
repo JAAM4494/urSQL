@@ -20,7 +20,9 @@ public class TableOperations {
     public int getTail(){
         return _tail;
     }
-    
+    String[][] metadataTableSelected; 
+    String[][] metadataTable1;
+    String[][] metadataTable2;
     /**
      * Inserta un registro en una determinada tabla
      * @param pTable Tabla a insertar el registro
@@ -342,6 +344,302 @@ public class TableOperations {
      *         -7 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
      *         -8 -> no se encontro la tabla en la que se va a insertar
      */
+     public BTreeMap <Integer,typeData[]> joinLogic(BTreeMap<Integer,typeData[]> pDatosTable1, 
+            BTreeMap<Integer,typeData[]> pDatosTable2, int pColumnaCondicionPos1,int pColumnaCondicionPos2 , ArrayList<ArrayList<Integer>> ColumnsToSelect, ArrayList<ArrayList<String>> typesToSelect,DB thedb){
+        
+        BTreeMap <Integer,typeData[]> tmp = thedb.treeMapCreate("tmp").keySerializer(BTreeKeySerializer.INTEGER)
+                    .makeOrGet();
+        int tail;
+        int backupInt=0;
+        Boolean insertedFlag=false;
+        
+        String[] columnsSelectedTable=new String[ColumnsToSelect.get(0).size()+ColumnsToSelect.get(1).size()];
+        
+        String[] typesSelectedTable=new String[typesToSelect.get(0).size()+typesToSelect.get(1).size() ];
+        
+        System.out.println("size 1:"+typesToSelect.get(0).size());
+        
+        System.out.println("size 2:"+typesToSelect.get(1).size());
+
+        
+        int sizeColSelected=0;
+        
+        int sizeTypesSelected=0;
+        
+
+         for (int i = 0; i < metadataTable1[0].length; i++) {
+                for (int j = 0; j < ColumnsToSelect.get(0).size(); j++) {
+                    if (i == ColumnsToSelect.get(0).get(j)) {
+                        columnsSelectedTable[sizeColSelected] = metadataTable1[0][i];
+                        sizeColSelected++;
+                    }
+                }
+         }
+
+         for (int i = 0; i < metadataTable2[0].length; i++) {
+                for (int j = 0; j < ColumnsToSelect.get(1).size(); j++) {
+                    if (i == ColumnsToSelect.get(1).get(j)) {
+                        columnsSelectedTable[sizeColSelected] = metadataTable2[0][i];
+                        sizeColSelected++;
+                    }
+                }
+         }
+         
+        
+        for (int i = 0; i < pDatosTable2.size(); i++) {
+            for (int j = 0; j <pDatosTable1.size() ; j++) {
+                    if(pDatosTable1.ceilingEntry(j).getValue()[pColumnaCondicionPos1].getDate().equals(pDatosTable2.ceilingEntry(i).getValue()[pColumnaCondicionPos2].getDate())){
+                        tail=tmp.size();
+                        ArrayList<String> tmpRegister= new ArrayList<>();    
+                         
+                        for (int k = 0; k < ColumnsToSelect.get(0).size(); k++) {
+                            tmpRegister.add(pDatosTable1.ceilingEntry(j).getValue()[ColumnsToSelect.get(0).get(k)].getDate());
+                        }
+                        
+                        for (int k = 0; k < ColumnsToSelect.get(1).size(); k++) {
+                            tmpRegister.add(pDatosTable2.ceilingEntry(i).getValue()[ColumnsToSelect.get(1).get(k)].getDate());
+
+                        }
+                        //System.out.println("Register with Select"+tmpRegister.get(2));
+                        
+                        typeData[] myTypeData= new typeData[tmpRegister.size()];
+                            
+
+                        for (int k = 0; k <ColumnsToSelect.get(0).size(); k++) {
+                            
+                            if (typesToSelect.get(0).get(k).equals("VARCHAR")) {
+                                myTypeData[k] = new VARCHAR(tmpRegister.get(k));
+                                typesSelectedTable[sizeTypesSelected]="VARCHAR";
+                                sizeTypesSelected++;
+                            }
+                     
+                            else if (typesToSelect.get(0).get(k).equals("INTEGER")) {
+                                myTypeData[k] = new INTEGER(tmpRegister.get(k));
+                                typesSelectedTable[sizeTypesSelected]="INTEGER";
+                                sizeTypesSelected++;
+                            }
+                        }
+                        int backupK=ColumnsToSelect.get(0).size();
+ 
+                        for (int k = 0; k <ColumnsToSelect.get(1).size(); k++) {
+                            if (typesToSelect.get(1).get(k).equals("VARCHAR")) {
+                                myTypeData[backupK] = new VARCHAR(tmpRegister.get(backupK));
+                                backupK++;
+
+                                typesSelectedTable[sizeTypesSelected]="VARCHAR";
+                                sizeTypesSelected++;
+                            } else if (typesToSelect.get(0).get(k).equals("INTEGER")) {
+                                myTypeData[backupK] = new INTEGER(tmpRegister.get(backupK));
+                                backupK++;
+                                typesSelectedTable[sizeTypesSelected]="INTEGER";
+                                sizeTypesSelected++;
+
+                            }
+                        }
+                        //System.out.println("metadata types"+typesSelectedTable[2]);
+                        
+
+                        metadataTableSelected=new String[columnsSelectedTable.length][typesSelectedTable.length];
+                        
+                        
+                        metadataTableSelected[0]=columnsSelectedTable;
+                        metadataTableSelected[1]=typesSelectedTable;
+                        
+
+                        //System.out.println("Register with Select"+myTypeData[0].getDate());
+                        
+                        //System.out.println("Register with Select 2:"+myTypeData[1].getDate());
+                        
+                        //System.out.println("Register with Select 3:"+myTypeData[2].getDate());
+                        //System.out.println("VERIF");
+
+
+                        sizeTypesSelected=0;
+                        
+                        tmp.put(tail, myTypeData);     
+                        //backupInt++;
+                        //insertedFlag=true;
+                    }
+                    
+            }
+            
+          
+        }
+
+        
+
+        
+        return tmp;
+        
+        /*for (int i = 0; i <pDatosTable2.size() ; i++) {
+            if(pDatosTable2.ceilingEntry(i).getValue()._register[pColumnaCondicionPos2].equals(pDatosTable1.ceilingEntry(0).getValue()._register[pColumnaCondicionPos2])){
+            tail=tmp.size();
+            System.out.println("Tail"+tail);
+            tmp.put(tail, new Register(pDatosTable2.ceilingEntry(i).getValue()._register));
+            i++;
+            //System.out.println("Dato Join"+tmp.ceilingEntry(1).getValue()._register[1]);
+            }  
+        }
+        
+        //System.out.println("Primer dato join"+tmp.ceilingEntry(0).getValue()._register[0]);
+        
+        
+        return tmp;*/
+    
+    }
+    
+    
+    
+    public ArrayList<String[]> selectJoin(String[] pColSelect1, String[] pColSelect2, String pSchema,
+            String pTable1, String pTable2, String ColumnJoin, int[] pTipoCondiciones, 
+            String format) {
+            
+        
+        
+        metadataTable1 = getMetaDataTable(pSchema, pTable1);
+        
+        
+        
+        if (metadataTable1 != null) {
+            File file = new File(Constants.DATABASE + pTable1);
+            
+            
+            try (DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()) {
+                BTreeMap<Integer, typeData[]> primary = thedb.treeMapCreate("pri")
+                        .keySerializer(BTreeKeySerializer.INTEGER)
+                        .makeOrGet();
+                
+
+                int tail = primary.size();
+              
+                ArrayList<String[]> salida = new ArrayList<>();
+
+                //System.out.println("metadata" +md[0][0]);
+                File fileToJoin = new File(Constants.DATABASE + pTable2);
+                
+                try (DB thedbToJoin = DBMaker.fileDB(fileToJoin).closeOnJvmShutdown().make()) {
+
+                    BTreeMap<Integer, typeData[]> primarytoJoin = thedbToJoin.treeMapCreate("pri")
+                            .keySerializer(BTreeKeySerializer.INTEGER)
+                            .makeOrGet();
+
+                    metadataTable2 = getMetaDataTable(pSchema, pTable2);
+                    
+
+                    //System.out.println("Metadata table FUNC:"+metadataTable2[0][2]);
+                    String columnToJoinVerif = "";
+                    int posColumnToJoin = 0;
+
+                    ArrayList<ArrayList<Integer>> ColumnsToSelect = new ArrayList<ArrayList<Integer>>();
+                    
+                    ArrayList<ArrayList<String>> typesToSelect = new ArrayList<ArrayList<String>>();
+
+
+                    ArrayList<Integer> ColumnsToSelectTab1 = new ArrayList<Integer>();
+
+                    ArrayList<Integer> ColumnsToSelectTab2 = new ArrayList<Integer>();
+                    
+                     ArrayList<String> typesToSelectTab1 = new ArrayList<String>();
+
+                    ArrayList<String> typesToSelectTab2 = new ArrayList<String>();
+                    
+                    
+                    
+
+                    for (int j = 0; j < pColSelect1.length; j++) {
+                        for (int k = 0; k < metadataTable1[0].length; k++) {
+                            if (pColSelect1[j].equals(metadataTable1[0][k])) {
+                                ColumnsToSelectTab1.add(k);
+                            }
+                        }
+                    }
+                    for (int j = 0; j < pColSelect2.length; j++) {
+                        for (int k = 0; k < metadataTable2[0].length; k++) {
+                            if (pColSelect2[j].equals(metadataTable2[0][k])) {
+                                ColumnsToSelectTab2.add(k);
+                            }
+                        }
+                    }
+                    for (int k = 0; k < ColumnsToSelectTab1.size(); k++) {
+                            typesToSelectTab1.add(metadataTable1[1][ColumnsToSelectTab1.get(k)]);
+                    }
+                    
+                    for (int k = 0; k < ColumnsToSelectTab2.size(); k++) {
+                            typesToSelectTab2.add(metadataTable2[1][ColumnsToSelectTab2.get(k)]);
+                    }
+                    //System.out.println("Verif type to select1"+typesToSelectTab2.get(0));
+                    
+                    
+
+                    ColumnsToSelect.add(ColumnsToSelectTab1);
+                    ColumnsToSelect.add(ColumnsToSelectTab2);
+                    
+                    typesToSelect.add(typesToSelectTab1);
+                    typesToSelect.add(typesToSelectTab2);
+
+                    
+                    
+                    
+                    for (int j = 0; j < metadataTable1[0].length; j++) {
+                        if (metadataTable1[0][j].equals(ColumnJoin)) {
+                            columnToJoinVerif = metadataTable1[0][j];
+                            posColumnToJoin = j;
+                        }
+                    }
+                    
+                    int posColumnToJoin2 = 0;
+
+                    for (int j = 0; j < metadataTable2[0].length; j++) {
+
+                        if (metadataTable2[0][j].equals(ColumnJoin)) {
+                            columnToJoinVerif = metadataTable2[0][j];
+                            posColumnToJoin2 = j;
+                        }
+                    }
+                    
+                    
+
+                    if (columnToJoinVerif.equals("") == true) {
+                        return null;
+                    } 
+                    else {
+                        //System.out.println("DATOS TABLA 2" + primarytoJoin.ceilingEntry(0).getValue()._register[posColumnToJoin]);
+                        
+                        
+                        BTreeMap<Integer, typeData[]> myJoinSelect = joinLogic(primary, primarytoJoin, posColumnToJoin, posColumnToJoin2, ColumnsToSelect,typesToSelect, thedb);
+                        System.out.println("Printing my Join Select Data" + myJoinSelect.ceilingEntry(0).getValue()[3].getDate());
+                        //System.out.println("METADA TABLE SELECT"+metadataTableSelected[1][3]);
+                        
+                        //if(pAggregateFunction.equals("")!=true){
+                        //    pAggregateLogic(myJoinSelect,pAggregateFunction.get(0),pAggregateFunction.get(1),metadataTableSelected);
+                        //}
+                        
+                        
+                        switch (format) {
+                            case "FOR JSON":
+                                break;
+                            case "FOR XML":
+                                break;
+                        }
+                        
+                        
+                        return salida;
+
+                    }
+
+                }
+
+            } catch (Exception e) {
+                System.out.println("n1");
+                return null;
+            }
+        }
+        System.out.println("n2");
+        return null;
+
+    }
+    
+    
     public int update(String pCol, String pValor, String pSchema, String pTable, String[] pColumnasCondiciones,
             String[] pDatosCondiciones,String[] pOpes, int[] pTipoCondiciones){
         
