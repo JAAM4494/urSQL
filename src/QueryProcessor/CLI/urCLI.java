@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  *
  * @author JAAM
  */
-public class UrCLI {
+public class urCLI {
 
     static String userInputString;
     static Scanner userScanner;
@@ -33,9 +33,12 @@ public class UrCLI {
                 try {
                     Connector conn = new Connector(8080);
                     String out = conn.sendMessage(userInputString);
-                    System.out.println(out);
+                    //System.out.println(out);
+                    ResultSetManager manager =  new ResultSetManager();
+                    manager.displayResult(out);
+                    manager.displayStatus(out);
                 } catch (IOException ex) {
-                    Logger.getLogger(UrCLI.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(urCLI.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
