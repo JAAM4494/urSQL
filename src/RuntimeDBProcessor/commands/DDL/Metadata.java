@@ -12,7 +12,6 @@ public class Metadata implements Serializable {
     public final String _name;
     public final String _type;
     public final String _nullability;
-    
             
     public Metadata(String pId, String pTypeData, String pName, String pType, String pNULL){
         _id = pId;

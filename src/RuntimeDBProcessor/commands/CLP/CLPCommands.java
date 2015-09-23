@@ -1,37 +1,44 @@
 package RuntimeDBProcessor.commands.CLP;
+import org.json.*;
+
 
 /**
  *
  * @author macbook
  */
 public class CLPCommands {
-        public void CreateDB(String pDBName){
+        public  JSONObject CreateDB(String pDBName){
+            System.out.println("Creating response"+pDBName);
+            return null;
+        }
         
+        public  JSONObject DisplayDB(String pDBName){
+            return null;
+        }
+        
+        public  JSONObject DropDB(String pDBName){
+            
+            return null;
+            
+            
+        }
+        public  JSONObject GetStatus(){
+            return null;
         
         }
         
-        public void DisplayDB(String pDBName){
+        public  JSONObject ListDB(){
             
+            return null;
         }
         
-        public void DropDB(String pDBName){
+        public JSONObject Start(){
             
-        }
-        public void GetStatus(){
-            
-        
+            return null;
         }
         
-        public void ListDB(){
-            
-        }
-        
-        public void Start(){
-            
-        }
-        
-        public void Stop(){
-            
+        public JSONObject Stop(){
+            return null;
             
         }      
 
