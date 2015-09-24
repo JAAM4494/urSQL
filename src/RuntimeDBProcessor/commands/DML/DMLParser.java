@@ -5,7 +5,6 @@
  */
 package RuntimeDBProcessor.commands.DML;
 
-import Runtime.Server.CommunicationProtocol;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class DMLParser {
     
     DMLCommands _dml = new DMLCommands();
     
-    public String parserInsertInto(String pTable, List<String> pDatos, List<String> pCols){
+    public void parserInsertInto(String pTable, List<String> pDatos, List<String> pCols){
         
         int largo = pDatos.size();
         int i;
@@ -28,18 +27,10 @@ public class DMLParser {
             cols[i] = pCols.get(i);
         }
         int sal = _dml.insert(pTable, cols, datos);
-        CommunicationProtocol respuesta = new CommunicationProtocol();
-        if(sal==0){
-            respuesta.setStatus("0", "1");
-        }
-        else{
-            respuesta.setStatus(Integer.toString(Math.abs(sal)), "0");
-        }
-        return respuesta.getReturnObj();
-
+        System.out.println(sal);
     }
     
-    public String parserUpdate(String pTabla, String pCol, String pValor, ArrayList<String> pWhere){
+    public void parserUpdate(String pTabla, String pCol, String pValor, ArrayList<String> pWhere){
         
         int largo = pWhere.size();
         int nElementos = (largo+1)/5;
@@ -67,18 +58,10 @@ public class DMLParser {
             cols[i] = pWhere.get(i*5+3);
         }
         
-        int sal = _dml.updateTable(pCol, pValor, pTabla, cols, datos, opes, condis);
-        CommunicationProtocol respuesta = new CommunicationProtocol();
-        if(sal>=0){
-            respuesta.setStatus("0", Integer.toString(Math.abs(sal)));
-        }
-        else{
-            respuesta.setStatus(Integer.toString(Math.abs(sal)), "0");
-        }
-        return respuesta.getReturnObj();
+        _dml.updateTable(pCol, pValor, pTabla, cols, datos, opes, condis);
     }
     
-    public String parserDelete(String pTabla, ArrayList<String> pWhere){
+    public void parserDelete(String pTabla, ArrayList<String> pWhere){
         
         int largo = pWhere.size();
         int nElementos = (largo+1)/5;
@@ -105,15 +88,7 @@ public class DMLParser {
             opes[i] = pWhere.get(i*5+2);
             cols[i] = pWhere.get(i*5+3);
         }
-        int sal = _dml.deleteFrom(pTabla, cols, datos, opes, condis);
-        CommunicationProtocol respuesta = new CommunicationProtocol();
-        if(sal>=0){
-            respuesta.setStatus("0", Integer.toString(Math.abs(sal)));
-        }
-        else{
-            respuesta.setStatus(Integer.toString(Math.abs(sal)), "0");
-        }
-        return respuesta.getReturnObj();
+        _dml.deleteFrom(pTabla, cols, datos, opes, condis);
     }
    
     

@@ -46,7 +46,6 @@ public class RuntimeDB {
             respuesta.setStatus(Integer.toString(Math.abs(i)), "0");
         }
         _json =  respuesta.getReturnObj();
-        System.out.println(_json);
     }
         
     public void DisplayDB(String pDBName){
@@ -63,7 +62,6 @@ public class RuntimeDB {
             respuesta.setStatus(Integer.toString(Math.abs(i)), "0");
         }
         _json =  respuesta.getReturnObj();
-        System.out.println(_json);
     }
     
     public void GetStatus(){
@@ -86,31 +84,29 @@ public class RuntimeDB {
     }
 
     public void setDB(String pSchema){
+        
         _json = _ddlP.parserSetDatabase(pSchema);
-        System.out.println(_json);
         
     }
 
     public void createTable(ArrayList<String> pCreateTable){
 
-        String nombre = pCreateTable.get(0);
-        String pk = pCreateTable.get(pCreateTable.size()-1);
-        pCreateTable.remove(0);
-        pCreateTable.remove(pCreateTable.size()-1);
-        _json = _ddlP.parserCreateTable(nombre, pk, pCreateTable);
-        System.out.println(_json);
+        if(pCreateTable.size()>5){
+            String nombre = pCreateTable.get(0);
+            String pk = pCreateTable.get(pCreateTable.size()-1);
+            pCreateTable.remove(0);
+            pCreateTable.remove(pCreateTable.size()-1);
+            _json = _ddlP.parserCreateTable(nombre, pk, pCreateTable);
+        }
 
     }
 
     public void alterTable(ArrayList<String> pAlterTable){
-        System.out.println("Alter");
         _json = _ddlP.parserAlterTable(pAlterTable); 
-        System.out.println(_json);
     }
         
     public void dropTable(String pTable){
         _json = _ddlP.parserDropTable(pTable);
-        System.out.println(_json);
     }
     
     public void createIndex(ArrayList<String> pCreateIndex){
@@ -124,22 +120,20 @@ public class RuntimeDB {
     
     public void update (ArrayList<String> pUpdateData){
             
-        String table = pUpdateData.get(0);
-        String col = pUpdateData.get(1);
-        String val = pUpdateData.get(2);
-        pUpdateData.remove(0);
-        pUpdateData.remove(0);
-        pUpdateData.remove(0);
-        _json = _dmlP.parserUpdate(table, col, val, pUpdateData);
-        System.out.println(_json);
+            String table = pUpdateData.get(0);
+            String col = pUpdateData.get(1);
+            String val = pUpdateData.get(2);
+            pUpdateData.remove(0);
+            pUpdateData.remove(0);
+            pUpdateData.remove(0);
+            _dmlP.parserUpdate(table, col, val, pUpdateData);
         
     }
         
     public void delete (ArrayList<String> pDelete){
         String tabla = pDelete.get(0);
         pDelete.remove(0);     
-        _json = _dmlP.parserDelete(tabla, pDelete);
-        System.out.println(_json);
+        _dmlP.parserDelete(tabla, pDelete);
     }
         
     public void insertInto(ArrayList<String> pDelete){
@@ -155,8 +149,7 @@ public class RuntimeDB {
         List<String> datos  = pDelete.subList(i+1, largo);
         
         if ( cols.size() == datos.size()){
-            _json = _dmlP.parserInsertInto(table, datos, cols);
-            System.out.println(_json);
+            _dmlP.parserInsertInto(table, datos, cols);
         }
         else{
             System.out.println("Error diferentes cantidades del cols y datos");

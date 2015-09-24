@@ -17,7 +17,7 @@ public class TableOperations {
     
     private static int _tail;
     
-    public static int getTail(){
+    public int getTail(){
         return _tail;
     }
     String[][] metadataTableSelected; 
@@ -57,31 +57,25 @@ public class TableOperations {
      * @param pColumns String[] en la que vienen las columanas a insertar
      * @param pValues String[] con los valores de las columnas a insertar
      * @return 0 -> proceso satisfactorio
-              -1216 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada
-              -1146 -> no se encontro la tabla en la que se va a insertar 
-              -1068 -> Error de la llave primaria el dato esta repetido
-              -1232 -> Error el dato no es del tipo correspondiente
-              -1048 -> Error el dato no admite nulos
-              -1637 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
+              -1 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada 1216
+              -2 -> no se encontro la tabla en la que se va a insertar 1146
+              -3 -> Error de la llave primaria el dato esta repetido
+              -4 -> Error el dato no es del tipo correspondiente 1232->SQL
+              -5 -> Error el dato no admite nulos 1048->SQL
+              -6 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
      */
     public int insertINTO(String pSchema, String pTable, String[] pColumns, String[] pValues){
         
         //Verifica la IR
         if(!verificarFK(pSchema, pTable, pColumns, pValues)){
-            typeData[] r_a = {new NULL(), new INTEGER("1216"), new VARCHAR("INSERT_INTO"), 
-                new VARCHAR("Error en la IR, el dato que se va a insertar no esta en la columna referenciada")};
-            insert(Constants.LOG_ERRORS, r_a, true);
-            return -1216; //-1216 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada
+            return -1; //-1 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada
         }
         
         //Obtiene la metadata de la tabla
         String[][] metadata = getMetaDataTable(pSchema, pTable);
         
         if (metadata==null){
-            typeData[] r_a = {new NULL(), new INTEGER("1146"), new VARCHAR("INSERT_INTO"), 
-                new VARCHAR("La tabla no existe")};
-            insert(Constants.LOG_ERRORS, r_a, true);
-            return -1146;//-1146 -> No se encontro la tabla en la que se va a insertar
+            return -2;//-2 -> no se encontro la tabla en la que se va a insertar
         }
         
         int largoC = pColumns.length;
@@ -105,10 +99,7 @@ public class TableOperations {
                         ArrayList<String[]> ar = select(col, pSchema, pTable, col, datos, ope, condi);
                         
                         if(!ar.isEmpty()){
-                            typeData[] r_a = {new NULL(), new INTEGER("1068 "), new VARCHAR("INSERT_INTO"), 
-                                new VARCHAR("Error de la llave primaria el dato esta repetido")};
-                            insert(Constants.LOG_ERRORS, r_a, true);
-                            return -1068 ;//-3 -> Error de la llave primaria el dato esta repetido
+                            return -3;//-3 -> Error de la llave primaria el dato esta repetido
                         }
                     }
                     
@@ -125,10 +116,7 @@ public class TableOperations {
                         break;
                     }
                     else{
-                        typeData[] r_a = {new NULL(), new INTEGER("1232"), new VARCHAR("INSERT_INTO"), 
-                            new VARCHAR("Error el dato no es del tipo correspondiente")};
-                        insert(Constants.LOG_ERRORS, r_a, true);
-                        return -1232;//Error el dato no es del tipo correspondiente 1232->SQL
+                        return -4;//-4 -> Error el dato no es del tipo correspondiente 1232->SQL
                     }
                 }
                 
@@ -141,10 +129,7 @@ public class TableOperations {
                     salida[i] = new NULL();
                 }
                 else{
-                    typeData[] r_a = {new NULL(), new INTEGER("1048"), new VARCHAR("INSERT_INTO"), 
-                        new VARCHAR("Error el dato no admite nulos")};
-                    insert(Constants.LOG_ERRORS, r_a, true);
-                    return -1048;//Error el dato no admite nulos 1048->SQL
+                    return -5;//-5 -> Error el dato no admite nulos 1048->SQL
                 }
                 
             }
@@ -154,10 +139,7 @@ public class TableOperations {
              return 0;//0 -> proceso satisfactorio
         }
         else{
-            typeData[] r_a = {new NULL(), new INTEGER("1637"), new VARCHAR("INSERT_INTO"), 
-                new VARCHAR("Error al intentar abrir el achivo, puede que este dañado o concurrencia")};
-            insert(Constants.LOG_ERRORS, r_a, true);
-            return -1637;//Error al intentar abrir el achivo, puede que este dañado o concurrencia
+            return -6;//-6 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
         }
        
         
@@ -342,7 +324,26 @@ public class TableOperations {
         
     }
     
-    
+    /**
+     * Actualiza todos los registros que cumplan con las condiciones
+     * @param pCol Columna a setear
+     * @param pValor Nuevo valor a setear
+     * @param pSchema Esquema en el que se va a trabajar
+     * @param pTable Tabla en la que se va a trabajar
+     * @param pColumnasCondiciones Columnas que se van a comparar
+     * @param pDatosCondiciones Datos que se van a comparar con los del registro
+     * @param pOpes operadores con los que se van a comparar los dato
+     * @param pTipoCondiciones condiciones un 1 es un AND, un 2 un OR
+     * @return Mayor a 0 -> Cantidad de registros actualizados
+     *         -1 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada 1216
+     *         -2 -> Error de la llave primaria el dato esta repetido
+     *         -3 -> Error la col a actualizar es referenciada en otra tabla
+     *         -4 -> Error el dato no admite nulos 1048->SQL
+     *         -5 -> Error el dato no es del tipo correspondiente 1232->SQL
+     *         -6 -> No esta la columna
+     *         -7 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
+     *         -8 -> no se encontro la tabla en la que se va a insertar
+     */
      public BTreeMap <Integer,typeData[]> joinLogic(BTreeMap<Integer,typeData[]> pDatosTable1, 
             BTreeMap<Integer,typeData[]> pDatosTable2, int pColumnaCondicionPos1,int pColumnaCondicionPos2 , ArrayList<ArrayList<Integer>> ColumnsToSelect, ArrayList<ArrayList<String>> typesToSelect,DB thedb){
         
@@ -638,26 +639,7 @@ public class TableOperations {
 
     }
     
-    /**
-     * Actualiza todos los registros que cumplan con las condiciones
-     * @param pCol Columna a setear
-     * @param pValor Nuevo valor a setear
-     * @param pSchema Esquema en el que se va a trabajar
-     * @param pTable Tabla en la que se va a trabajar
-     * @param pColumnasCondiciones Columnas que se van a comparar
-     * @param pDatosCondiciones Datos que se van a comparar con los del registro
-     * @param pOpes operadores con los que se van a comparar los dato
-     * @param pTipoCondiciones condiciones un 1 es un AND, un 2 un OR
-     * @return Mayor a 0 -> Cantidad de registros actualizados
-     *         -1216 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada 1216
-     *         -1068 -> Error de la llave primaria el dato esta repetido
-     *         -1217 -> Error la col a actualizar es referenciada en otra tabla
-     *         -1048 -> Error el dato no admite nulos 1048->SQL
-     *         -1232 -> Error el dato no es del tipo correspondiente 1232->SQL
-     *         -1072 -> No esta la columna
-     *         -1637 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
-     *         -1146 -> no se encontro la tabla en la que se va a insertar
-     */
+    
     public int update(String pCol, String pValor, String pSchema, String pTable, String[] pColumnasCondiciones,
             String[] pDatosCondiciones,String[] pOpes, int[] pTipoCondiciones){
         
@@ -665,10 +647,7 @@ public class TableOperations {
         String[] pColumns = { pCol };
         String[] pValues = { pValor };
         if(!verificarFK(pSchema, pTable, pColumns, pValues)){
-            typeData[] r_a = {new NULL(), new INTEGER("1216"), new VARCHAR("UPDATE"), 
-                new VARCHAR("El dato que se va a insertar no esta en la columna referenciada")};
-            insert(Constants.LOG_ERRORS, r_a, true);
-            return -1216;//Error en la IR, el dato que se va a insertar no esta en la columna referenciada
+            return -1;//-1 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada
         }
         
         //obtiene la metadata de la tabla
@@ -683,18 +662,12 @@ public class TableOperations {
                 String [] ope = {"="};
                 int [] condi = {};
                 if(!select(col, pSchema, pTable, col, datos, ope, condi).isEmpty()){
-                    typeData[] r_a = {new NULL(), new INTEGER("1068"), new VARCHAR("UPDATE"), 
-                        new VARCHAR("Error de la llave primaria el dato esta repetido")};
-                    insert(Constants.LOG_ERRORS, r_a, true);
-                    return -1068;//Error de la llave primaria el dato esta repetido
+                    return -2;//-2 -> Error de la llave primaria el dato esta repetido
                 }                           
             }
             
             if(!verificarREF(pSchema, pTable, pColumns)){
-                typeData[] r_a = {new NULL(), new INTEGER("1217"), new VARCHAR("UPDATE"), 
-                     new VARCHAR("Error la col a actualizar es referenciada en otra tabla")};
-                insert(Constants.LOG_ERRORS, r_a, true);
-                return -1217;
+                return -3; //-3 -> Error la col a actualizar es referenciada en otra tabla
             }
             
             File file = new File(Constants.DATABASE+pTable);
@@ -724,10 +697,7 @@ public class TableOperations {
                             if(register[j].verificarTipo(pValor)){
                                 if(pValor.equals("NULL")){
                                     if (md[2][j].equals("NOT NULL")){
-                                        typeData[] r_a = {new NULL(), new INTEGER("1048"), new VARCHAR("UPDATE"), 
-                                                new VARCHAR("Error el dato no admite nulos")};
-                                        insert(Constants.LOG_ERRORS, r_a, true);
-                                        return -1048;//Error el dato no admite nulos 1048->SQL
+                                        return -4;//-4 -> Error el dato no admite nulos 1048->SQL
                                     }
                                 }
                                 
@@ -737,10 +707,7 @@ public class TableOperations {
                                 nR++;
                             }
                             else{
-                                typeData[] r_a = {new NULL(), new INTEGER("1232"), new VARCHAR("UPDATE"), 
-                                    new VARCHAR("Error el dato no es del tipo correspondiente")};
-                                insert(Constants.LOG_ERRORS, r_a, true);
-                                return -1232;//Error el dato no es del tipo correspondiente 1232->SQL
+                                return -5;//-5 -> Error el dato no es del tipo correspondiente 1232->SQL
                             }
                             
                         }
@@ -749,24 +716,15 @@ public class TableOperations {
                     return nR;
                 }
                 else{
-                    typeData[] r_a = {new NULL(), new INTEGER("1072"), new VARCHAR("UPDATE"), 
-                        new VARCHAR("No esta la columna")};
-                    insert(Constants.LOG_ERRORS, r_a, true);
-                    return -1072;//-6 -> No esta la columna
+                    return -6;//-6 -> No esta la columna
                 }
 
             }
             catch(Exception e){
-                typeData[] r_a = {new NULL(), new INTEGER("1637"), new VARCHAR("UPDATE"), 
-                    new VARCHAR("Error al intentar abrir el achivo, puede que este dañado o concurrencia")};
-                insert(Constants.LOG_ERRORS, r_a, true);
-                return -1637;//-7 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
+                return -7;//-7 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
             }
         }
-        typeData[] r_a = {new NULL(), new INTEGER("1146"), new VARCHAR("UPDATE"), 
-            new VARCHAR("no se encontro la tabla en la que se va a insertar")};
-        insert(Constants.LOG_ERRORS, r_a, true);
-        return -1146;//-8 -> no se encontro la tabla en la que se va a insertar
+        return -8;//-8 -> no se encontro la tabla en la que se va a insertar
     }
     
     /**
@@ -778,9 +736,9 @@ public class TableOperations {
      * @param pOpes operadores con los que se van a comparar los dato
      * @param pTipoCondiciones condiciones un 1 es un AND, un 2 un OR
      * @return  Mayor a 0 -> Cantidad de registros borrados
-     *          -1217 -> Error en la IR, posee columnas referenciadas 1217
-     *          -1637 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
-     *          -1146 -> no se encontro la tabla en la que se va a insertar
+     *          -1 -> Error en la IR, posee columnas referenciadas 1217
+     *          -2 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
+     *          -3 -> no se encontro la tabla en la que se va a insertar
      */
     public int delete(String pSchema, String pTable, String[] pColumnasCondiciones,
             String[] pDatosCondiciones, String[] pOpes, int[] pTipoCondiciones){
@@ -790,10 +748,7 @@ public class TableOperations {
         if (md!=null){
 
             if(!verificarREF(pSchema, pTable, md[0])){
-                typeData[] r_a = {new NULL(), new INTEGER("1217"), new VARCHAR("UPDATE"), 
-                    new VARCHAR("Error en la IR, posee columnas referenciadas")};
-                insert(Constants.LOG_ERRORS, r_a, true);
-                return -1217;//Error en la IR, posee columnas referenciadas
+                return -1;//-1 -> Error en la IR, posee columnas referenciadas
             }
             
             File file = new File(Constants.DATABASE+pTable);
@@ -823,16 +778,10 @@ public class TableOperations {
                 
             }
             catch(Exception e){
-                typeData[] r_a = {new NULL(), new INTEGER("1637"), new VARCHAR("UPDATE"), 
-                    new VARCHAR("Error al intentar abrir el achivo, puede que este dañado o concurrencia")};
-                insert(Constants.LOG_ERRORS, r_a, true);
-                return -1637;// Error al intentar abrir el achivo, puede que este dañado o concurrencia
+                return -2;//-2 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
             }
         }
-        typeData[] r_a = {new NULL(), new INTEGER("1146"), new VARCHAR("UPDATE"), 
-                    new VARCHAR("No existe la tabla")};
-        insert(Constants.LOG_ERRORS, r_a, true);
-        return -1146;//-3 -> no se encontro la tabla en la que se va a borrar
+        return -3;//-3 -> no se encontro la tabla en la que se va a borrar
     
     
     
@@ -1095,6 +1044,5 @@ public class TableOperations {
         return true;
     
     }
-
 }
 
