@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package RuntimeDBProcessor;
 
+import Runtime.Server.CommunicationProtocol;
 import RuntimeDBProcessor.commands.CLP.CLPCommands;
 import RuntimeDBProcessor.commands.DDL.DDLParser;
 import RuntimeDBProcessor.commands.DML.DMLParser;
@@ -23,7 +19,7 @@ public class RuntimeDB {
     private final DMLParser _dmlP = new DMLParser();
     private final CLPCommands _clp = new CLPCommands();
     JSONObject _jsonResponse ;
-    
+    private static String _json;
     TableOperations newOperation = new TableOperations();
     //newOperation.selecJoin("");
     Boolean inJoin = false;
@@ -35,11 +31,21 @@ public class RuntimeDB {
     ArrayList<String> ColumnsToSelect1 = new ArrayList<>();
     ArrayList<String> ColumnsToSelect2 = new ArrayList<>();
              
-
+    public static String getJson(){
+        return _json;
+    }
     
     
     public void CreateDB(String pDBName){
-        System.out.println(_clp.createDatabase(pDBName));    
+        int i = (_clp.createDatabase(pDBName)); 
+        CommunicationProtocol respuesta = new CommunicationProtocol();
+        if(i==0){
+            respuesta.setStatus("0", "0");
+        }
+        else{
+            respuesta.setStatus(Integer.toString(Math.abs(i)), "0");
+        }
+        _json =  respuesta.getReturnObj();
     }
         
     public void DisplayDB(String pDBName){
@@ -47,7 +53,15 @@ public class RuntimeDB {
     }
     
     public void DropDB(String pDBName){
-        _ddlP.parserDropTable(pDBName);
+        int i = _clp.DropDatabase(pDBName);
+        CommunicationProtocol respuesta = new CommunicationProtocol();
+        if(i==0){
+            respuesta.setStatus("0", "0");
+        }
+        else{
+            respuesta.setStatus(Integer.toString(Math.abs(i)), "0");
+        }
+        _json =  respuesta.getReturnObj();
     }
     
     public void GetStatus(){
@@ -70,8 +84,9 @@ public class RuntimeDB {
     }
 
     public void setDB(String pSchema){
-        System.out.println("pSchema" +pSchema);
-        _ddlP.parserSetDatabase(pSchema);
+        
+        _json = _ddlP.parserSetDatabase(pSchema);
+        
     }
 
     public void createTable(ArrayList<String> pCreateTable){
@@ -81,17 +96,17 @@ public class RuntimeDB {
             String pk = pCreateTable.get(pCreateTable.size()-1);
             pCreateTable.remove(0);
             pCreateTable.remove(pCreateTable.size()-1);
-            _ddlP.parserCreateTable(nombre, pk, pCreateTable);
+            _json = _ddlP.parserCreateTable(nombre, pk, pCreateTable);
         }
 
     }
 
     public void alterTable(ArrayList<String> pAlterTable){
-        _ddlP.parserAlterTable(pAlterTable); 
+        _json = _ddlP.parserAlterTable(pAlterTable); 
     }
         
     public void dropTable(String pTable){
-        _ddlP.parserDropTable(pTable);
+        _json = _ddlP.parserDropTable(pTable);
     }
     
     public void createIndex(ArrayList<String> pCreateIndex){
