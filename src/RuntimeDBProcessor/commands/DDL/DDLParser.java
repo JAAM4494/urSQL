@@ -15,7 +15,6 @@ import java.util.ArrayList;
 public class DDLParser {
     
     DDLCommands _ddl = new DDLCommands();
-    private final int nCreateT = 4;
     
     public String parserSetDatabase(String pSchema){
         int i = _ddl.setDatabase(pSchema);
@@ -30,42 +29,38 @@ public class DDLParser {
     }
     
     public String parserCreateTable(String pTable, String pPK, ArrayList<String> pCols){
-        
+        int nCreateT = 4;
         int largo = pCols.size();
-        if(largo%nCreateT==0){
-            int nCols = largo/nCreateT;
-            String[] cols = new String[nCols];
-            for(int i=0; i<nCols; i++){
-                String col = pCols.get(i*nCreateT+1)+"-"+pCols.get(i*nCreateT+2)+"-"+pCols.get(i*nCreateT+3);
-                cols[i] = col;
-            }  
-            int sal = _ddl.createTable(pTable, cols, pPK);
-            CommunicationProtocol respuesta = new CommunicationProtocol();
-            if(sal==0){
-                respuesta.setStatus("0", "0");
-            }
-            else{
-                respuesta.setStatus(Integer.toString(Math.abs(sal)), "0");
-            }
-            return respuesta.getReturnObj();
+        int nCols = largo/nCreateT;
+        String[] cols = new String[nCols];
+        for(int i=0; i<nCols; i++){
+            String col = pCols.get(i*nCreateT+1)+"-"+pCols.get(i*nCreateT+2)+"-"+pCols.get(i*nCreateT+3);
+            cols[i] = col;
+        }  
+        int sal = _ddl.createTable(pTable, cols, pPK);
+        CommunicationProtocol respuesta = new CommunicationProtocol();
+        if(sal==0){
+            respuesta.setStatus("0", "0");
         }
-        return null;
+        else{
+            respuesta.setStatus(Integer.toString(Math.abs(sal)), "0");
+        }
+        return respuesta.getReturnObj();
+        
+
     }
     
     public String parserAlterTable(ArrayList<String> pDatos){
         int largo = pDatos.size();
-        if(largo==nCreateT){
-            int sal = _ddl.createAlterTable(pDatos.get(0), pDatos.get(1), pDatos.get(2), pDatos.get(3));
-            CommunicationProtocol respuesta = new CommunicationProtocol();
-            if(sal==0){
-                respuesta.setStatus("0", "0");
-            }
-            else{
-                respuesta.setStatus(Integer.toString(Math.abs(sal)), "0");
-            }
-            return respuesta.getReturnObj();
+        int sal = _ddl.createAlterTable(pDatos.get(0), pDatos.get(1), pDatos.get(2), pDatos.get(3));
+        CommunicationProtocol respuesta = new CommunicationProtocol();
+        if(sal==0){
+            respuesta.setStatus("0", "0");
         }
-        return null;
+        else{
+            respuesta.setStatus(Integer.toString(Math.abs(sal)), "0");
+        }
+        return respuesta.getReturnObj();
     }
     
     public String parserDropTable(String pTable){
