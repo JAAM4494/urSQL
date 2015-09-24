@@ -1,6 +1,6 @@
 package RuntimeDBProcessor.parser;
 
-// $ANTLR 3.5.1 /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g 2015-09-23 14:55:07
+// $ANTLR 3.5.1 /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g 2015-09-24 14:00:47
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -978,7 +978,7 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = AggregateFunctions;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:279:2: ( ( 'COUNT' '(' Identifier ')' ) | 'AVERAGE' '(' Identifier ')' | 'MIN' '(' Identifier ')' | 'MAX' '(' Identifier ')' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:341:2: ( ( 'COUNT' '(' Identifier ')' ) | 'AVERAGE' '(' Identifier ')' | 'MIN' '(' Identifier ')' | 'MAX' '(' Identifier ')' )
 			int alt1=4;
 			switch ( input.LA(1) ) {
 			case 'C':
@@ -1022,10 +1022,10 @@ public class urSQLLexer extends Lexer {
 			}
 			switch (alt1) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:279:4: ( 'COUNT' '(' Identifier ')' )
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:341:4: ( 'COUNT' '(' Identifier ')' )
 					{
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:279:4: ( 'COUNT' '(' Identifier ')' )
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:279:5: 'COUNT' '(' Identifier ')'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:341:4: ( 'COUNT' '(' Identifier ')' )
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:341:5: 'COUNT' '(' Identifier ')'
 					{
 					match("COUNT"); 
 
@@ -1038,7 +1038,7 @@ public class urSQLLexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:279:35: 'AVERAGE' '(' Identifier ')'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:341:35: 'AVERAGE' '(' Identifier ')'
 					{
 					match("AVERAGE"); 
 
@@ -1049,7 +1049,7 @@ public class urSQLLexer extends Lexer {
 					}
 					break;
 				case 3 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:279:65: 'MIN' '(' Identifier ')'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:341:65: 'MIN' '(' Identifier ')'
 					{
 					match("MIN"); 
 
@@ -1060,7 +1060,7 @@ public class urSQLLexer extends Lexer {
 					}
 					break;
 				case 4 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:279:91: 'MAX' '(' Identifier ')'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:341:91: 'MAX' '(' Identifier ')'
 					{
 					match("MAX"); 
 
@@ -1086,7 +1086,7 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = Type;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:307:7: ( 'INTEGER' | 'DECIMAL' '(' Number ',' Number ')' | 'CHAR' '(' Number ')' | 'VARCHAR' | 'DATETIME' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:367:7: ( 'INTEGER' | 'DECIMAL' '(' Number ',' Number ')' | 'CHAR' '(' Number ')' | 'VARCHAR' | 'DATETIME' )
 			int alt2=5;
 			switch ( input.LA(1) ) {
 			case 'I':
@@ -1135,14 +1135,14 @@ public class urSQLLexer extends Lexer {
 			}
 			switch (alt2) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:308:2: 'INTEGER'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:368:2: 'INTEGER'
 					{
 					match("INTEGER"); 
 
 					}
 					break;
 				case 2 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:308:14: 'DECIMAL' '(' Number ',' Number ')'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:368:14: 'DECIMAL' '(' Number ',' Number ')'
 					{
 					match("DECIMAL"); 
 
@@ -1156,7 +1156,7 @@ public class urSQLLexer extends Lexer {
 					}
 					break;
 				case 3 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:308:51: 'CHAR' '(' Number ')'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:368:51: 'CHAR' '(' Number ')'
 					{
 					match("CHAR"); 
 
@@ -1167,14 +1167,14 @@ public class urSQLLexer extends Lexer {
 					}
 					break;
 				case 4 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:308:75: 'VARCHAR'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:368:75: 'VARCHAR'
 					{
 					match("VARCHAR"); 
 
 					}
 					break;
 				case 5 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:308:86: 'DATETIME'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:368:86: 'DATETIME'
 					{
 					match("DATETIME"); 
 
@@ -1202,7 +1202,7 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = Nullability;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:316:2: ( 'NULL' | 'NOT NULL' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:376:2: ( 'NULL' | 'NOT NULL' )
 			int alt3=2;
 			int LA3_0 = input.LA(1);
 			if ( (LA3_0=='N') ) {
@@ -1236,14 +1236,14 @@ public class urSQLLexer extends Lexer {
 
 			switch (alt3) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:316:4: 'NULL'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:376:4: 'NULL'
 					{
 					match("NULL"); 
 
 					}
 					break;
 				case 2 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:316:12: 'NOT NULL'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:376:12: 'NOT NULL'
 					{
 					match("NOT NULL"); 
 
@@ -1265,7 +1265,7 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = LogicToken;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:328:2: ( 'AND' | 'OR' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:388:2: ( 'AND' | 'OR' )
 			int alt4=2;
 			int LA4_0 = input.LA(1);
 			if ( (LA4_0=='A') ) {
@@ -1283,14 +1283,14 @@ public class urSQLLexer extends Lexer {
 
 			switch (alt4) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:328:4: 'AND'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:388:4: 'AND'
 					{
 					match("AND"); 
 
 					}
 					break;
 				case 2 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:328:12: 'OR'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:388:12: 'OR'
 					{
 					match("OR"); 
 
@@ -1312,12 +1312,12 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = Identifier;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:331:3: ( LETTER ( LETTER | DIGIT )* )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:331:6: LETTER ( LETTER | DIGIT )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:391:3: ( LETTER ( LETTER | DIGIT )* )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:391:6: LETTER ( LETTER | DIGIT )*
 			{
 			mLETTER(); 
 
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:331:13: ( LETTER | DIGIT )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:391:13: ( LETTER | DIGIT )*
 			loop5:
 			while (true) {
 				int alt5=2;
@@ -1362,10 +1362,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = Number;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:332:8: ( ( DIGIT )* )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:333:3: ( DIGIT )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:392:8: ( ( DIGIT )* )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:393:3: ( DIGIT )*
 			{
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:333:3: ( DIGIT )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:393:3: ( DIGIT )*
 			loop6:
 			while (true) {
 				int alt6=2;
@@ -1408,7 +1408,7 @@ public class urSQLLexer extends Lexer {
 	// $ANTLR start "LETTER"
 	public final void mLETTER() throws RecognitionException {
 		try {
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:335:17: ( ( 'a' .. 'z' | 'A' .. 'Z' ) )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:395:17: ( ( 'a' .. 'z' | 'A' .. 'Z' ) )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:
 			{
 			if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
@@ -1431,7 +1431,7 @@ public class urSQLLexer extends Lexer {
 	// $ANTLR start "DIGIT"
 	public final void mDIGIT() throws RecognitionException {
 		try {
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:336:16: ( '0' .. '9' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:396:16: ( '0' .. '9' )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:
 			{
 			if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
@@ -1456,10 +1456,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = WS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:338:4: ( ( ' ' | '\\n' | '\\t' )+ )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:338:6: ( ' ' | '\\n' | '\\t' )+
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:398:4: ( ( ' ' | '\\n' | '\\t' )+ )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:398:6: ( ' ' | '\\n' | '\\t' )+
 			{
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:338:6: ( ' ' | '\\n' | '\\t' )+
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:398:6: ( ' ' | '\\n' | '\\t' )+
 			int cnt7=0;
 			loop7:
 			while (true) {
