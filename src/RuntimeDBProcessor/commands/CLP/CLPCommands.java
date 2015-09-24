@@ -25,10 +25,10 @@ public class CLPCommands {
             typeData[] tp = {new VARCHAR(pDBName)};
             t.insert(Constants.DB, tp, false);
             typeData[] r1 = {new VARCHAR("CREATE_DATABASE"), new VARCHAR(pDBName), 
-                    new VARCHAR("Correct"), new NULL()};
+                    new VARCHAR("Correct")};
             t.insert(Constants.HISTORY_CATALOG, r1, false);
             String[] cols1 = {"tableFK-VARCHAR-NOT NULL", "colFK-VARCHAR-NOT NULL", "tableREF-VARCHAR-NOT NULL", "colREF-VARCHAR-NOT NULL"};
-            String[] cols2 = {"Comando-VARCHAR-NOT NULL", "Argumento-VARCHAR-NOT NULL", "Estado-VARCHAR-NOT NULL", "Error-VARCHAR-NULL"};
+            String[] cols2 = {"Comando-VARCHAR-NOT NULL", "Argumento-VARCHAR-NOT NULL", "Estado-VARCHAR-NOT NULL"};
             String[] cols3 = {"Id-INTEGER-NOT NULL", "Error-VARCHAR-NOT NULL", "Comando-VARCHAR-NOT NULL", "Descrip-VARCHAR-NULL"};
             t.updateMETADATA(Constants.CONSTRAIT_CATALOG, pDBName, cols1, ""); 
             t.updateMETADATA(Constants.HISTORY_CATALOG, pDBName, cols2, "");
@@ -40,7 +40,7 @@ public class CLPCommands {
                 new VARCHAR("La base de datos ya existe")};
         t.insert(Constants.LOG_ERRORS, r_a, true);
         typeData[] r1 = {new VARCHAR("CREATE_DATABASE"), new VARCHAR(pDBName), 
-                new VARCHAR("Error"), new VARCHAR(Integer.toString(t.getTail()))};
+                new VARCHAR("Error "+Integer.toString(TableOperations.getTail()))};
         t.insert(Constants.HISTORY_CATALOG, r1, false);
         return -1007;
         
@@ -55,7 +55,7 @@ public class CLPCommands {
         TableOperations t = new TableOperations();
         if(t.borrarDatabase(pDBName)){
             typeData[] r1 = {new VARCHAR("DROP_DATABASE"), new VARCHAR(pDBName), 
-                    new VARCHAR("Correct"), new NULL()};
+                    new VARCHAR("Correct")};
             t.insert(Constants.HISTORY_CATALOG, r1, false);
             return 0;
         }
@@ -63,7 +63,7 @@ public class CLPCommands {
                 new VARCHAR("La base de datos no existe")};
         t.insert(Constants.LOG_ERRORS, r_a, true);
         typeData[] r1 = {new VARCHAR("CREATE_DATABASE"), new VARCHAR(pDBName), 
-                new VARCHAR("Error"), new VARCHAR(Integer.toString(t.getTail()))};
+                new VARCHAR("Error "+Integer.toString(TableOperations.getTail()))};
         t.insert(Constants.HISTORY_CATALOG, r1, false);
         return -1008;
         

@@ -27,14 +27,14 @@ public class DDLCommands {
         TableOperations t = new TableOperations();
         if(!t.verificarDBRepetidas(pSchemaName)){
             _schema = pSchemaName;
-            typeData[] r1 = {new VARCHAR("SET_DATABASE"), new VARCHAR(pSchemaName), new VARCHAR("Correct"), new NULL()};
+            typeData[] r1 = {new VARCHAR("SET_DATABASE"), new VARCHAR(pSchemaName), new VARCHAR("Correct")};
             t.insert(Constants.HISTORY_CATALOG, r1, false);
             return 0;//0 -> proceso correcto
         }
         else{
             typeData[] r = {new NULL(), new INTEGER("1008"), new VARCHAR("SET_DATABASE"), new VARCHAR("No existe la base de datos")};
             t.insert(Constants.LOG_ERRORS, r, true);
-            typeData[] r1 = {new VARCHAR("SET_DATABASE"), new VARCHAR(pSchemaName), new VARCHAR("Error"), new VARCHAR(Integer.toString(t.getTail()))};
+            typeData[] r1 = {new VARCHAR("SET_DATABASE"), new VARCHAR(pSchemaName), new VARCHAR("Error "+Integer.toString(TableOperations.getTail()))};
             t.insert(Constants.HISTORY_CATALOG, r1, false);
             return -1008;
         }
@@ -75,7 +75,7 @@ public class DDLCommands {
         
         //Si la tabla se inserta correctamente en la metadata
         if(bool){
-            typeData[] r1 = {new VARCHAR("CREATE_TABLE"), new VARCHAR(pTable), new VARCHAR("Correct"), new NULL()};
+            typeData[] r1 = {new VARCHAR("CREATE_TABLE"), new VARCHAR(pTable), new VARCHAR("Correct")};
             t.insert(Constants.HISTORY_CATALOG, r1, false);
         }
         
@@ -84,14 +84,14 @@ public class DDLCommands {
             //PONER ERROR QUE ES EN VERDAD
             typeData[] r = {new NULL(), new INTEGER("-1050"), new VARCHAR("CREATE_TABLE"), new VARCHAR("No se actualizo la metadata")};
             t.insert(Constants.LOG_ERRORS, r, true);//new VARCHAR(Integer.toString(t.getTail()))
-            typeData[] r1 = {new VARCHAR("CREATE_TABLE"), new VARCHAR(pTable), new VARCHAR("Error"), new VARCHAR(Integer.toString(t.getTail()))};
+            typeData[] r1 = {new VARCHAR("CREATE_TABLE"), new VARCHAR(pTable), new VARCHAR("Error "+Integer.toString(TableOperations.getTail()))};
             t.insert(Constants.HISTORY_CATALOG, r1, false);
             salida = -1050;
         }
         //Inserta en el catalogo de historia
-        typeData[] r2 = {new VARCHAR("PRIMARY_KEY"), new VARCHAR(pPrimary), new NULL(), new NULL()};
+        typeData[] r2 = {new VARCHAR("PRIMARY_KEY"), new VARCHAR(pPrimary), new NULL()};
         t.insert(Constants.HISTORY_CATALOG, r2, false);
-        typeData[] r3 = {new VARCHAR("COL"), new NULL(), new NULL(), new NULL()};
+        typeData[] r3 = {new VARCHAR("COL"), new NULL(), new NULL()};
         int largo = pColumnas.length; 
         for(int i=0;i<largo;i++){
             r3[1] = new VARCHAR(pColumnas[i]);
@@ -120,14 +120,14 @@ public class DDLCommands {
         
         boolean bool = t.deleteTableMetadata(pTable, _schema);
         if(bool){
-            typeData[] r = {new VARCHAR("DROP_TABLE"), new VARCHAR(pTable), new VARCHAR("Correct"), new NULL()};
+            typeData[] r = {new VARCHAR("DROP_TABLE"), new VARCHAR(pTable), new VARCHAR("Correct")};
             t.insert(Constants.HISTORY_CATALOG, r, false);
             return 0;//0 -> proceso satisfactorio
         }
         else{
             typeData[] r_a = {new NULL(), new INTEGER("-1"), new VARCHAR("DROP_TABLE"), new VARCHAR("La tabla no estaba en la tabla de la metadata")};
             t.insert(Constants.LOG_ERRORS, r_a, true);//new VARCHAR(Integer.toString(t.getTail()))
-            typeData[] r = {new VARCHAR("DROP_TABLE"), new VARCHAR(pTable), new VARCHAR("Error"), new VARCHAR(Integer.toString(t.getTail()))};
+            typeData[] r = {new VARCHAR("DROP_TABLE"), new VARCHAR(pTable), new VARCHAR("Error "+Integer.toString(TableOperations.getTail()))};
             t.insert(Constants.HISTORY_CATALOG, r, false);
             return -1146;//-1 -> No estaba la tabla en la metadata
         }
@@ -160,6 +160,7 @@ public class DDLCommands {
         
         //Verifica la IR
         String[] str= {};int[] in = {};String[] col = {pFKColum};
+        System.out.println(pFKColum+"  "+pTable);
         ArrayList<String[]> a1 = t.select(col, _schema, pTable, str, str, str, in);
         String[] col2 = {pREFColum};
         ArrayList<String[]> a2 = t.select(col2, _schema, pTableREF, str, str, str, in);
@@ -178,40 +179,44 @@ public class DDLCommands {
                         typeData[] r_a = {new NULL(), new INTEGER("-1215"), new VARCHAR("ALTER_TABLE"), 
                             new VARCHAR("No se puede crear la integridad referencial")};
                         t.insert(Constants.LOG_ERRORS, r_a, true);
-                        salida = -1;//-1 -> Existen datos en la columna FK que en la referenciada no
+                        salida = -1215;//-1 -> Existen datos en la columna FK que en la referenciada no
                         break;
                     }
                 }
             }
             else{
-                salida = -2;//-2 -> Nombre de tabla o columa no existen de la tabla de REF
+                
+                salida = -1072;//-2 -> Nombre de tabla o columa no existen de la tabla de REF
                 typeData[] r_a = {new NULL(), new INTEGER("-1072"), new VARCHAR("ALTER_TABLE"), 
                     new VARCHAR("Nombre de tabla o columa no existen de la tabla a referenciar")};
                 t.insert(Constants.LOG_ERRORS, r_a, true);
             }
         }
         else{
-            salida = -3;//-3 -> Nombre de tabla o columa no existen de la tabla de FK
-            typeData[] r_a = {new NULL(), new INTEGER("-1072"), new VARCHAR("ALTER_TABLE"), 
+            if(!a1.isEmpty()){
+                salida = -1072;//-3 -> Nombre de tabla o columa no existen de la tabla de FK
+                typeData[] r_a = {new NULL(), new INTEGER("-1072"), new VARCHAR("ALTER_TABLE"), 
                 new VARCHAR("Nombre de tabla o columa no existen de la tabla de en la la restriccion")};
-            t.insert(Constants.LOG_ERRORS, r_a, true);
+                t.insert(Constants.LOG_ERRORS, r_a, true);
+            }
+            
         }
         
         if (salida==0){       
-            typeData[] r1 = {new VARCHAR("ALTER_TABLE"), new VARCHAR(pTable), new VARCHAR("Correct"), new NULL()};
+            typeData[] r1 = {new VARCHAR("ALTER_TABLE"), new VARCHAR(pTable), new VARCHAR("Correct")};
             t.insert(Constants.HISTORY_CATALOG, r1, false);     
             typeData[] value = {new VARCHAR(pTable), new VARCHAR(pFKColum), new VARCHAR(pTableREF),new VARCHAR(pREFColum)};
             t.insert(Constants.CONSTRAIT_CATALOG, value, false);
         }
         else{
-            typeData[] r1 = {new VARCHAR("ALTER_TABLE"), new VARCHAR(pTable), new VARCHAR("Error"), new VARCHAR(Integer.toString(t.getTail()))};
+            typeData[] r1 = {new VARCHAR("ALTER_TABLE"), new VARCHAR(pTable), new VARCHAR("Error "+Integer.toString(TableOperations.getTail()))};
             t.insert(Constants.HISTORY_CATALOG, r1, false);
             
         }
         
-        typeData[] r2 = {new VARCHAR("ADD_CONSTRAINT"), new VARCHAR(pFKColum), new NULL(), new NULL()};
+        typeData[] r2 = {new VARCHAR("ADD_CONSTRAINT"), new VARCHAR(pFKColum), new NULL()};
         t.insert(Constants.HISTORY_CATALOG, r2, false);        
-        typeData[] r3 = {new VARCHAR("REFERENCES"), new VARCHAR(pTableREF+"."+pREFColum), new NULL(), new NULL()};
+        typeData[] r3 = {new VARCHAR("REFERENCES"), new VARCHAR(pTableREF+"."+pREFColum), new NULL()};
         t.insert(Constants.HISTORY_CATALOG, r3, false);                  
         
         return salida;
