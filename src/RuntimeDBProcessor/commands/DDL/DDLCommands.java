@@ -45,7 +45,7 @@ public class DDLCommands {
      * 
      * @return el esquema con el cual se trabaja 
      */
-    public String getSchema(){
+    public static String getSchema(){
         return _schema;
     }
 
@@ -82,7 +82,7 @@ public class DDLCommands {
         //Sino existe es un error
         else{
             //PONER ERROR QUE ES EN VERDAD
-            typeData[] r = {new NULL(), new INTEGER("-1050"), new VARCHAR("CREATE_TABLE"), new VARCHAR("No se actualizo la metadata")};
+            typeData[] r = {new NULL(), new INTEGER("-1050"), new VARCHAR("CREATE_TABLE"), new VARCHAR("La tabla ya existe")};
             t.insert(Constants.LOG_ERRORS, r, true);//new VARCHAR(Integer.toString(t.getTail()))
             typeData[] r1 = {new VARCHAR("CREATE_TABLE"), new VARCHAR(pTable), new VARCHAR("Error "+Integer.toString(TableOperations.getTail()))};
             t.insert(Constants.HISTORY_CATALOG, r1, false);
@@ -160,11 +160,13 @@ public class DDLCommands {
         
         //Verifica la IR
         String[] str= {};int[] in = {};String[] col = {pFKColum};
-        System.out.println(pFKColum+"  "+pTable);
         ArrayList<String[]> a1 = t.select(col, _schema, pTable, str, str, str, in);
         String[] col2 = {pREFColum};
-        ArrayList<String[]> a2 = t.select(col2, _schema, pTableREF, str, str, str, in);
+        
+        System.out.println(a1.isEmpty()+"  "+a1.size());
+ 
         if(!a1.isEmpty() && a1.size()>0 && a1.get(0).length == 1){
+            ArrayList<String[]> a2 = t.select(col2, _schema, pTableREF, str, str, str, in);
             if(!a2.isEmpty() && a2.size()>0 && a2.get(0).length == 1){
                 int sizeA1 = a1.size();
                 int sizeA2 = a2.size();
@@ -185,20 +187,25 @@ public class DDLCommands {
                 }
             }
             else{
+                if(t.getFlagSelect()){
+                    t.setFlagSelect();
+                    salida = -1072;//-3 -> Nombre de tabla o columa no existen de la tabla de FK
+                    typeData[] r_a = {new NULL(), new INTEGER("-1072"), new VARCHAR("ALTER_TABLE"), 
+                    new VARCHAR("No existe la columna o tabla")};
+                    t.insert(Constants.LOG_ERRORS, r_a, true);
+                }
                 
-                salida = -1072;//-2 -> Nombre de tabla o columa no existen de la tabla de REF
-                typeData[] r_a = {new NULL(), new INTEGER("-1072"), new VARCHAR("ALTER_TABLE"), 
-                    new VARCHAR("Nombre de tabla o columa no existen de la tabla a referenciar")};
-                t.insert(Constants.LOG_ERRORS, r_a, true);
             }
         }
         else{
-            if(!a1.isEmpty()){
-                salida = -1072;//-3 -> Nombre de tabla o columa no existen de la tabla de FK
-                typeData[] r_a = {new NULL(), new INTEGER("-1072"), new VARCHAR("ALTER_TABLE"), 
-                new VARCHAR("Nombre de tabla o columa no existen de la tabla de en la la restriccion")};
-                t.insert(Constants.LOG_ERRORS, r_a, true);
+            if(t.getFlagSelect()){
+                    t.setFlagSelect();
+                    salida = -1072;//-3 -> Nombre de tabla o columa no existen de la tabla de FK
+                    typeData[] r_a = {new NULL(), new INTEGER("-1072"), new VARCHAR("ALTER_TABLE"), 
+                    new VARCHAR("No existe la columna o tabla")};
+                    t.insert(Constants.LOG_ERRORS, r_a, true);
             }
+            
             
         }
         

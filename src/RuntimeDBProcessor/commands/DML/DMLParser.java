@@ -47,7 +47,15 @@ public class DMLParser {
         String[] datos = new String[nElementos];
         String[] cols = new String[nElementos];
         String[] opes = new String[nElementos];
-        int[] condis = new int[nElementos-1];
+        
+        int[] condis;
+        if (nElementos>0){
+            condis = new int[nElementos-1];
+        }
+        else{
+            condis = new int[]{};
+        }
+        
         int i;
         for(i=0; i<nElementos-1; i++){
             datos[i] = pWhere.get(i*5+1);
@@ -86,7 +94,13 @@ public class DMLParser {
         String[] datos = new String[nElementos];
         String[] cols = new String[nElementos];
         String[] opes = new String[nElementos];
-        int[] condis = new int[nElementos-1];
+        int[] condis;
+        if (nElementos>0){
+            condis = new int[nElementos-1];
+        }
+        else{
+            condis = new int[]{};
+        }
         int i;
         for(i=0; i<nElementos-1; i++){
             datos[i] = pWhere.get(i*5+1);

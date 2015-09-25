@@ -29,6 +29,7 @@ public class RuntimeDB {
     
     
     public void CreateDB(String pDBName){
+        System.out.println("CREATE DB");
         int i = (_clp.createDatabase(pDBName)); 
         CommunicationProtocol respuesta = new CommunicationProtocol();
         if(i==0){
@@ -135,6 +136,7 @@ public class RuntimeDB {
     }
         
     public void insertInto(ArrayList<String> pDelete){
+        System.out.println("INSERT");
         String table = pDelete.get(0);
         pDelete.remove(0);
         int largo = pDelete.size(), i;

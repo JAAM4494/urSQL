@@ -1,5 +1,6 @@
 package RuntimeDBProcessor.commands.CLP;
 import StoredDataManager.TableOperations;
+import java.io.File;
 import org.json.*;
 import urSQL.Constants.Constants;
 import urSQL.tipos.INTEGER;
@@ -22,6 +23,8 @@ public class CLPCommands {
     public int createDatabase(String pDBName){
         TableOperations t = new TableOperations();
         if(t.verificarDBRepetidas(pDBName)){
+            //File theDir = new File(Constants.DATABASE+pDBName);
+            //theDir.mkdir();
             typeData[] tp = {new VARCHAR(pDBName)};
             t.insert(Constants.DB, tp, false);
             typeData[] r1 = {new VARCHAR("CREATE_DATABASE"), new VARCHAR(pDBName), 

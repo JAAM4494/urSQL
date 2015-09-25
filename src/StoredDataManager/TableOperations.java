@@ -18,10 +18,20 @@ import urSQL.tipos.*;
 public class TableOperations {
     
     private static int _tail;
+    private boolean _flag=false;
     
     public static int getTail(){
         return _tail;
     }
+    
+    public boolean getFlagSelect(){
+        return _flag;
+    }
+    
+    public void setFlagSelect(){
+        _flag=false;
+    }
+    
     ArrayList<String[]> metadataTableSelected; 
     String[][] metadataTable1;
     String[][] metadataTable2;
@@ -33,6 +43,21 @@ public class TableOperations {
      * @return boolean true: si el proceso se ejecuto satisfactoriamente, false en caso contrario
      */
     public boolean insert(String pTable, typeData[] pValues, boolean pFlag){
+        /*
+        File file;
+        if(!_flag){
+            String sh = DDLCommands.getSchema();
+            if(!sh.equals("NULA")){
+                file = new File(Constants.DATABASE+sh+"\\"+pTable);
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            file = new File(pTable);
+        }
+        */
         File file = new File(Constants.DATABASE+pTable);
         try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
             BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
@@ -277,6 +302,7 @@ public class TableOperations {
             }
         }
     }
+    
     return salida;
 }
     
@@ -317,6 +343,7 @@ public class TableOperations {
 
                             }
                             if (k==larDates){
+                                _flag = true;
                                 return new ArrayList<>();
                                 //sal[j] = "NULL";
                                 //Aqui es que no se encuentra la col a seleccionar
@@ -339,7 +366,7 @@ public class TableOperations {
                 return salida;
             }
         }
-        System.out.println("n2");
+        _flag = true;
         return salida;
         
     }
@@ -1079,6 +1106,13 @@ public class TableOperations {
             
             int tail = primary.size();
             int planID=1;
+            
+            for (int i = 0; i < tail; i++) {
+                Metadata md =  primary.ceilingEntry(i).getValue();
+                if (md._typeData.equals("TABLE") && md._name.equals(pTable)){
+                    return false;
+                }
+            }
             
             if(tail>0){
                 String regiter = primary.ceilingEntry(tail-1).getValue()._id;
