@@ -31,15 +31,8 @@ public class VARCHAR extends typeData{
         
         if (pOperador.equals("=") && pDate.equals(getDate()))
             return true;
-            
-        /*
-        if (pOperador.equals("not") && date!=pDateInt)
-            return true;
-
-        if (pOperador.equals(">") && date>pDateInt)
-            return true;
-            
-        if (pOperador.equals("<") && date<pDateInt)
+           
+        if (pOperador.equals("not") && pDate.equals(getDate()))
             return true;
         
         if (pOperador.equals("like"))
@@ -47,10 +40,6 @@ public class VARCHAR extends typeData{
         
         if (pOperador.equals("is not null") && !(getDate().equals("NULL")))
             return true;  
-        
-        if (pOperador.equals("is null") && getDate().equals("NULL"))
-            return true;
-        */
         
         return false;
     }

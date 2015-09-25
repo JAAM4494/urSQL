@@ -51,9 +51,6 @@ public class INTEGER extends typeData{
         if (pOperador.equals("is not null") && !(getDate().equals("NULL")))
             return true;  
         
-        if (pOperador.equals("is null") && getDate().equals("NULL"))
-            return true;
-        
         return false;
     }
     

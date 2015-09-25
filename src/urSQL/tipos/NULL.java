@@ -29,12 +29,15 @@ public class NULL extends typeData{
     }
     @Override
     public boolean comparar(String pDate, String pOperador) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (pOperador.equals("is null"))
+            return true;  
+        
+        return false;
     }
 
     @Override
     public boolean verificarTipo(String pData) {
-        return getDate().equals(pData);
+        return pData.equals("NULL");
     }
 
     @Override
