@@ -25,7 +25,7 @@ public class RuntimePreParser {
        urSQLLexer lexer = new urSQLLexer(in);
        CommonTokenStream tokens = new CommonTokenStream(lexer);
        urSQLParser parserP = new urSQLParser(tokens);  
-       parserP.query();
+       parserP.script();
     }
     //CREATE DATABASE TecDB
     //CREATE TABLE Hola AS (Nombre VARCHAR NOT NULL,Cedula INTEGER NOT NULL, PRIMARY KEY(Nombre));
@@ -33,10 +33,10 @@ public class RuntimePreParser {
     //UPDATE hola Set col=valor WHERE a=1 OR b=2
     //INSERT INTO hola(col1, col2) VALUES (val1, val2, val3)
     public static void main(String[] args) throws RecognitionException {
-        RuntimeDB d = new RuntimeDB();
-        d.setDB("TecDB");
+       // RuntimeDB d = new RuntimeDB();
+       // d.setDB("TecDB");
         RuntimePreParser prueba = new RuntimePreParser();
-        prueba.recievemsg("ALTER TABLE Cursos ADD CONSTRAINT FOREIGN KEY (carneEst) REFERENCES Est (Carne)");  
+        prueba.recievemsg("SELECT * FROM Estudiantes");  
        
         //Funciones.recorrerArchivo2("TecDB");
        // Funciones.recorrerArchivo(Constants.HISTORY_CATALOG);

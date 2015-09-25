@@ -162,8 +162,7 @@ public class RuntimeDB {
             ArrayList<String> columnasCondiciones=new ArrayList<>();
             ArrayList<String> datosCondiciones=new ArrayList<>();
             ArrayList<String> operadorCondiciones=new ArrayList<>();
-            
-            
+             
             TableOperations newOperation = new TableOperations();
             
             //newOperation.selecJoin("");
@@ -384,7 +383,7 @@ public class RuntimeDB {
                             //System.out.println("Cold Cond"+pColCondToSend[0]);
 
 
-                            System.out.println(
+                            System.out.println("Revisando EL"+
                                     newOperation.select(coltoSelecttoSend,"TEC_DB",table1,
                                             pColCondToSend,pDatosToSend,pOpToSend,condisLogicArr).get(0)[0]);
                             

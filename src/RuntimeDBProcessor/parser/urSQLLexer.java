@@ -1,6 +1,6 @@
 package RuntimeDBProcessor.parser;
 
-// $ANTLR 3.5.1 /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g 2015-09-21 16:10:18
+// $ANTLR 3.5.1 /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g 2015-09-24 19:53:31
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -48,11 +48,16 @@ public class urSQLLexer extends Lexer {
 	public static final int T__48=48;
 	public static final int T__49=49;
 	public static final int T__50=50;
+	public static final int T__51=51;
+	public static final int T__52=52;
+	public static final int T__53=53;
+	public static final int T__54=54;
+	public static final int T__55=55;
 	public static final int AggregateFunctions=4;
-	public static final int CompareOperator=5;
-	public static final int DIGIT=6;
-	public static final int Identifier=7;
-	public static final int LETTER=8;
+	public static final int DIGIT=5;
+	public static final int Identifier=6;
+	public static final int LETTER=7;
+	public static final int LogicToken=8;
 	public static final int Nullability=9;
 	public static final int Number=10;
 	public static final int Type=11;
@@ -118,11 +123,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__15;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:4:7: ( ');' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:4:9: ');'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:4:7: ( '*' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:4:9: '*'
 			{
-			match(");"); 
-
+			match('*'); 
 			}
 
 			state.type = _type;
@@ -139,10 +143,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__16;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:5:7: ( '*' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:5:9: '*'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:5:7: ( ',' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:5:9: ','
 			{
-			match('*'); 
+			match(','); 
 			}
 
 			state.type = _type;
@@ -159,10 +163,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__17;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:6:7: ( ',' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:6:9: ','
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:6:7: ( '.' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:6:9: '.'
 			{
-			match(','); 
+			match('.'); 
 			}
 
 			state.type = _type;
@@ -179,10 +183,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__18;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:7:7: ( '.' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:7:9: '.'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:7:7: ( '<' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:7:9: '<'
 			{
-			match('.'); 
+			match('<'); 
 			}
 
 			state.type = _type;
@@ -219,11 +223,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__20;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:9:7: ( 'ADD' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:9:9: 'ADD'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:9:7: ( '>' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:9:9: '>'
 			{
-			match("ADD"); 
-
+			match('>'); 
 			}
 
 			state.type = _type;
@@ -240,10 +243,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__21;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:10:7: ( 'ALTER TABLE' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:10:9: 'ALTER TABLE'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:10:7: ( 'ADD' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:10:9: 'ADD'
 			{
-			match("ALTER TABLE"); 
+			match("ADD"); 
 
 			}
 
@@ -261,10 +264,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__22;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:11:7: ( 'AS' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:11:9: 'AS'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:11:7: ( 'ALTER TABLE' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:11:9: 'ALTER TABLE'
 			{
-			match("AS"); 
+			match("ALTER TABLE"); 
 
 			}
 
@@ -282,10 +285,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__23;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:12:7: ( 'CONSTRAINT' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:12:9: 'CONSTRAINT'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:12:7: ( 'AS' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:12:9: 'AS'
 			{
-			match("CONSTRAINT"); 
+			match("AS"); 
 
 			}
 
@@ -303,10 +306,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__24;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:13:7: ( 'CREATE DATABASE' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:13:9: 'CREATE DATABASE'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:13:7: ( 'CONSTRAINT' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:13:9: 'CONSTRAINT'
 			{
-			match("CREATE DATABASE"); 
+			match("CONSTRAINT"); 
 
 			}
 
@@ -324,10 +327,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__25;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:14:7: ( 'CREATE INDEX' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:14:9: 'CREATE INDEX'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:14:7: ( 'CREATE DATABASE' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:14:9: 'CREATE DATABASE'
 			{
-			match("CREATE INDEX"); 
+			match("CREATE DATABASE"); 
 
 			}
 
@@ -345,10 +348,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__26;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:15:7: ( 'CREATE TABLE' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:15:9: 'CREATE TABLE'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:15:7: ( 'CREATE INDEX' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:15:9: 'CREATE INDEX'
 			{
-			match("CREATE TABLE"); 
+			match("CREATE INDEX"); 
 
 			}
 
@@ -366,10 +369,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__27;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:16:7: ( 'DELETE' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:16:9: 'DELETE'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:16:7: ( 'CREATE TABLE' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:16:9: 'CREATE TABLE'
 			{
-			match("DELETE"); 
+			match("CREATE TABLE"); 
 
 			}
 
@@ -387,10 +390,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__28;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:17:7: ( 'DISPLAY DATABASE' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:17:9: 'DISPLAY DATABASE'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:17:7: ( 'DELETE' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:17:9: 'DELETE'
 			{
-			match("DISPLAY DATABASE"); 
+			match("DELETE"); 
 
 			}
 
@@ -408,10 +411,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__29;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:18:7: ( 'DROP DATABASE' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:18:9: 'DROP DATABASE'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:18:7: ( 'DISPLAY DATABASE' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:18:9: 'DISPLAY DATABASE'
 			{
-			match("DROP DATABASE"); 
+			match("DISPLAY DATABASE"); 
 
 			}
 
@@ -429,10 +432,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__30;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:19:7: ( 'DROP TABLE' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:19:9: 'DROP TABLE'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:19:7: ( 'DROP DATABASE' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:19:9: 'DROP DATABASE'
 			{
-			match("DROP TABLE"); 
+			match("DROP DATABASE"); 
 
 			}
 
@@ -450,10 +453,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__31;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:20:7: ( 'FOR JSON' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:20:9: 'FOR JSON'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:20:7: ( 'DROP TABLE' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:20:9: 'DROP TABLE'
 			{
-			match("FOR JSON"); 
+			match("DROP TABLE"); 
 
 			}
 
@@ -471,10 +474,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__32;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:21:7: ( 'FOR XML' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:21:9: 'FOR XML'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:21:7: ( 'FOR JSON' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:21:9: 'FOR JSON'
 			{
-			match("FOR XML"); 
+			match("FOR JSON"); 
 
 			}
 
@@ -492,10 +495,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__33;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:22:7: ( 'FOREIGN KEY' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:22:9: 'FOREIGN KEY'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:22:7: ( 'FOR XML' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:22:9: 'FOR XML'
 			{
-			match("FOREIGN KEY"); 
+			match("FOR XML"); 
 
 			}
 
@@ -513,10 +516,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__34;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:23:7: ( 'FROM' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:23:9: 'FROM'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:23:7: ( 'FOREIGN KEY' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:23:9: 'FOREIGN KEY'
 			{
-			match("FROM"); 
+			match("FOREIGN KEY"); 
 
 			}
 
@@ -534,10 +537,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__35;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:24:7: ( 'GROUP BY' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:24:9: 'GROUP BY'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:24:7: ( 'FROM' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:24:9: 'FROM'
 			{
-			match("GROUP BY"); 
+			match("FROM"); 
 
 			}
 
@@ -555,10 +558,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__36;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:25:7: ( 'INSERT' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:25:9: 'INSERT'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:25:7: ( 'GROUP BY' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:25:9: 'GROUP BY'
 			{
-			match("INSERT"); 
+			match("GROUP BY"); 
 
 			}
 
@@ -576,10 +579,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__37;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:26:7: ( 'INTO' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:26:9: 'INTO'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:26:7: ( 'INSERT' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:26:9: 'INSERT'
 			{
-			match("INTO"); 
+			match("INSERT"); 
 
 			}
 
@@ -597,10 +600,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__38;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:27:7: ( 'JOIN' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:27:9: 'JOIN'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:27:7: ( 'INTO' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:27:9: 'INTO'
 			{
-			match("JOIN"); 
+			match("INTO"); 
 
 			}
 
@@ -618,10 +621,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__39;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:28:7: ( 'LIST DATABASES' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:28:9: 'LIST DATABASES'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:28:7: ( 'JOIN' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:28:9: 'JOIN'
 			{
-			match("LIST DATABASES"); 
+			match("JOIN"); 
 
 			}
 
@@ -639,10 +642,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__40;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:29:7: ( 'ON' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:29:9: 'ON'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:29:7: ( 'LIST DATABASES' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:29:9: 'LIST DATABASES'
 			{
-			match("ON"); 
+			match("LIST DATABASES"); 
 
 			}
 
@@ -660,10 +663,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__41;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:30:7: ( 'PRIMARY KEY(' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:30:9: 'PRIMARY KEY('
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:30:7: ( 'ON' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:30:9: 'ON'
 			{
-			match("PRIMARY KEY("); 
+			match("ON"); 
 
 			}
 
@@ -681,10 +684,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__42;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:31:7: ( 'REFERENCES' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:31:9: 'REFERENCES'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:31:7: ( 'PRIMARY KEY(' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:31:9: 'PRIMARY KEY('
 			{
-			match("REFERENCES"); 
+			match("PRIMARY KEY("); 
 
 			}
 
@@ -702,10 +705,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__43;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:32:7: ( 'SELECT' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:32:9: 'SELECT'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:32:7: ( 'REFERENCES' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:32:9: 'REFERENCES'
 			{
-			match("SELECT"); 
+			match("REFERENCES"); 
 
 			}
 
@@ -723,10 +726,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__44;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:33:7: ( 'SET DATABASE' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:33:9: 'SET DATABASE'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:33:7: ( 'SELECT' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:33:9: 'SELECT'
 			{
-			match("SET DATABASE"); 
+			match("SELECT"); 
 
 			}
 
@@ -744,10 +747,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__45;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:34:7: ( 'SET' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:34:9: 'SET'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:34:7: ( 'SET DATABASE' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:34:9: 'SET DATABASE'
 			{
-			match("SET"); 
+			match("SET DATABASE"); 
 
 			}
 
@@ -807,10 +810,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__48;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:37:7: ( 'UPDATE' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:37:9: 'UPDATE'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:37:7: ( 'Set' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:37:9: 'Set'
 			{
-			match("UPDATE"); 
+			match("Set"); 
 
 			}
 
@@ -828,10 +831,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__49;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:38:7: ( 'VALUES' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:38:9: 'VALUES'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:38:7: ( 'UPDATE' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:38:9: 'UPDATE'
 			{
-			match("VALUES"); 
+			match("UPDATE"); 
 
 			}
 
@@ -849,10 +852,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__50;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:39:7: ( 'WHERE' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:39:9: 'WHERE'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:39:7: ( 'VALUES' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:39:9: 'VALUES'
 			{
-			match("WHERE"); 
+			match("VALUES"); 
 
 			}
 
@@ -865,12 +868,117 @@ public class urSQLLexer extends Lexer {
 	}
 	// $ANTLR end "T__50"
 
+	// $ANTLR start "T__51"
+	public final void mT__51() throws RecognitionException {
+		try {
+			int _type = T__51;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:40:7: ( 'WHERE' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:40:9: 'WHERE'
+			{
+			match("WHERE"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__51"
+
+	// $ANTLR start "T__52"
+	public final void mT__52() throws RecognitionException {
+		try {
+			int _type = T__52;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:41:7: ( 'is not null' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:41:9: 'is not null'
+			{
+			match("is not null"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__52"
+
+	// $ANTLR start "T__53"
+	public final void mT__53() throws RecognitionException {
+		try {
+			int _type = T__53;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:42:7: ( 'is null' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:42:9: 'is null'
+			{
+			match("is null"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__53"
+
+	// $ANTLR start "T__54"
+	public final void mT__54() throws RecognitionException {
+		try {
+			int _type = T__54;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:43:7: ( 'like' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:43:9: 'like'
+			{
+			match("like"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__54"
+
+	// $ANTLR start "T__55"
+	public final void mT__55() throws RecognitionException {
+		try {
+			int _type = T__55;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:44:7: ( 'not' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:44:9: 'not'
+			{
+			match("not"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__55"
+
 	// $ANTLR start "AggregateFunctions"
 	public final void mAggregateFunctions() throws RecognitionException {
 		try {
 			int _type = AggregateFunctions;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:131:2: ( ( 'COUNT' '(' Identifier ')' ) | 'AVERAGE' '(' Identifier ')' | 'MIN' '(' Identifier ')' | 'MAX' '(' Identifier ')' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:346:2: ( ( 'COUNT' '(' Identifier ')' ) | 'AVERAGE' '(' Identifier ')' | 'MIN' '(' Identifier ')' | 'MAX' '(' Identifier ')' )
 			int alt1=4;
 			switch ( input.LA(1) ) {
 			case 'C':
@@ -914,10 +1022,10 @@ public class urSQLLexer extends Lexer {
 			}
 			switch (alt1) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:131:4: ( 'COUNT' '(' Identifier ')' )
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:346:4: ( 'COUNT' '(' Identifier ')' )
 					{
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:131:4: ( 'COUNT' '(' Identifier ')' )
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:131:5: 'COUNT' '(' Identifier ')'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:346:4: ( 'COUNT' '(' Identifier ')' )
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:346:5: 'COUNT' '(' Identifier ')'
 					{
 					match("COUNT"); 
 
@@ -930,7 +1038,7 @@ public class urSQLLexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:131:35: 'AVERAGE' '(' Identifier ')'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:346:35: 'AVERAGE' '(' Identifier ')'
 					{
 					match("AVERAGE"); 
 
@@ -941,7 +1049,7 @@ public class urSQLLexer extends Lexer {
 					}
 					break;
 				case 3 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:131:65: 'MIN' '(' Identifier ')'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:346:65: 'MIN' '(' Identifier ')'
 					{
 					match("MIN"); 
 
@@ -952,7 +1060,7 @@ public class urSQLLexer extends Lexer {
 					}
 					break;
 				case 4 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:131:91: 'MAX' '(' Identifier ')'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:346:91: 'MAX' '(' Identifier ')'
 					{
 					match("MAX"); 
 
@@ -978,7 +1086,7 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = Type;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:154:7: ( 'INTEGER' | 'DECIMAL' '(' Number ',' Number ')' | 'CHAR' '(' Number ')' | 'VARCHAR' | 'DATETIME' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:372:7: ( 'INTEGER' | 'DECIMAL' '(' Number ',' Number ')' | 'CHAR' '(' Number ')' | 'VARCHAR' | 'DATETIME' )
 			int alt2=5;
 			switch ( input.LA(1) ) {
 			case 'I':
@@ -1027,14 +1135,14 @@ public class urSQLLexer extends Lexer {
 			}
 			switch (alt2) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:155:2: 'INTEGER'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:373:2: 'INTEGER'
 					{
 					match("INTEGER"); 
 
 					}
 					break;
 				case 2 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:155:14: 'DECIMAL' '(' Number ',' Number ')'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:373:14: 'DECIMAL' '(' Number ',' Number ')'
 					{
 					match("DECIMAL"); 
 
@@ -1048,7 +1156,7 @@ public class urSQLLexer extends Lexer {
 					}
 					break;
 				case 3 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:155:51: 'CHAR' '(' Number ')'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:373:51: 'CHAR' '(' Number ')'
 					{
 					match("CHAR"); 
 
@@ -1059,14 +1167,14 @@ public class urSQLLexer extends Lexer {
 					}
 					break;
 				case 4 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:155:75: 'VARCHAR'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:373:75: 'VARCHAR'
 					{
 					match("VARCHAR"); 
 
 					}
 					break;
 				case 5 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:155:86: 'DATETIME'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:373:86: 'DATETIME'
 					{
 					match("DATETIME"); 
 
@@ -1094,7 +1202,7 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = Nullability;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:163:2: ( 'NULL' | 'NOT NULL' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:381:2: ( 'NULL' | 'NOT NULL' )
 			int alt3=2;
 			int LA3_0 = input.LA(1);
 			if ( (LA3_0=='N') ) {
@@ -1128,14 +1236,14 @@ public class urSQLLexer extends Lexer {
 
 			switch (alt3) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:163:4: 'NULL'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:381:4: 'NULL'
 					{
 					match("NULL"); 
 
 					}
 					break;
 				case 2 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:163:12: 'NOT NULL'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:381:12: 'NOT NULL'
 					{
 					match("NOT NULL"); 
 
@@ -1152,166 +1260,39 @@ public class urSQLLexer extends Lexer {
 	}
 	// $ANTLR end "Nullability"
 
-	// $ANTLR start "CompareOperator"
-	public final void mCompareOperator() throws RecognitionException {
+	// $ANTLR start "LogicToken"
+	public final void mLogicToken() throws RecognitionException {
 		try {
-			int _type = CompareOperator;
+			int _type = LogicToken;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:173:2: ( '>' | '<' | '=' | 'like' | 'not' | 'is null' | 'is not null' )
-			int alt4=7;
-			switch ( input.LA(1) ) {
-			case '>':
-				{
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:393:2: ( 'AND' | 'OR' )
+			int alt4=2;
+			int LA4_0 = input.LA(1);
+			if ( (LA4_0=='A') ) {
 				alt4=1;
-				}
-				break;
-			case '<':
-				{
+			}
+			else if ( (LA4_0=='O') ) {
 				alt4=2;
-				}
-				break;
-			case '=':
-				{
-				alt4=3;
-				}
-				break;
-			case 'l':
-				{
-				alt4=4;
-				}
-				break;
-			case 'n':
-				{
-				alt4=5;
-				}
-				break;
-			case 'i':
-				{
-				int LA4_6 = input.LA(2);
-				if ( (LA4_6=='s') ) {
-					int LA4_7 = input.LA(3);
-					if ( (LA4_7==' ') ) {
-						int LA4_8 = input.LA(4);
-						if ( (LA4_8=='n') ) {
-							int LA4_9 = input.LA(5);
-							if ( (LA4_9=='u') ) {
-								alt4=6;
-							}
-							else if ( (LA4_9=='o') ) {
-								alt4=7;
-							}
+			}
 
-							else {
-								int nvaeMark = input.mark();
-								try {
-									for (int nvaeConsume = 0; nvaeConsume < 5 - 1; nvaeConsume++) {
-										input.consume();
-									}
-									NoViableAltException nvae =
-										new NoViableAltException("", 4, 9, input);
-									throw nvae;
-								} finally {
-									input.rewind(nvaeMark);
-								}
-							}
-
-						}
-
-						else {
-							int nvaeMark = input.mark();
-							try {
-								for (int nvaeConsume = 0; nvaeConsume < 4 - 1; nvaeConsume++) {
-									input.consume();
-								}
-								NoViableAltException nvae =
-									new NoViableAltException("", 4, 8, input);
-								throw nvae;
-							} finally {
-								input.rewind(nvaeMark);
-							}
-						}
-
-					}
-
-					else {
-						int nvaeMark = input.mark();
-						try {
-							for (int nvaeConsume = 0; nvaeConsume < 3 - 1; nvaeConsume++) {
-								input.consume();
-							}
-							NoViableAltException nvae =
-								new NoViableAltException("", 4, 7, input);
-							throw nvae;
-						} finally {
-							input.rewind(nvaeMark);
-						}
-					}
-
-				}
-
-				else {
-					int nvaeMark = input.mark();
-					try {
-						input.consume();
-						NoViableAltException nvae =
-							new NoViableAltException("", 4, 6, input);
-						throw nvae;
-					} finally {
-						input.rewind(nvaeMark);
-					}
-				}
-
-				}
-				break;
-			default:
+			else {
 				NoViableAltException nvae =
 					new NoViableAltException("", 4, 0, input);
 				throw nvae;
 			}
+
 			switch (alt4) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:173:4: '>'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:393:4: 'AND'
 					{
-					match('>'); 
+					match("AND"); 
+
 					}
 					break;
 				case 2 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:173:8: '<'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:393:12: 'OR'
 					{
-					match('<'); 
-					}
-					break;
-				case 3 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:173:14: '='
-					{
-					match('='); 
-					}
-					break;
-				case 4 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:173:20: 'like'
-					{
-					match("like"); 
-
-					}
-					break;
-				case 5 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:173:29: 'not'
-					{
-					match("not"); 
-
-					}
-					break;
-				case 6 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:173:37: 'is null'
-					{
-					match("is null"); 
-
-					}
-					break;
-				case 7 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:173:49: 'is not null'
-					{
-					match("is not null"); 
+					match("OR"); 
 
 					}
 					break;
@@ -1324,19 +1305,19 @@ public class urSQLLexer extends Lexer {
 			// do for sure before leaving
 		}
 	}
-	// $ANTLR end "CompareOperator"
+	// $ANTLR end "LogicToken"
 
 	// $ANTLR start "Identifier"
 	public final void mIdentifier() throws RecognitionException {
 		try {
 			int _type = Identifier;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:176:3: ( LETTER ( LETTER | DIGIT )* )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:176:6: LETTER ( LETTER | DIGIT )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:396:3: ( LETTER ( LETTER | DIGIT )* )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:396:6: LETTER ( LETTER | DIGIT )*
 			{
 			mLETTER(); 
 
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:176:13: ( LETTER | DIGIT )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:396:13: ( LETTER | DIGIT )*
 			loop5:
 			while (true) {
 				int alt5=2;
@@ -1381,10 +1362,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = Number;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:177:8: ( ( DIGIT )* )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:178:3: ( DIGIT )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:397:8: ( ( DIGIT )* )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:398:3: ( DIGIT )*
 			{
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:178:3: ( DIGIT )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:398:3: ( DIGIT )*
 			loop6:
 			while (true) {
 				int alt6=2;
@@ -1427,7 +1408,7 @@ public class urSQLLexer extends Lexer {
 	// $ANTLR start "LETTER"
 	public final void mLETTER() throws RecognitionException {
 		try {
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:180:17: ( ( 'a' .. 'z' | 'A' .. 'Z' ) )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:400:17: ( ( 'a' .. 'z' | 'A' .. 'Z' ) )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:
 			{
 			if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
@@ -1450,7 +1431,7 @@ public class urSQLLexer extends Lexer {
 	// $ANTLR start "DIGIT"
 	public final void mDIGIT() throws RecognitionException {
 		try {
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:181:16: ( '0' .. '9' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:401:16: ( '0' .. '9' )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:
 			{
 			if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
@@ -1475,16 +1456,16 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = WS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:183:4: ( ( ' ' | '\\t' )+ )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:183:6: ( ' ' | '\\t' )+
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:403:4: ( ( ' ' | '\\n' | '\\t' )+ )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:403:6: ( ' ' | '\\n' | '\\t' )+
 			{
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:183:6: ( ' ' | '\\t' )+
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:403:6: ( ' ' | '\\n' | '\\t' )+
 			int cnt7=0;
 			loop7:
 			while (true) {
 				int alt7=2;
 				int LA7_0 = input.LA(1);
-				if ( (LA7_0=='\t'||LA7_0==' ') ) {
+				if ( ((LA7_0 >= '\t' && LA7_0 <= '\n')||LA7_0==' ') ) {
 					alt7=1;
 				}
 
@@ -1492,7 +1473,7 @@ public class urSQLLexer extends Lexer {
 				case 1 :
 					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:
 					{
-					if ( input.LA(1)=='\t'||input.LA(1)==' ' ) {
+					if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)==' ' ) {
 						input.consume();
 					}
 					else {
@@ -1525,8 +1506,8 @@ public class urSQLLexer extends Lexer {
 
 	@Override
 	public void mTokens() throws RecognitionException {
-		// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:8: ( T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | AggregateFunctions | Type | Nullability | CompareOperator | Identifier | Number | WS )
-		int alt8=45;
+		// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:8: ( T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | AggregateFunctions | Type | Nullability | LogicToken | Identifier | Number | WS )
+		int alt8=50;
 		alt8 = dfa8.predict(input);
 		switch (alt8) {
 			case 1 :
@@ -1796,49 +1777,84 @@ public class urSQLLexer extends Lexer {
 				}
 				break;
 			case 39 :
-				// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:238: AggregateFunctions
+				// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:238: T__51
+				{
+				mT__51(); 
+
+				}
+				break;
+			case 40 :
+				// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:244: T__52
+				{
+				mT__52(); 
+
+				}
+				break;
+			case 41 :
+				// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:250: T__53
+				{
+				mT__53(); 
+
+				}
+				break;
+			case 42 :
+				// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:256: T__54
+				{
+				mT__54(); 
+
+				}
+				break;
+			case 43 :
+				// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:262: T__55
+				{
+				mT__55(); 
+
+				}
+				break;
+			case 44 :
+				// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:268: AggregateFunctions
 				{
 				mAggregateFunctions(); 
 
 				}
 				break;
-			case 40 :
-				// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:257: Type
+			case 45 :
+				// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:287: Type
 				{
 				mType(); 
 
 				}
 				break;
-			case 41 :
-				// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:262: Nullability
+			case 46 :
+				// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:292: Nullability
 				{
 				mNullability(); 
 
 				}
 				break;
-			case 42 :
-				// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:274: CompareOperator
+			case 47 :
+				// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:304: LogicToken
 				{
-				mCompareOperator(); 
+				mLogicToken(); 
 
 				}
 				break;
-			case 43 :
-				// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:290: Identifier
+			case 48 :
+				// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:315: Identifier
 				{
 				mIdentifier(); 
 
 				}
 				break;
-			case 44 :
-				// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:301: Number
+			case 49 :
+				// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:326: Number
 				{
 				mNumber(); 
 
 				}
 				break;
-			case 45 :
-				// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:308: WS
+			case 50 :
+				// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:1:333: WS
 				{
 				mWS(); 
 
@@ -1851,287 +1867,297 @@ public class urSQLLexer extends Lexer {
 
 	protected DFA8 dfa8 = new DFA8(this);
 	static final String DFA8_eotS =
-		"\1\35\1\uffff\1\40\4\uffff\21\34\1\uffff\3\34\6\uffff\2\34\1\104\16\34"+
-		"\1\126\16\34\1\147\1\34\1\uffff\21\34\1\uffff\3\34\1\u0080\13\34\1\30"+
-		"\1\uffff\13\34\1\uffff\1\34\1\u0099\2\34\1\u009c\1\34\1\u009e\4\34\2\uffff"+
-		"\1\34\1\u00a4\4\34\1\uffff\1\u0089\1\uffff\1\30\5\34\1\uffff\3\34\1\uffff"+
-		"\1\34\2\uffff\1\34\1\uffff\2\34\1\uffff\1\34\2\uffff\3\34\1\u00ba\1\uffff"+
-		"\3\34\1\u00be\1\uffff\3\34\1\u00c2\2\34\2\uffff\2\34\1\uffff\1\u00c7\3"+
-		"\34\1\u00cb\1\uffff\1\u00cc\1\u00cd\1\34\1\uffff\2\34\2\uffff\4\34\1\uffff"+
-		"\1\u0090\2\34\3\uffff\1\u0090\1\34\4\uffff\1\u0090\2\uffff\3\34\1\u00dc"+
-		"\1\u00dd\2\uffff";
+		"\1\36\10\uffff\24\35\3\uffff\2\35\1\105\17\35\1\130\1\131\17\35\1\154"+
+		"\1\35\1\uffff\1\35\1\131\20\35\2\uffff\6\35\1\u0087\4\35\1\uffff\1\35"+
+		"\1\u008e\4\35\1\uffff\13\35\1\uffff\1\35\1\u00a0\2\35\1\u00a3\1\35\1\u00a5"+
+		"\4\35\1\uffff\1\35\1\u00ab\1\uffff\4\35\1\uffff\1\u00b2\2\uffff\1\u0091"+
+		"\1\uffff\5\35\1\uffff\3\35\1\uffff\1\35\2\uffff\1\35\1\uffff\2\35\1\uffff"+
+		"\1\35\2\uffff\3\35\1\u00c4\1\uffff\3\35\1\u00c8\4\uffff\3\35\1\u00cc\2"+
+		"\35\2\uffff\2\35\1\uffff\1\u00d1\3\35\1\u00d5\1\uffff\1\u00d6\1\u00d7"+
+		"\1\35\1\uffff\2\35\2\uffff\4\35\1\uffff\1\u0097\2\35\3\uffff\1\u0097\1"+
+		"\35\4\uffff\1\u0097\2\uffff\3\35\1\u00e6\1\u00e7\2\uffff";
 	static final String DFA8_eofS =
-		"\u00de\uffff";
+		"\u00e8\uffff";
 	static final String DFA8_minS =
-		"\1\11\1\uffff\1\73\4\uffff\1\104\1\110\1\101\1\117\1\122\1\116\1\117\1"+
-		"\111\1\116\1\122\2\105\1\120\1\101\1\110\1\101\1\117\1\uffff\1\151\1\157"+
-		"\1\163\6\uffff\1\104\1\124\1\60\1\105\1\116\1\105\1\101\1\103\1\123\1"+
-		"\117\1\124\1\122\2\117\1\123\1\111\1\123\1\60\1\111\1\106\1\114\1\101"+
-		"\1\104\1\114\1\105\1\116\1\130\1\114\1\124\1\153\1\164\1\40\1\60\1\105"+
-		"\1\uffff\1\122\1\123\1\116\1\101\1\122\1\105\1\111\2\120\1\105\1\40\1"+
-		"\115\1\125\2\105\1\116\1\124\1\uffff\1\115\2\105\1\40\1\122\1\120\1\101"+
-		"\1\125\1\103\1\122\2\50\1\114\1\40\1\145\1\60\1\uffff\1\122\1\101\3\124"+
+		"\1\11\10\uffff\1\104\1\110\1\101\1\117\1\122\1\116\1\117\1\111\1\116\1"+
+		"\122\2\105\1\120\1\101\1\110\1\163\1\151\1\157\1\101\1\117\3\uffff\1\104"+
+		"\1\124\1\60\1\105\1\104\1\116\1\105\1\101\1\103\1\123\1\117\1\124\1\122"+
+		"\2\117\1\123\1\111\1\123\2\60\1\111\1\106\1\114\1\101\1\164\1\104\1\114"+
+		"\1\105\1\40\1\153\1\164\1\116\1\130\1\114\1\124\1\60\1\105\1\uffff\1\122"+
+		"\1\60\1\123\1\116\1\101\1\122\1\105\1\111\2\120\1\105\1\40\1\115\1\125"+
+		"\2\105\1\116\1\124\2\uffff\1\115\2\105\1\40\1\122\1\120\1\60\1\101\1\125"+
+		"\1\103\1\122\1\156\1\145\1\60\2\50\1\114\1\40\1\uffff\1\122\1\101\3\124"+
 		"\1\50\1\124\1\115\1\114\1\40\1\124\1\112\1\111\1\60\1\120\1\122\1\60\1"+
-		"\107\1\60\1\40\1\101\1\122\1\103\2\uffff\1\124\1\60\1\124\1\105\1\110"+
-		"\1\105\1\uffff\1\60\1\uffff\1\60\1\40\1\107\1\122\1\50\1\105\1\uffff\1"+
-		"\105\2\101\1\104\1\111\2\uffff\1\107\1\uffff\1\40\1\124\1\uffff\1\105"+
-		"\2\uffff\1\122\1\105\1\124\1\60\1\uffff\1\105\1\123\1\101\1\60\1\uffff"+
-		"\1\105\1\101\1\40\1\60\1\114\1\131\2\uffff\1\115\1\116\1\uffff\1\60\1"+
-		"\122\1\131\1\116\1\60\1\uffff\2\60\1\122\1\uffff\1\50\1\111\1\104\1\uffff"+
-		"\1\50\1\40\1\105\1\40\1\uffff\1\60\1\40\1\103\3\uffff\1\60\1\116\4\uffff"+
-		"\1\60\2\uffff\1\105\1\124\1\123\2\60\2\uffff";
+		"\107\1\60\1\40\1\101\1\122\1\103\1\uffff\1\124\1\60\1\uffff\1\124\1\105"+
+		"\1\110\1\105\1\157\1\60\2\uffff\1\60\1\uffff\1\40\1\107\1\122\1\50\1\105"+
+		"\1\uffff\1\105\2\101\1\104\1\111\2\uffff\1\107\1\uffff\1\40\1\124\1\uffff"+
+		"\1\105\2\uffff\1\122\1\105\1\124\1\60\1\uffff\1\105\1\123\1\101\1\60\4"+
+		"\uffff\1\105\1\101\1\40\1\60\1\114\1\131\2\uffff\1\115\1\116\1\uffff\1"+
+		"\60\1\122\1\131\1\116\1\60\1\uffff\2\60\1\122\1\uffff\1\50\1\111\1\104"+
+		"\1\uffff\1\50\1\40\1\105\1\40\1\uffff\1\60\1\40\1\103\3\uffff\1\60\1\116"+
+		"\4\uffff\1\60\2\uffff\1\105\1\124\1\123\2\60\2\uffff";
 	static final String DFA8_maxS =
-		"\1\172\1\uffff\1\73\4\uffff\1\126\4\122\1\116\1\117\1\111\1\116\1\122"+
-		"\1\105\1\124\1\120\1\101\1\110\1\111\1\125\1\uffff\1\151\1\157\1\163\6"+
-		"\uffff\1\104\1\124\1\172\1\105\1\125\1\105\1\101\1\114\1\123\1\117\1\124"+
-		"\1\122\2\117\1\124\1\111\1\123\1\172\1\111\1\106\1\124\1\117\1\104\1\122"+
-		"\1\105\1\116\1\130\1\114\1\124\1\153\1\164\1\40\1\172\1\105\1\uffff\1"+
-		"\122\1\123\1\116\1\101\1\122\1\105\1\111\2\120\2\105\1\115\1\125\1\105"+
-		"\1\117\1\116\1\124\1\uffff\1\115\2\105\1\172\1\122\1\120\1\101\1\125\1"+
-		"\103\1\122\2\50\1\114\1\40\1\145\1\172\1\uffff\1\122\1\101\3\124\1\50"+
-		"\1\124\1\115\1\114\1\40\1\124\1\130\1\111\1\172\1\120\1\122\1\172\1\107"+
-		"\1\172\1\40\1\101\1\122\1\103\2\uffff\1\124\1\172\1\124\1\105\1\110\1"+
-		"\105\1\uffff\1\172\1\uffff\1\172\1\40\1\107\1\122\1\50\1\105\1\uffff\1"+
-		"\105\2\101\1\124\1\111\2\uffff\1\107\1\uffff\1\40\1\124\1\uffff\1\105"+
-		"\2\uffff\1\122\1\105\1\124\1\172\1\uffff\1\105\1\123\1\101\1\172\1\uffff"+
-		"\1\105\1\101\1\40\1\172\1\114\1\131\2\uffff\1\115\1\116\1\uffff\1\172"+
-		"\1\122\1\131\1\116\1\172\1\uffff\2\172\1\122\1\uffff\1\50\1\111\1\124"+
-		"\1\uffff\1\50\1\40\1\105\1\40\1\uffff\1\172\1\40\1\103\3\uffff\1\172\1"+
-		"\116\4\uffff\1\172\2\uffff\1\105\1\124\1\123\2\172\2\uffff";
+		"\1\172\10\uffff\1\126\4\122\1\116\1\117\1\111\2\122\1\105\1\145\1\120"+
+		"\1\101\1\110\1\163\1\151\1\157\1\111\1\125\3\uffff\1\104\1\124\1\172\1"+
+		"\105\1\104\1\125\1\105\1\101\1\114\1\123\1\117\1\124\1\122\2\117\1\124"+
+		"\1\111\1\123\2\172\1\111\1\106\1\124\1\117\1\164\1\104\1\122\1\105\1\40"+
+		"\1\153\1\164\1\116\1\130\1\114\1\124\1\172\1\105\1\uffff\1\122\1\172\1"+
+		"\123\1\116\1\101\1\122\1\105\1\111\2\120\2\105\1\115\1\125\1\105\1\117"+
+		"\1\116\1\124\2\uffff\1\115\2\105\1\40\1\122\1\120\1\172\1\101\1\125\1"+
+		"\103\1\122\1\156\1\145\1\172\2\50\1\114\1\40\1\uffff\1\122\1\101\3\124"+
+		"\1\50\1\124\1\115\1\114\1\40\1\124\1\130\1\111\1\172\1\120\1\122\1\172"+
+		"\1\107\1\172\1\40\1\101\1\122\1\103\1\uffff\1\124\1\172\1\uffff\1\124"+
+		"\1\105\1\110\1\105\1\165\1\172\2\uffff\1\172\1\uffff\1\40\1\107\1\122"+
+		"\1\50\1\105\1\uffff\1\105\2\101\1\124\1\111\2\uffff\1\107\1\uffff\1\40"+
+		"\1\124\1\uffff\1\105\2\uffff\1\122\1\105\1\124\1\172\1\uffff\1\105\1\123"+
+		"\1\101\1\172\4\uffff\1\105\1\101\1\40\1\172\1\114\1\131\2\uffff\1\115"+
+		"\1\116\1\uffff\1\172\1\122\1\131\1\116\1\172\1\uffff\2\172\1\122\1\uffff"+
+		"\1\50\1\111\1\124\1\uffff\1\50\1\40\1\105\1\40\1\uffff\1\172\1\40\1\103"+
+		"\3\uffff\1\172\1\116\4\uffff\1\172\2\uffff\1\105\1\124\1\123\2\172\2\uffff";
 	static final String DFA8_acceptS =
-		"\1\uffff\1\1\1\uffff\1\4\1\5\1\6\1\7\21\uffff\1\52\3\uffff\1\53\1\54\1"+
-		"\55\1\3\1\2\1\7\42\uffff\1\12\21\uffff\1\34\20\uffff\1\10\27\uffff\1\40"+
-		"\1\41\6\uffff\1\47\1\uffff\1\51\6\uffff\1\50\5\uffff\1\23\1\24\1\uffff"+
-		"\1\26\2\uffff\1\31\1\uffff\1\32\1\33\4\uffff\1\43\4\uffff\1\11\6\uffff"+
-		"\1\21\1\22\2\uffff\1\27\5\uffff\1\42\3\uffff\1\46\3\uffff\1\17\4\uffff"+
-		"\1\30\3\uffff\1\37\1\44\1\45\2\uffff\1\14\1\15\1\16\1\20\1\uffff\1\25"+
-		"\1\35\5\uffff\1\13\1\36";
+		"\1\uffff\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\24\uffff\1\60\1\61\1\62\45\uffff"+
+		"\1\13\22\uffff\1\35\1\57\22\uffff\1\11\27\uffff\1\41\2\uffff\1\44\6\uffff"+
+		"\1\53\1\54\1\uffff\1\56\5\uffff\1\55\5\uffff\1\24\1\25\1\uffff\1\27\2"+
+		"\uffff\1\32\1\uffff\1\33\1\34\4\uffff\1\43\4\uffff\1\50\1\51\1\52\1\12"+
+		"\6\uffff\1\22\1\23\2\uffff\1\30\5\uffff\1\42\3\uffff\1\47\3\uffff\1\20"+
+		"\4\uffff\1\31\3\uffff\1\40\1\45\1\46\2\uffff\1\15\1\16\1\17\1\21\1\uffff"+
+		"\1\26\1\36\5\uffff\1\14\1\37";
 	static final String DFA8_specialS =
-		"\u00de\uffff}>";
+		"\u00e8\uffff}>";
 	static final String[] DFA8_transitionS = {
-			"\1\36\26\uffff\1\36\7\uffff\1\1\1\2\1\3\1\uffff\1\4\1\uffff\1\5\15\uffff"+
-			"\1\30\1\6\1\30\2\uffff\1\7\1\34\1\10\1\11\1\34\1\12\1\13\1\34\1\14\1"+
-			"\15\1\34\1\16\1\26\1\27\1\17\1\20\1\34\1\21\1\22\1\34\1\23\1\24\1\25"+
-			"\3\34\6\uffff\10\34\1\33\2\34\1\31\1\34\1\32\14\34",
-			"",
-			"\1\37",
+			"\2\37\25\uffff\1\37\7\uffff\1\1\1\2\1\3\1\uffff\1\4\1\uffff\1\5\15\uffff"+
+			"\1\6\1\7\1\10\2\uffff\1\11\1\35\1\12\1\13\1\35\1\14\1\15\1\35\1\16\1"+
+			"\17\1\35\1\20\1\33\1\34\1\21\1\22\1\35\1\23\1\24\1\35\1\25\1\26\1\27"+
+			"\3\35\6\uffff\10\35\1\30\2\35\1\31\1\35\1\32\14\35",
 			"",
 			"",
 			"",
 			"",
-			"\1\42\7\uffff\1\43\6\uffff\1\44\2\uffff\1\45",
-			"\1\50\6\uffff\1\46\2\uffff\1\47",
-			"\1\54\3\uffff\1\51\3\uffff\1\52\10\uffff\1\53",
-			"\1\55\2\uffff\1\56",
+			"",
+			"",
+			"",
+			"",
+			"\1\40\7\uffff\1\41\1\uffff\1\44\4\uffff\1\42\2\uffff\1\43",
+			"\1\47\6\uffff\1\45\2\uffff\1\46",
+			"\1\53\3\uffff\1\50\3\uffff\1\51\10\uffff\1\52",
+			"\1\54\2\uffff\1\55",
+			"\1\56",
 			"\1\57",
 			"\1\60",
 			"\1\61",
-			"\1\62",
-			"\1\63",
+			"\1\62\3\uffff\1\63",
 			"\1\64",
 			"\1\65",
-			"\1\66\16\uffff\1\67",
-			"\1\70",
+			"\1\66\16\uffff\1\67\20\uffff\1\70",
 			"\1\71",
 			"\1\72",
-			"\1\74\7\uffff\1\73",
-			"\1\76\5\uffff\1\75",
-			"",
-			"\1\77",
-			"\1\100",
-			"\1\101",
-			"",
-			"",
+			"\1\73",
+			"\1\74",
+			"\1\75",
+			"\1\76",
+			"\1\100\7\uffff\1\77",
+			"\1\102\5\uffff\1\101",
 			"",
 			"",
 			"",
-			"",
-			"\1\102",
 			"\1\103",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
-			"\1\105",
-			"\1\106\6\uffff\1\107",
-			"\1\110",
-			"\1\111",
-			"\1\113\10\uffff\1\112",
-			"\1\114",
-			"\1\115",
+			"\1\104",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
+			"\1\106",
+			"\1\107",
+			"\1\110\6\uffff\1\111",
+			"\1\112",
+			"\1\113",
+			"\1\115\10\uffff\1\114",
 			"\1\116",
 			"\1\117",
 			"\1\120",
 			"\1\121",
-			"\1\122\1\123",
-			"\1\124",
-			"\1\125",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
+			"\1\122",
+			"\1\123",
+			"\1\124\1\125",
+			"\1\126",
 			"\1\127",
-			"\1\130",
-			"\1\131\7\uffff\1\132",
-			"\1\133\15\uffff\1\134",
-			"\1\135",
-			"\1\136\5\uffff\1\137",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
+			"\1\132",
+			"\1\133",
+			"\1\134\7\uffff\1\135",
+			"\1\136\15\uffff\1\137",
 			"\1\140",
 			"\1\141",
-			"\1\142",
-			"\1\143",
+			"\1\142\5\uffff\1\143",
 			"\1\144",
 			"\1\145",
 			"\1\146",
-			"\1\30",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
+			"\1\147",
 			"\1\150",
-			"",
 			"\1\151",
 			"\1\152",
 			"\1\153",
-			"\1\154",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
 			"\1\155",
+			"",
 			"\1\156",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
 			"\1\157",
 			"\1\160",
 			"\1\161",
 			"\1\162",
-			"\1\163\44\uffff\1\164",
+			"\1\163",
+			"\1\164",
 			"\1\165",
 			"\1\166",
 			"\1\167",
-			"\1\171\11\uffff\1\170",
+			"\1\170\44\uffff\1\171",
 			"\1\172",
 			"\1\173",
-			"",
 			"\1\174",
-			"\1\175",
-			"\1\176",
-			"\1\177\17\uffff\12\34\7\uffff\32\34\6\uffff\32\34",
+			"\1\176\11\uffff\1\175",
+			"\1\177",
+			"\1\u0080",
+			"",
+			"",
 			"\1\u0081",
 			"\1\u0082",
 			"\1\u0083",
 			"\1\u0084",
 			"\1\u0085",
 			"\1\u0086",
-			"\1\u0087",
-			"\1\u0087",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
 			"\1\u0088",
 			"\1\u0089",
 			"\1\u008a",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
-			"",
 			"\1\u008b",
 			"\1\u008c",
 			"\1\u008d",
-			"\1\u008e",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
+			"\1\u008f",
 			"\1\u008f",
 			"\1\u0090",
 			"\1\u0091",
+			"",
 			"\1\u0092",
 			"\1\u0093",
 			"\1\u0094",
 			"\1\u0095",
-			"\1\u0096\15\uffff\1\u0097",
+			"\1\u0096",
+			"\1\u0097",
 			"\1\u0098",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
+			"\1\u0099",
 			"\1\u009a",
 			"\1\u009b",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
-			"\1\u009d",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
+			"\1\u009c",
+			"\1\u009d\15\uffff\1\u009e",
 			"\1\u009f",
-			"\1\u00a0",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
 			"\1\u00a1",
 			"\1\u00a2",
-			"",
-			"",
-			"\1\u00a3",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
-			"\1\u00a5",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
+			"\1\u00a4",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
 			"\1\u00a6",
 			"\1\u00a7",
 			"\1\u00a8",
-			"",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
-			"",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
 			"\1\u00a9",
-			"\1\u00aa",
-			"\1\u00ab",
-			"\1\u0087",
-			"\1\u00ac",
 			"",
+			"\1\u00aa",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
+			"",
+			"\1\u00ac",
 			"\1\u00ad",
 			"\1\u00ae",
 			"\1\u00af",
-			"\1\u00b0\17\uffff\1\u00b1",
-			"\1\u00b2",
+			"\1\u00b0\5\uffff\1\u00b1",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
 			"",
+			"",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
 			"",
 			"\1\u00b3",
-			"",
 			"\1\u00b4",
 			"\1\u00b5",
-			"",
+			"\1\u008f",
 			"\1\u00b6",
-			"",
 			"",
 			"\1\u00b7",
 			"\1\u00b8",
 			"\1\u00b9",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
-			"",
-			"\1\u00bb",
+			"\1\u00ba\17\uffff\1\u00bb",
 			"\1\u00bc",
+			"",
+			"",
 			"\1\u00bd",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
 			"",
+			"\1\u00be",
 			"\1\u00bf",
-			"\1\u00c0",
-			"\1\u00c1",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
-			"\1\u00c3",
-			"\1\u00c4",
 			"",
+			"\1\u00c0",
+			"",
+			"",
+			"\1\u00c1",
+			"\1\u00c2",
+			"\1\u00c3",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
 			"",
 			"\1\u00c5",
 			"\1\u00c6",
+			"\1\u00c7",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
 			"",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
-			"\1\u00c8",
+			"",
+			"",
+			"",
 			"\1\u00c9",
 			"\1\u00ca",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
-			"",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
+			"\1\u00cb",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
+			"\1\u00cd",
 			"\1\u00ce",
 			"",
-			"\1\u0087",
-			"\1\u00cf",
-			"\1\u00d0\4\uffff\1\u00d1\12\uffff\1\u00d2",
 			"",
-			"\1\u0090",
+			"\1\u00cf",
+			"\1\u00d0",
+			"",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
+			"\1\u00d2",
 			"\1\u00d3",
 			"\1\u00d4",
-			"\1\u00d5",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
 			"",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
-			"\1\u00d6",
-			"\1\u00d7",
-			"",
-			"",
-			"",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
 			"\1\u00d8",
 			"",
-			"",
-			"",
-			"",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
-			"",
-			"",
+			"\1\u008f",
 			"\1\u00d9",
-			"\1\u00da",
-			"\1\u00db",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
-			"\12\34\7\uffff\32\34\6\uffff\32\34",
+			"\1\u00da\4\uffff\1\u00db\12\uffff\1\u00dc",
+			"",
+			"\1\u0097",
+			"\1\u00dd",
+			"\1\u00de",
+			"\1\u00df",
+			"",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
+			"\1\u00e0",
+			"\1\u00e1",
+			"",
+			"",
+			"",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
+			"\1\u00e2",
+			"",
+			"",
+			"",
+			"",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
+			"",
+			"",
+			"\1\u00e3",
+			"\1\u00e4",
+			"\1\u00e5",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
+			"\12\35\7\uffff\32\35\6\uffff\32\35",
 			"",
 			""
 	};
@@ -2167,7 +2193,7 @@ public class urSQLLexer extends Lexer {
 		}
 		@Override
 		public String getDescription() {
-			return "1:1: Tokens : ( T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | AggregateFunctions | Type | Nullability | CompareOperator | Identifier | Number | WS );";
+			return "1:1: Tokens : ( T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | AggregateFunctions | Type | Nullability | LogicToken | Identifier | Number | WS );";
 		}
 	}
 
