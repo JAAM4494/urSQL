@@ -24,10 +24,8 @@ public class RuntimePreParser {
        ANTLRStringStream in = new ANTLRStringStream(msg);
        urSQLLexer lexer = new urSQLLexer(in);
        CommonTokenStream tokens = new CommonTokenStream(lexer);
-       urSQLParser parserP = new urSQLParser(tokens);
-       
-       parserP.script();
-       
+       urSQLParser parserP = new urSQLParser(tokens);  
+       parserP.query();
     }
     //CREATE DATABASE TecDB
     //CREATE TABLE Hola AS (Nombre VARCHAR NOT NULL,Cedula INTEGER NOT NULL, PRIMARY KEY(Nombre));
