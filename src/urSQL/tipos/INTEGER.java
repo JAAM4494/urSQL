@@ -19,66 +19,73 @@ package urSQL.tipos;
  *
  * @author Aaron Elizondo
  */
-public class INTEGER extends typeData{
+public class INTEGER extends typeData {
 
-    public INTEGER(String pDate){
+    public INTEGER(String pDate) {
         setDate(pDate);
     }
-    
-     @Override
-    public boolean comparar(String pDate, String pOperador) {
-        
-        int pDateInt = Integer.parseInt(pDate);
-        if (verificarTipo(pDate)){
-            
-            int date = Integer.parseInt(getDate());
-            
-            if (pOperador.equals(">") && date>pDateInt)
-                return true;
-            
-            if (pOperador.equals("<") && date<pDateInt)
-                return true;
-            
-            if (pOperador.equals("=") && date==pDateInt)
-                return true;
-            
-            if (pOperador.equals("not") && date!=pDateInt)
-                return true;
 
-            if (pOperador.equals("like"))
-                return false; 
-        }     
-        if (pOperador.equals("is not null") && !(getDate().equals("NULL")))
-            return true;  
-        
+    @Override
+    public boolean comparar(String pDate, String pOperador) {
+
+        int pDateInt = Integer.parseInt(pDate);
+        if (verificarTipo(pDate)) {
+
+            int date = Integer.parseInt(getDate());
+
+            if (pOperador.equals(">") && date > pDateInt) {
+                return true;
+            }
+
+            if (pOperador.equals("<") && date < pDateInt) {
+                return true;
+            }
+
+            if (pOperador.equals("=") && date == pDateInt) {
+                return true;
+            }
+
+            if (pOperador.equals("not") && date != pDateInt) {
+                return true;
+            }
+
+            if (pOperador.equals("like")) {
+                return false;
+            }
+
+            if (pOperador.equals("is not null")) {
+                return true;
+            }
+        }
+        //if (pOperador.equals("is not null") && !(getDate().equals("NULL")))
+        //    return true;  
+
         return false;
     }
-    
+
     @Override
     public boolean verificarTipo(String pDate) {
-      
+
         try {
-            if (pDate.equals("NULL"))
-                return false;
-            int a = Integer.parseInt(pDate);
+            //if (pDate.equals("NULL"))
+            //return false;
+            Integer.parseInt(pDate);
             return true;
+        } catch (Exception e) {
+            return false;
         }
-        catch(Exception e){
-         return false;     
-        }   
     }
-    
+
     @Override
     public boolean verificarTipo() {
         try {
-            if (getDate().equals("NULL"))
-                return false;
-            int a = Integer.parseInt(getDate());
+            //if (getDate().equals("NULL"))
+            //return false;
+            Integer.parseInt(getDate());
             return true;
+        } catch (Exception e) {
+            return false;
         }
-        catch(Exception e){
-         return false;     
-        }
-        
-    }    
+
+    }
 }

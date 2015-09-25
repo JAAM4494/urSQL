@@ -38,8 +38,11 @@ public class VARCHAR extends typeData{
         if (pOperador.equals("like"))
             return false;
         
-        if (pOperador.equals("is not null") && !(getDate().equals("NULL")))
-            return true;  
+        if (pOperador.equals("is not null"))
+            return true; 
+        
+        //if (pOperador.equals("is not null") && !(getDate().equals("NULL")))
+        //    return true;  
         
         return false;
     }
