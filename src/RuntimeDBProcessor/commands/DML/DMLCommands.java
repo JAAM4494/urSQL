@@ -32,22 +32,28 @@ public class DMLCommands {
               -1637 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
      */
     public int insert(String pTable, String[] pColumns, String[] pValues){ 
-        int proceso = _tableOp.insertINTO(DDLCommands.getSchema(), pTable, pColumns, pValues);
+        String schema = DDLCommands.getSchema();
+        if (schema.equals("NULL")){
+            typeData[] r = {new NULL(), new INTEGER("1046"), new VARCHAR("INSERT INTO"), new VARCHAR("No se trabaja con ninguna base de datos")};
+            _tableOp.insert(Constants.DATABASE+Constants.LOG_ERRORS, r, true);
+            return -1046;
+        }
+        int proceso = _tableOp.insertINTO(schema, pTable, pColumns, pValues);
         if(proceso==0){
             typeData[] r1 = {new VARCHAR("INSERT_INTO"), new VARCHAR(pTable), new VARCHAR("Correct")};
-            _tableOp.insert(Constants.HISTORY_CATALOG, r1, false);
+            _tableOp.insert(schema+Constants.HISTORY_CATALOG, r1, false);
         }
         else{
             
             typeData[] r1 = {new VARCHAR("INSERT_INTO"), new VARCHAR(pTable), 
                 new VARCHAR("Error "+Integer.toString(TableOperations.getTail()))};
-            _tableOp.insert(Constants.HISTORY_CATALOG, r1, false);
+            _tableOp.insert(schema+Constants.HISTORY_CATALOG, r1, false);
         }
         
         int largo = pColumns.length;
         for(int i=0; i<largo; i++){
             typeData[] r2 = {new VARCHAR("COL"), new VARCHAR(pColumns[i]+"="+pValues[i]), new NULL()};
-            _tableOp.insert(Constants.HISTORY_CATALOG, r2, false);
+            _tableOp.insert(schema+Constants.HISTORY_CATALOG, r2, false);
         }
         return proceso;
         
@@ -77,19 +83,25 @@ public class DMLCommands {
     public int updateTable(String pCol, String pValor, String pTable, String[] pColumnasCondiciones,
             String[] pDatosCondiciones,String[] pOpes, int[] pTipoCondiciones){
         
-        int salida = _tableOp.update(pCol, pValor, DDLCommands.getSchema(), pTable, pColumnasCondiciones, pDatosCondiciones, pOpes, pTipoCondiciones);
+        String schema = DDLCommands.getSchema();
+        if (schema.equals("NULL")){
+            typeData[] r = {new NULL(), new INTEGER("1046"), new VARCHAR("UPDATE"), new VARCHAR("No se trabaja con ninguna base de datos")};
+            _tableOp.insert(Constants.DATABASE+Constants.LOG_ERRORS, r, true);
+            return -1046;
+        }
+        int salida = _tableOp.update(pCol, pValor, schema, pTable, pColumnasCondiciones, pDatosCondiciones, pOpes, pTipoCondiciones);
         if (salida>0){
             typeData[] r1 = {new VARCHAR("UPDATE"), new VARCHAR(pTable), new VARCHAR("Correct")};
-             _tableOp.insert(Constants.HISTORY_CATALOG, r1, false);
+             _tableOp.insert(schema+Constants.HISTORY_CATALOG, r1, false);
         }
         else{
             typeData[] r1 = {new VARCHAR("UPDATE"), new VARCHAR(pTable), 
             new VARCHAR("Error "+Integer.toString(TableOperations.getTail()))};
-            _tableOp.insert(Constants.HISTORY_CATALOG, r1, false);
+            _tableOp.insert(schema+Constants.HISTORY_CATALOG, r1, false);
         }
         typeData[] r2 = {new VARCHAR("SET"), new VARCHAR(pCol+"="+pValor), new NULL()};
-        _tableOp.insert(Constants.HISTORY_CATALOG, r2, false);
-        updateWhere(pColumnasCondiciones, pDatosCondiciones, pOpes, pTipoCondiciones);
+        _tableOp.insert(schema+Constants.HISTORY_CATALOG, r2, false);
+        updateWhere(schema, pColumnasCondiciones, pDatosCondiciones, pOpes, pTipoCondiciones);
         return salida;
     }
     
@@ -108,20 +120,26 @@ public class DMLCommands {
     public int deleteFrom(String pTable, String[] pColumnasCondiciones,
             String[] pDatosCondiciones,String[] pOpes, int[] pTipoCondiciones){
         
-        int salida = _tableOp.delete(DDLCommands.getSchema(), pTable, pColumnasCondiciones, pDatosCondiciones, pOpes, pTipoCondiciones);
+        String schema = DDLCommands.getSchema();
+        if (schema.equals("NULL")){
+            typeData[] r = {new NULL(), new INTEGER("1046"), new VARCHAR("UPDATE"), new VARCHAR("No se trabaja con ninguna base de datos")};
+            _tableOp.insert(Constants.DATABASE+Constants.LOG_ERRORS, r, true);
+            return -1046;
+        }
+        int salida = _tableOp.delete(schema, pTable, pColumnasCondiciones, pDatosCondiciones, pOpes, pTipoCondiciones);
         if (salida>0){
             typeData[] r1 = {new VARCHAR("DELETE"), new NULL(), new VARCHAR("Correct")};
-             _tableOp.insert(Constants.HISTORY_CATALOG, r1, false);
+             _tableOp.insert(schema+Constants.HISTORY_CATALOG, r1, false);
         }
         else{
             typeData[] r1 = {new VARCHAR("DELETE"), new NULL(), 
             new VARCHAR("Error "+Integer.toString(TableOperations.getTail()))};
-            _tableOp.insert(Constants.HISTORY_CATALOG, r1, false);
+            _tableOp.insert(schema+Constants.HISTORY_CATALOG, r1, false);
         }
         
         typeData[] r2 = {new VARCHAR("FROM"), new VARCHAR(pTable), new NULL()};
-        _tableOp.insert(Constants.HISTORY_CATALOG, r2, false);
-        updateWhere(pColumnasCondiciones, pDatosCondiciones, pOpes, pTipoCondiciones);
+        _tableOp.insert(schema+Constants.HISTORY_CATALOG, r2, false);
+        updateWhere(schema, pColumnasCondiciones, pDatosCondiciones, pOpes, pTipoCondiciones);
         return salida;
     }
     
@@ -132,21 +150,21 @@ public class DMLCommands {
      * @param pOpes operadores con los que se van a comparar los dato
      * @param pTipoCondiciones condiciones un 1 es un AND, un 2 un OR
      */
-    private void updateWhere(String[] pColumnasCondiciones, String[] pDatosCondiciones,
+    private void updateWhere(String pSchema, String[] pColumnasCondiciones, String[] pDatosCondiciones,
             String[] pOpes, int[] pTipoCondiciones) {
         
         int largo = pColumnasCondiciones.length;
         if (largo>0){
             typeData[] r1 = {new VARCHAR("WHERE"), new VARCHAR(pColumnasCondiciones[0]+pOpes[0]+pDatosCondiciones[0]), new NULL()};
-            _tableOp.insert(Constants.HISTORY_CATALOG, r1, false);
+            _tableOp.insert(pSchema+Constants.HISTORY_CATALOG, r1, false);
             for (int i=1;i<largo;i++){
                 if (pTipoCondiciones[i-1]==1){
                     typeData[] r2 = {new VARCHAR("AND"), new VARCHAR(pColumnasCondiciones[i]+pOpes[i]+pDatosCondiciones[i]), new NULL()};
-                    _tableOp.insert(Constants.HISTORY_CATALOG, r2, false);
+                    _tableOp.insert(pSchema+Constants.HISTORY_CATALOG, r2, false);
                 }
                 else{
                    typeData[] r2 = {new VARCHAR("OR"), new VARCHAR(pColumnasCondiciones[i]+pOpes[i]+pDatosCondiciones[i]), new NULL()};
-                    _tableOp.insert(Constants.HISTORY_CATALOG, r2, false); 
+                    _tableOp.insert(pSchema+Constants.HISTORY_CATALOG, r2, false); 
                 }
             }
                 

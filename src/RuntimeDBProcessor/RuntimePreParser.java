@@ -8,6 +8,7 @@ package RuntimeDBProcessor;
 
 import RuntimeDBProcessor.parser.urSQLLexer;
 import RuntimeDBProcessor.parser.urSQLParser;
+import StoredDataManager.TableOperations;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
@@ -34,12 +35,14 @@ public class RuntimePreParser {
     //INSERT INTO hola(col1, col2) VALUES (val1, val2, val3)
     public static void main(String[] args) throws RecognitionException {
         RuntimeDB d = new RuntimeDB();
-        d.setDB("TecDB");
+        d.setDB("TecDB2");
         RuntimePreParser prueba = new RuntimePreParser();
-        prueba.recievemsg("CREATE TABLE Est AS (Carne INTEGER NOT NULL,Nombre VARCHAR NOT NULL, PRIMARY KEY(Carne))");  
+        prueba.recievemsg("CREATE TABLE Profes AS (idProfe INTEGER NOT NULL,Nombre VARCHAR NOT NULL, PRIMARY KEY(idProfe))");  
        
-        
-        //Funciones.recorrerArchivo2("TecDB");
+        TableOperations t = new TableOperations();
+        t.getArbolMetadata();
+        //Funciones.recorrerArchivo2(Constants.DATABASE+"TecDB\\"+Constants.METADATA);
+        //Funciones.recorrerArchivo(Constants.DATABASE+"TecDB\\Cursos");
         /*System.out.println("HISTORY CATALOG");
         Funciones.recorrerArchivo(Constants.HISTORY_CATALOG);
         System.out.println("CONSTRAIT CATALOG");

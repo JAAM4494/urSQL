@@ -1,10 +1,16 @@
 package StoredDataManager;
 
+import Runtime.Server.CommunicationProtocol;
 import SystemCatalog.Metadata;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.mapdb.BTreeKeySerializer;
 import org.mapdb.BTreeMap;
 import org.mapdb.DB;
@@ -43,22 +49,9 @@ public class TableOperations {
      * @return boolean true: si el proceso se ejecuto satisfactoriamente, false en caso contrario
      */
     public boolean insert(String pTable, typeData[] pValues, boolean pFlag){
-        /*
-        File file;
-        if(!_flag){
-            String sh = DDLCommands.getSchema();
-            if(!sh.equals("NULA")){
-                file = new File(Constants.DATABASE+sh+"\\"+pTable);
-            }
-            else{
-                return false;
-            }
-        }
-        else{
-            file = new File(pTable);
-        }
-        */
-        File file = new File(Constants.DATABASE+pTable);
+
+        File file = new File(pTable);
+        
         try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
             BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
                     .keySerializer(BTreeKeySerializer.INTEGER)
@@ -97,7 +90,7 @@ public class TableOperations {
         if(!verificarFK(pSchema, pTable, pColumns, pValues)){
             typeData[] r_a = {new NULL(), new INTEGER("1216"), new VARCHAR("INSERT_INTO"), 
                 new VARCHAR("Error en la IR, el dato que se va a insertar no esta en la columna referenciada")};
-            insert(Constants.LOG_ERRORS, r_a, true);
+            insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
             return -1216; //-1216 -> Error en la IR, el dato que se va a insertar no esta en la columna referenciada
         }
         
@@ -107,7 +100,7 @@ public class TableOperations {
         if (metadata==null){
             typeData[] r_a = {new NULL(), new INTEGER("1146"), new VARCHAR("INSERT_INTO"), 
                 new VARCHAR("La tabla no existe")};
-            insert(Constants.LOG_ERRORS, r_a, true);
+            insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
             return -1146;//-1146 -> No se encontro la tabla en la que se va a insertar
         }
         
@@ -134,7 +127,7 @@ public class TableOperations {
                         if(!ar.isEmpty()){
                             typeData[] r_a = {new NULL(), new INTEGER("1068 "), new VARCHAR("INSERT_INTO"), 
                                 new VARCHAR("Error de la llave primaria el dato esta repetido")};
-                            insert(Constants.LOG_ERRORS, r_a, true);
+                            insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
                             return -1068 ;//-3 -> Error de la llave primaria el dato esta repetido
                         }
                     }
@@ -151,10 +144,11 @@ public class TableOperations {
                     if(salida[i].verificarTipo()){
                         break;
                     }
+                    
                     else{
                         typeData[] r_a = {new NULL(), new INTEGER("1232"), new VARCHAR("INSERT_INTO"), 
                             new VARCHAR("Error el dato no es del tipo correspondiente")};
-                        insert(Constants.LOG_ERRORS, r_a, true);
+                        insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
                         return -1232;//Error el dato no es del tipo correspondiente 1232->SQL
                     }
                 }
@@ -170,20 +164,20 @@ public class TableOperations {
                 else{
                     typeData[] r_a = {new NULL(), new INTEGER("1048"), new VARCHAR("INSERT_INTO"), 
                         new VARCHAR("Error el dato no admite nulos")};
-                    insert(Constants.LOG_ERRORS, r_a, true);
+                    insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
                     return -1048;//Error el dato no admite nulos 1048->SQL
                 }
                 
             }
             
         }
-        if(insert(pTable,salida,false)){
+        if(insert(pSchema+pTable,salida,false)){
              return 0;//0 -> proceso satisfactorio
         }
         else{
             typeData[] r_a = {new NULL(), new INTEGER("1637"), new VARCHAR("INSERT_INTO"), 
                 new VARCHAR("Error al intentar abrir el achivo, puede que este dañado o concurrencia")};
-            insert(Constants.LOG_ERRORS, r_a, true);
+            insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
             return -1637;//Error al intentar abrir el achivo, puede que este dañado o concurrencia
         }
        
@@ -308,18 +302,26 @@ public class TableOperations {
     
     public ArrayList<String[]> select(String[] pColSelect, String pSchema, String pTable, String[] pColumnasCondiciones,
             String[] pDatosCondiciones, String[] pOpes, int[] pTipoCondiciones){
-        
         String[][] md = getMetaDataTable(pSchema, pTable);
         ArrayList<String[]> salida = new ArrayList<>();
         if (md!=null){
-            File file = new File(Constants.DATABASE+pTable);
+            File file = new File(pSchema+pTable);
             try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
                 BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
                         .keySerializer(BTreeKeySerializer.INTEGER)
                         .makeOrGet();
 
                 int tail = primary.size();
-                
+                if(tail==0){
+                    for (String md1 : md[0]) {
+                        if (md1.equals(pColSelect[0])) {
+                            _flag = true;
+                            return salida; 
+                        }
+                    }
+                    _flag = false;
+                    return salida;
+                }
                 if(pColSelect[0].equals("=")){
                     pColSelect = md[0];
                 }
@@ -343,7 +345,7 @@ public class TableOperations {
 
                             }
                             if (k==larDates){
-                                _flag = true;
+                                _flag=true;
                                 return new ArrayList<>();
                                 //sal[j] = "NULL";
                                 //Aqui es que no se encuentra la col a seleccionar
@@ -362,11 +364,10 @@ public class TableOperations {
 
             }
             catch(Exception e){
-                System.out.println("n1");
                 return salida;
             }
         }
-        _flag = true;
+        
         return salida;
         
     }
@@ -761,7 +762,7 @@ public class TableOperations {
         if(!verificarFK(pSchema, pTable, pColumns, pValues)){
             typeData[] r_a = {new NULL(), new INTEGER("1216"), new VARCHAR("UPDATE"), 
                 new VARCHAR("El dato que se va a insertar no esta en la columna referenciada")};
-            insert(Constants.LOG_ERRORS, r_a, true);
+            insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
             return -1216;//Error en la IR, el dato que se va a insertar no esta en la columna referenciada
         }
         
@@ -779,7 +780,7 @@ public class TableOperations {
                 if(!select(col, pSchema, pTable, col, datos, ope, condi).isEmpty()){
                     typeData[] r_a = {new NULL(), new INTEGER("1068"), new VARCHAR("UPDATE"), 
                         new VARCHAR("Error de la llave primaria el dato esta repetido")};
-                    insert(Constants.LOG_ERRORS, r_a, true);
+                    insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
                     return -1068;//Error de la llave primaria el dato esta repetido
                 }                           
             }
@@ -787,11 +788,11 @@ public class TableOperations {
             if(!verificarREF(pSchema, pTable, pColumns)){
                 typeData[] r_a = {new NULL(), new INTEGER("1217"), new VARCHAR("UPDATE"), 
                      new VARCHAR("Error la col a actualizar es referenciada en otra tabla")};
-                insert(Constants.LOG_ERRORS, r_a, true);
+                insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
                 return -1217;
             }
             
-            File file = new File(Constants.DATABASE+pTable);
+            File file = new File(pSchema+pTable);
             try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
                 BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
                         .keySerializer(BTreeKeySerializer.INTEGER)
@@ -820,7 +821,7 @@ public class TableOperations {
                                     if (md[2][j].equals("NOT NULL")){
                                         typeData[] r_a = {new NULL(), new INTEGER("1048"), new VARCHAR("UPDATE"), 
                                                 new VARCHAR("Error el dato no admite nulos")};
-                                        insert(Constants.LOG_ERRORS, r_a, true);
+                                        insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
                                         return -1048;//Error el dato no admite nulos 1048->SQL
                                     }
                                 }
@@ -833,7 +834,7 @@ public class TableOperations {
                             else{
                                 typeData[] r_a = {new NULL(), new INTEGER("1232"), new VARCHAR("UPDATE"), 
                                     new VARCHAR("Error el dato no es del tipo correspondiente")};
-                                insert(Constants.LOG_ERRORS, r_a, true);
+                                insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
                                 return -1232;//Error el dato no es del tipo correspondiente 1232->SQL
                             }
                             
@@ -845,7 +846,7 @@ public class TableOperations {
                 else{
                     typeData[] r_a = {new NULL(), new INTEGER("1072"), new VARCHAR("UPDATE"), 
                         new VARCHAR("No esta la columna")};
-                    insert(Constants.LOG_ERRORS, r_a, true);
+                    insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
                     return -1072;//-6 -> No esta la columna
                 }
 
@@ -853,13 +854,13 @@ public class TableOperations {
             catch(Exception e){
                 typeData[] r_a = {new NULL(), new INTEGER("1637"), new VARCHAR("UPDATE"), 
                     new VARCHAR("Error al intentar abrir el achivo, puede que este dañado o concurrencia")};
-                insert(Constants.LOG_ERRORS, r_a, true);
+                insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
                 return -1637;//-7 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
             }
         }
         typeData[] r_a = {new NULL(), new INTEGER("1146"), new VARCHAR("UPDATE"), 
             new VARCHAR("no se encontro la tabla en la que se va a insertar")};
-        insert(Constants.LOG_ERRORS, r_a, true);
+        insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
         return -1146;//-8 -> no se encontro la tabla en la que se va a insertar
     }
     
@@ -886,11 +887,11 @@ public class TableOperations {
             if(!verificarREF(pSchema, pTable, md[0])){
                 typeData[] r_a = {new NULL(), new INTEGER("1217"), new VARCHAR("UPDATE"), 
                     new VARCHAR("Error en la IR, posee columnas referenciadas")};
-                insert(Constants.LOG_ERRORS, r_a, true);
+                insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
                 return -1217;//Error en la IR, posee columnas referenciadas
             }
             
-            File file = new File(Constants.DATABASE+pTable);
+            File file = new File(pSchema+pTable);
             try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
                 BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
                         .keySerializer(BTreeKeySerializer.INTEGER)
@@ -919,13 +920,13 @@ public class TableOperations {
             catch(Exception e){
                 typeData[] r_a = {new NULL(), new INTEGER("1637"), new VARCHAR("UPDATE"), 
                     new VARCHAR("Error al intentar abrir el achivo, puede que este dañado o concurrencia")};
-                insert(Constants.LOG_ERRORS, r_a, true);
+                insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
                 return -1637;// Error al intentar abrir el achivo, puede que este dañado o concurrencia
             }
         }
         typeData[] r_a = {new NULL(), new INTEGER("1146"), new VARCHAR("UPDATE"), 
                     new VARCHAR("No existe la tabla")};
-        insert(Constants.LOG_ERRORS, r_a, true);
+        insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
         return -1146;//-3 -> no se encontro la tabla en la que se va a borrar
     
     
@@ -1009,7 +1010,7 @@ public class TableOperations {
     }
     
     private ArrayList<Metadata> getMetaDataTable2(String pSchema, String pTable){
-        File file = new File(Constants.DATABASE+pSchema);
+        File file = new File(pSchema+Constants.METADATA);
         try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
             BTreeMap <Integer,Metadata> primary = thedb.treeMapCreate("pri")
                     .keySerializer(BTreeKeySerializer.INTEGER)
@@ -1077,6 +1078,7 @@ public class TableOperations {
             for(int i=0; i<tail;i++){
                 if (pDBName.equals(primary.ceilingEntry(i).getValue()[0].getDate())){
                     primary.replace(i, tp);
+                    thedb.commit();
                     return true;
                 }
             }
@@ -1085,6 +1087,51 @@ public class TableOperations {
         catch(Exception e){
             return false;
         }
+    }
+    
+    public int findTableCol(String pTable, String pCol, String pSchema){
+        File file = new File(pSchema+Constants.METADATA);
+        try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
+            
+            BTreeMap <Integer, Metadata> primary = thedb.treeMapCreate("pri")
+                    .keySerializer(BTreeKeySerializer.INTEGER)
+                    .makeOrGet();
+            
+            int tail = primary.size();
+            
+            int i;
+            String plan="0";
+            for (i = 0; i < tail; i++) {
+                Metadata md =  primary.ceilingEntry(i).getValue();
+                if (md._typeData.equals("TABLE") && md._name.equals(pTable)){
+                    plan=md._id;
+                    break;
+                }
+            }
+            if (tail==i){
+                return -1;
+            }
+            else{
+
+                for(int j=i+1; j<tail; j++){
+                    Metadata md =  primary.ceilingEntry(j).getValue();
+
+                    if(md._id.equals(plan)){
+                        if(md._name.equals(pCol)){
+                            return 0;
+                        }
+                    }
+                    else{
+                        break;
+                    }
+                }
+                return -2;
+            }
+        }
+        catch(Exception e){
+            return -3;
+        }
+            
     }
     
     /**
@@ -1097,7 +1144,7 @@ public class TableOperations {
      */
     public boolean updateMETADATA(String pTable, String pSchema, String[] pColumnas, String pPrimary){
         
-        File file = new File(Constants.DATABASE+pSchema);
+        File file = new File(pSchema+Constants.METADATA);
         try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
             
             BTreeMap <Integer, Metadata> primary = thedb.treeMapCreate("pri")
@@ -1115,8 +1162,16 @@ public class TableOperations {
             }
             
             if(tail>0){
-                String regiter = primary.ceilingEntry(tail-1).getValue()._id;
-                planID = Integer.parseInt(regiter)+1;                
+                String regiter;
+                for (int i=tail-1; i>-1; i--){
+                    regiter = primary.ceilingEntry(i).getValue()._id;
+     
+                    if(!regiter.equals("NULL")){
+                        planID = Integer.parseInt(regiter)+1; 
+                        break;
+                    }
+                }
+                             
             }
             
             String id = Integer.toString(planID);
@@ -1153,7 +1208,7 @@ public class TableOperations {
      */
     public boolean deleteTableMetadata(String pTable, String pSchema){
         
-        File file = new File(Constants.DATABASE+pSchema);
+        File file = new File(pSchema+Constants.METADATA);
         try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
             
             BTreeMap <Integer, Metadata> primary = thedb.treeMapCreate("pri")
@@ -1169,7 +1224,7 @@ public class TableOperations {
                     break;
                 }
             }
-            if (!plan.equals("NULO") && Integer.parseInt(plan)>3){
+            if (!plan.equals("NULO") && Integer.parseInt(plan)>2){
                 
                 String planActual=plan;
                 Metadata m = new Metadata("NULL", "NULL", "NULL", "NULL", "NULL");
@@ -1195,6 +1250,99 @@ public class TableOperations {
         
         return true;
     
+    }
+    
+    public String getArbolMetadata(){
+        
+        ArrayList<String> databases = getDatabases();
+        CommunicationProtocol respuesta = new CommunicationProtocol();
+        if (!databases.isEmpty()){
+            
+            int largoDB = databases.size();
+            
+            for (int i=0; i<largoDB; i++){
+                
+                JSONArray arrayRaiz = new JSONArray();
+                
+                File file = new File(Constants.DATABASE+databases.get(i)+"\\"+Constants.METADATA);
+                
+                try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
+
+                    BTreeMap <Integer, Metadata> primary = thedb.treeMapCreate("pri")
+                            .keySerializer(BTreeKeySerializer.INTEGER)
+                            .makeOrGet();
+                    int tail = primary.size();
+                    JSONObject tabla = new JSONObject();
+                    JSONArray columnasTabla = new JSONArray();
+                    String tableActual = null;
+                    for (int j = 9; j < tail; j++){
+                        
+                        Metadata md = primary.ceilingEntry(j).getValue();
+                        
+                        if(md._typeData.equals("TABLE")){
+                            
+                            if(j==9){
+                                tableActual = md._name;
+                                continue;
+                            }  
+                            
+                            tabla.put(tableActual, columnasTabla);
+                            arrayRaiz.put(tabla);
+                            
+                            tabla = new JSONObject();
+                            columnasTabla = new JSONArray();
+                            tableActual = md._name;   
+                            
+                            
+                          
+                        }
+                        if(md._typeData.equals("COL") || md._typeData.equals("PK")){
+                            
+                            columnasTabla.put(md._name);
+                        }
+                    }
+                    if(tail>9){
+                        tabla.put(tableActual, columnasTabla);
+                        arrayRaiz.put(tabla);
+                    }
+                    
+                } 
+                catch (JSONException ex) {
+                    Logger.getLogger(TableOperations.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                respuesta.accumulateData(databases.get(i), arrayRaiz);
+                
+            }
+            
+            respuesta.setStatus("0", "0");
+            return respuesta.getReturnObj();
+            
+        }
+        respuesta.setStatus("0", "0");
+        return respuesta.getReturnObj();
+    }
+    
+    public ArrayList<String> getDatabases(){
+        
+        ArrayList<String> databases = new ArrayList<>();
+        File file = new File(Constants.DATABASE+Constants.DB);
+        try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
+            
+            BTreeMap <Integer, typeData[]> primary = thedb.treeMapCreate("pri")
+                    .keySerializer(BTreeKeySerializer.INTEGER)
+                    .makeOrGet();
+            int tail = primary.size();
+   
+            for (int i = 0; i < tail; i++) {
+                
+                databases.add(primary.get(i)[0].getDate());
+            }
+            return databases;
+        }
+        catch(Exception e){
+            return databases;
+        }
     }
     
     public static int[] convertIntegers(List<Integer> integers) {

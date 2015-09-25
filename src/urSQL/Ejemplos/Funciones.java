@@ -16,7 +16,7 @@ public class Funciones {
     
     
     static public void recorrerArchivo2(String pName){
-        File file = new File(Constants.DATABASE+pName);
+        File file = new File(pName);
         try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
             BTreeMap <Integer,Metadata> primary = thedb.treeMapCreate("pri")
                     .keySerializer(BTreeKeySerializer.INTEGER)
@@ -33,7 +33,7 @@ public class Funciones {
     }
     
     static public void recorrerArchivo(String pName){
-        File file = new File(Constants.DATABASE+pName);
+        File file = new File(pName);
         try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
             BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
                     .keySerializer(BTreeKeySerializer.INTEGER)
