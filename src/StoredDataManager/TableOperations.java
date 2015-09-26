@@ -1476,6 +1476,7 @@ public class TableOperations {
         
         ArrayList<String> databases = getDatabases();
         CommunicationProtocol respuesta = new CommunicationProtocol();
+        respuesta.setFormat("default");
         if (!databases.isEmpty()){
             
             int largoDB = databases.size();
@@ -1551,7 +1552,6 @@ public class TableOperations {
             }
             
         }
-        respuesta.setFormat("default");
         respuesta.setStatus("0", "0");
         return respuesta.getReturnObj();
     }

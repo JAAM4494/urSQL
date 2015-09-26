@@ -23,6 +23,7 @@ public class RuntimeDB {
     private final DDLParser _ddlP = new DDLParser();
     private final DMLParser _dmlP = new DMLParser();
     private final CLPCommands _clp = new CLPCommands();
+    private final QueryPlan _queryPlan = new QueryPlan();
     private static boolean _flagStart=false;
     private static String _json;
     
@@ -35,7 +36,7 @@ public class RuntimeDB {
     }
      
     public void CreateDB(String pDBName){
-        System.out.println("CREATE DB");
+        _queryPlan.queryCreateDatabase();
         int i = (_clp.createDatabase(pDBName)); 
         CommunicationProtocol respuesta = new CommunicationProtocol();
         if(i==0){
@@ -44,16 +45,18 @@ public class RuntimeDB {
         else{
             respuesta.setStatus(Integer.toString(Math.abs(i)), "0");
         }
+        respuesta.setFormat("default");
         _json =  respuesta.getReturnObj();
-        System.out.println(_json);
+        System.out.println("JSON CREATE DB "+_json);
     }
         
     public void DisplayDB(String pDBName){
         _json = _clp.DisplayDB(pDBName);
-        System.out.println("DISPLAY DB "+_json);
+        System.out.println("JSON DISPLAY DB "+_json);
     }
     
     public void DropDB(String pDBName){
+        _queryPlan.queryDropDatabase();
         int i = _clp.DropDatabase(pDBName);
         CommunicationProtocol respuesta = new CommunicationProtocol();
         if(i==0){
@@ -62,8 +65,9 @@ public class RuntimeDB {
         else{
             respuesta.setStatus(Integer.toString(Math.abs(i)), "0");
         }
+        respuesta.setFormat("default");
         _json =  respuesta.getReturnObj();
-        System.out.println(_json);
+        System.out.println("JSON DROP DB "+_json);
     }
     
     public void GetStatus(){
@@ -73,13 +77,14 @@ public class RuntimeDB {
 
     public void ListDB(){
         _json = _clp.ListDB();
-        System.out.println("JSON LISTDB"+_json);
+        System.out.println("JSON LISTDB "+_json);
     }
 
     public void Start(){
         _flagStart = true;
         CommunicationProtocol respuesta = new CommunicationProtocol();
         respuesta.setStatus("0", "0");
+        respuesta.setFormat("default");
         _json = respuesta.getReturnObj();
         System.out.println("JSON START" + _json);
     }
@@ -88,35 +93,37 @@ public class RuntimeDB {
         _flagStart = false;
         CommunicationProtocol respuesta = new CommunicationProtocol();
         respuesta.setStatus("0", "0");
+        respuesta.setFormat("default");
         _json = respuesta.getReturnObj();
         System.out.println("JSON STOP" + _json);
     }
 
     public void setDB(String pSchema){
+        _queryPlan.querySetDatabase();
         _json = _ddlP.parserSetDatabase(pSchema);
-        System.out.println(_json);
+        System.out.println("JSON SET DB "+_json);
         
     }
 
     public void createTable(ArrayList<String> pCreateTable){
-for (int i = 0; i < pCreateTable.size(); i++) {
-                System.out.println(pCreateTable.get(i));
-        }
+        _queryPlan.queryCreateTable();
         String nombre = pCreateTable.get(0);
         String pk = pCreateTable.get(pCreateTable.size()-1);
         pCreateTable.remove(0);
         pCreateTable.remove(pCreateTable.size()-1);
         _json = _ddlP.parserCreateTable(nombre, pk, pCreateTable);
-        System.out.println(_json);
+        System.out.println("JSON CREATE TABLE "+_json);
 
     }
 
     public void alterTable(ArrayList<String> pAlterTable){
+        _queryPlan.queryAlterTable();
         _json = _ddlP.parserAlterTable(pAlterTable); 
-        System.out.println(_json);
+        System.out.println("JSON ALTER "+_json);
     }
         
     public void dropTable(String pTable){
+        _queryPlan.queryDropTable();
         _json = _ddlP.parserDropTable(pTable);
         System.out.println(_json);
     }
@@ -131,7 +138,7 @@ for (int i = 0; i < pCreateTable.size(); i++) {
     }
     
     public void update (ArrayList<String> pUpdateData){
-            
+        _queryPlan.queryUpdate();
         String table = pUpdateData.get(0);
         String col = pUpdateData.get(1);
         String val = pUpdateData.get(2);
@@ -139,20 +146,21 @@ for (int i = 0; i < pCreateTable.size(); i++) {
         pUpdateData.remove(0);
         pUpdateData.remove(0);
         _json = _dmlP.parserUpdate(table, col, val, pUpdateData);
-        System.out.println(_json);
+        System.out.println("JSON UPDATE "+_json);
         
     }
         
     public void delete (ArrayList<String> pDelete){
+        _queryPlan.queryDelete();
         String tabla = pDelete.get(0);
         pDelete.remove(0);     
         _json = _dmlP.parserDelete(tabla, pDelete);
-        System.out.println(_json);
+        System.out.println("JSON DELETE "+_json);
     }
         
     public void insertInto(ArrayList<String> pDelete){
-        System.out.println("INSERT");
         
+        _queryPlan.queryInsert();
         String table = pDelete.get(0);
         pDelete.remove(0);
         int largo = pDelete.size(), i;
@@ -166,13 +174,14 @@ for (int i = 0; i < pCreateTable.size(); i++) {
         
         if ( cols.size() == datos.size()){
             _json = _dmlP.parserInsertInto(table, datos, cols);
-            System.out.println(_json);
+            System.out.println("JSON INSERT " +_json);
         }
         else{
             CommunicationProtocol respuesta = new CommunicationProtocol();
             respuesta.setStatus("903", "0");
+            respuesta.setFormat("default");
             _json = respuesta.getReturnObj();
-            System.out.println("JSON " + _json);
+            System.out.println("JSON INSERT " + _json);
             //ERROR no viene bien el arroz
         }
         
@@ -459,23 +468,9 @@ for (int i = 0; i < pCreateTable.size(); i++) {
 
                              return;
                          }
-                        
-                        
-                        
-                        
+
                         ArrayList<String[]> selected =newOperation.select(all,schema,table1,pColCondToSend,pDatosToSend,pOpToSend,condisLogicArr);
-                        //for  (int j = 0; j < selected.size(); j++) {
-                        //        System.out.println("Selected"+selected.get(i)[1]);
-                        //    }
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+
                         String[][] md = newOperation.getMetaDataTable(schema, table1);
                         
                         for (int j = 0; j < md[0].length; j++) {
@@ -494,8 +489,6 @@ for (int i = 0; i < pCreateTable.size(); i++) {
 
                         }
                         
-                       // System.out.println("Printing size"+ toSendJson.size());
-                       // System.out.println("Printing size 2"+ md[0].length);
 
                         for (int j = 0; j < md[0].length; j++) {
                         respuesta.accumulateData(md[0][j] , toSendJson.get(j) ); 

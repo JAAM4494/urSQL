@@ -103,7 +103,7 @@ public class CLPCommands {
                 array.put(dbs.get(i));
             }
             respuesta.accumulateData("Databases", array);
-                    respuesta.setFormat("default");
+            respuesta.setFormat("default");
             respuesta.setStatus("0", "0");
             return respuesta.getReturnObj();
         }
