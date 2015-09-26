@@ -37,13 +37,14 @@ public class RuntimePreParser {
     //INSERT INTO hola(col1, col2) VALUES (val1, val2, val3)
     public static void main(String[] args) throws RecognitionException {
         RuntimeDB d = new RuntimeDB();
-        d.setDB("TecDB2");
+        d.setDB("TecDB");
         RuntimePreParser prueba = new RuntimePreParser();
-        prueba.recievemsg("CREATE TABLE Profes AS (idProfe INTEGER NOT NULL,Nombre VARCHAR NOT NULL, PRIMARY KEY(idProfe))");  
+        prueba.recievemsg("DISPLAY DATABASE TecDB");  
        
         TableOperations t = new TableOperations();
-        t.getArbolMetadata();
-        //Funciones.recorrerArchivo2(Constants.DATABASE+"TecDB\\"+Constants.METADATA);
+        
+        //t.getArbolMetadata();
+        //Funciones.recorrerArchivo2(Constants.DATABASE+"TecDB\\"+Constants.CONSTRAIT_CATALOG);
         //Funciones.recorrerArchivo(Constants.DATABASE+"TecDB\\Cursos");
         /*System.out.println("HISTORY CATALOG");
         Funciones.recorrerArchivo(Constants.HISTORY_CATALOG);

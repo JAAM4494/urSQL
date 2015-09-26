@@ -1,6 +1,8 @@
 package RuntimeDBProcessor.commands.CLP;
+import Runtime.Server.CommunicationProtocol;
 import StoredDataManager.TableOperations;
 import java.io.File;
+import java.util.ArrayList;
 import org.json.*;
 import urSQL.Constants.Constants;
 import urSQL.tipos.INTEGER;
@@ -47,9 +49,10 @@ public class CLPCommands {
         
     }
         
-    public JSONObject DisplayDB(String pDBName){
-            return null;
-        }
+    public String DisplayDB(String pDBName){
+        TableOperations tp = new TableOperations();
+        return tp.displayDB(pDBName);
+    }
         
     public int DropDatabase(String pDBName){
         
@@ -69,14 +72,36 @@ public class CLPCommands {
         
     }
     
-    public  JSONObject GetStatus(){
-            return null;
+    public String GetStatus(boolean pFlag){
         
-        }
+        CommunicationProtocol respuesta = new CommunicationProtocol();
+        JSONArray array1 = new JSONArray();
+        JSONArray array2 = new JSONArray();
+        String str;
+        if(pFlag){str="Running";}
+        else{str="Inactive";}
+        array1.put("Runtime");
+        array1.put("System Catalog");
+        array1.put("Store Data Maneger");
+        array2.put(str);
+        array2.put(str);
+        array2.put(str);
+        respuesta.accumulateData("Component", array1);
+        respuesta.accumulateData("Status", array2);
+        return respuesta.getReturnObj();
+    }
         
-    public  JSONObject ListDB(){
-            
-            return null;
+    public  String ListDB(){
+            TableOperations t =  new TableOperations();
+            ArrayList<String> dbs = t.getDatabases();
+            int largo = dbs.size();
+            CommunicationProtocol respuesta = new CommunicationProtocol();
+            JSONArray array = new JSONArray();
+            for (int i = 0; i < largo; i++) {
+                array.put(dbs.get(i));
+            }
+            respuesta.accumulateData("Databases", array);
+            return respuesta.getReturnObj();
         }
         
     public JSONObject Start(){

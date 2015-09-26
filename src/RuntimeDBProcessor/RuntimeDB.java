@@ -19,15 +19,17 @@ public class RuntimeDB {
     private final DDLParser _ddlP = new DDLParser();
     private final DMLParser _dmlP = new DMLParser();
     private final CLPCommands _clp = new CLPCommands();
-    JSONObject _jsonResponse ;
+    private static boolean _flagStart=false;
     private static String _json;
     
+    public static boolean getStart(){
+        return _flagStart;
+    }
              
     public static String getJson(){
         return _json;
     }
-    
-    
+     
     public void CreateDB(String pDBName){
         System.out.println("CREATE DB");
         int i = (_clp.createDatabase(pDBName)); 
@@ -43,7 +45,8 @@ public class RuntimeDB {
     }
         
     public void DisplayDB(String pDBName){
-        _jsonResponse=_clp.DisplayDB(pDBName);
+        _json = _clp.DisplayDB(pDBName);
+        System.out.println("DISPLAY DB "+_json);
     }
     
     public void DropDB(String pDBName){
@@ -60,22 +63,29 @@ public class RuntimeDB {
     }
     
     public void GetStatus(){
-                _jsonResponse=_clp.GetStatus();
+        _json=_clp.GetStatus(_flagStart);
+        System.out.println("JSON GET STATUS "+_json);
     }
 
     public void ListDB(){
-
-                _jsonResponse=_clp.ListDB();
+        _json = _clp.ListDB();
+        System.out.println("JSON LISTDB"+_json);
     }
 
     public void Start(){
-
-                _jsonResponse=_clp.Start();
+        _flagStart = true;
+        CommunicationProtocol respuesta = new CommunicationProtocol();
+        respuesta.setStatus("0", "0");
+        _json = respuesta.getReturnObj();
+        System.out.println("JSON START" + _json);
     }
 
     public void Stop(){
-                _jsonResponse=_clp.Stop();
-
+        _flagStart = false;
+        CommunicationProtocol respuesta = new CommunicationProtocol();
+        respuesta.setStatus("0", "0");
+        _json = respuesta.getReturnObj();
+        System.out.println("JSON STOP" + _json);
     }
 
     public void setDB(String pSchema){
@@ -96,7 +106,6 @@ public class RuntimeDB {
     }
 
     public void alterTable(ArrayList<String> pAlterTable){
-        System.out.println("Alter");
         _json = _ddlP.parserAlterTable(pAlterTable); 
         System.out.println(_json);
     }
@@ -153,13 +162,16 @@ public class RuntimeDB {
             System.out.println(_json);
         }
         else{
-            System.out.println("Error diferentes cantidades del cols y datos");
+            CommunicationProtocol respuesta = new CommunicationProtocol();
+            respuesta.setStatus("903", "0");
+            _json = respuesta.getReturnObj();
+            System.out.println("JSON " + _json);
             //ERROR no viene bien el arroz
         }
         
     }
          
-     public void select (ArrayList<String> pSelect){
+    public void select (ArrayList<String> pSelect){
             ArrayList<String> tablesJoin= new ArrayList<>();
             ArrayList<String> columnasCondiciones=new ArrayList<>();
             ArrayList<String> datosCondiciones=new ArrayList<>();
@@ -413,11 +425,9 @@ public class RuntimeDB {
             }
         }
      
-     public void reportedError(String pError){
+    public void reportedError(String pError){
       
             
     }
-     
-     
-           
+                
 }

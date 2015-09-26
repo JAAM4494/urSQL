@@ -15,7 +15,7 @@ import urSQL.tipos.typeData;
 public class DDLCommands {
     
     private static String _schema = "NULA";
-    
+    private static String _schemaName = "NULA";
     /**
      * Establece el esquema en el que se van a ejecutar los comandos DDL
      * @param pSchemaName Esquema en el que se van a realizar los cambios
@@ -26,6 +26,7 @@ public class DDLCommands {
         
         TableOperations t = new TableOperations();
         if(!t.verificarDBRepetidas(pSchemaName)){
+            _schemaName = pSchemaName;
             _schema = Constants.DATABASE+pSchemaName+"\\";
             typeData[] r1 = {new VARCHAR("SET_DATABASE"), new VARCHAR(pSchemaName), new VARCHAR("Correct")};
             t.insert(_schema+Constants.HISTORY_CATALOG, r1, false);

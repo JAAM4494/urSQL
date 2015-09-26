@@ -85,10 +85,15 @@ class client_handler extends Thread {
                         out.println(tp.getArbolMetadata());
                         continue;
                     }
-                    
-                    
                     prueba.recievemsg(line);
-                    out.println(RuntimeDB.getJson());
+                    if(RuntimeDB.getStart()){
+                        out.println(RuntimeDB.getJson());
+                    }
+                    else{
+                        CommunicationProtocol respuesta = new CommunicationProtocol();
+                        respuesta.setStatus("904", "0");
+                        out.println(respuesta.getReturnObj());
+                    }
                 } catch (RecognitionException ex) {
                     Logger.getLogger(client_handler.class.getName()).log(Level.SEVERE, null, ex);
                 }
