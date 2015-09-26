@@ -28,6 +28,8 @@ public class RuntimePreParser {
        urSQLParser parserP = new urSQLParser(tokens);  
        parserP.script();
     }
+    
+ 
     //CREATE DATABASE TecDB
     //CREATE TABLE Hola AS (Nombre VARCHAR NOT NULL,Cedula INTEGER NOT NULL, PRIMARY KEY(Nombre));
     //ALTER TABLE hola ADD CONSTRAINT FOREIGN KEY (colhola) REFERENCES hola2 (colhola2)

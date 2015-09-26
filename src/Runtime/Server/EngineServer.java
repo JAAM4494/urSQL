@@ -8,6 +8,7 @@ package Runtime.Server;
 // una cadena al cliente y cierre la conexión.
 
 import RuntimeDBProcessor.*;
+import StoredDataManager.TableOperations;
 import java.io.*;
 import java.net.*;
 import java.util.logging.Level;
@@ -62,6 +63,7 @@ class client_handler extends Thread {
         this.conn = conn;
     }
 
+    @Override
     public void run() {
         String line, input = "";
 
@@ -74,9 +76,17 @@ class client_handler extends Thread {
             //Now start reading input from client
             while ((line = in.readLine()) != null && !line.equals(".")) {
                 //reply with the same message, adding some text
-                Thread.sleep(250);
+
                 RuntimePreParser prueba = new RuntimePreParser();
                 try {
+                    
+                    if(line.equals("metadata")){
+                        TableOperations tp = new TableOperations();
+                        out.println(tp.getArbolMetadata());
+                        continue;
+                    }
+                    
+                    
                     prueba.recievemsg(line);
                     out.println(RuntimeDB.getJson());
                 } catch (RecognitionException ex) {
@@ -89,8 +99,6 @@ class client_handler extends Thread {
         } catch (IOException e) {
             System.out.println("IOException on socket : " + e);
             e.printStackTrace();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(client_handler.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
     }
 }
