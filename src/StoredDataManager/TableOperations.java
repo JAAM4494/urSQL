@@ -38,7 +38,7 @@ public class TableOperations {
         _flag=false;
     }
     
-    ArrayList<String[]> metadataTableSelected; 
+    public ArrayList<String[]> metadataTableSelected; 
     String[][] metadataTable1;
     String[][] metadataTable2;
     
@@ -396,7 +396,7 @@ public class TableOperations {
     }
     
     
-     public BTreeMap <Integer,typeData[]> joinLogic(BTreeMap<Integer,typeData[]> pDatosTable1, 
+      public BTreeMap <Integer,typeData[]> joinLogic(BTreeMap<Integer,typeData[]> pDatosTable1, 
             BTreeMap<Integer,typeData[]> pDatosTable2, int pColumnaCondicionPos1,int pColumnaCondicionPos2 , ArrayList<ArrayList<Integer>> ColumnsToSelect, 
            
             ArrayList<ArrayList<String>> typesToSelect,DB thedb){
@@ -414,7 +414,7 @@ public class TableOperations {
        // System.out.println("size 1:"+typesToSelect.get(0).size());
         
       //  System.out.println("size 2:"+typesToSelect.get(1).size());
-
+        
         
         int sizeColSelected=0;
         
@@ -428,6 +428,7 @@ public class TableOperations {
                     }
                 }
          }
+
          for (int i = 0; i < metadataTable2[0].length; i++) {
                 for (int j = 0; j < ColumnsToSelect.get(1).size(); j++) {
                     if (i == ColumnsToSelect.get(1).get(j)) {
@@ -436,6 +437,7 @@ public class TableOperations {
                     }
                 }
          }
+
          metadataTableSelected= new ArrayList<>();
           
         // System.out.println("Columna Posicion tabla 1"+pColumnaCondicionPos1);
@@ -443,17 +445,18 @@ public class TableOperations {
          
        //  System.out.println("Columna Posicion tabla 2"+pColumnaCondicionPos1);
 
-         
+
          
          
         for (int i = 0; i < pDatosTable2.size(); i++) {
             for (int j = 0; j <pDatosTable1.size() ; j++) {
                     
- 
+
                             
                     if(pDatosTable1.ceilingEntry(j).getValue()[pColumnaCondicionPos1].getDate().equals(pDatosTable2.ceilingEntry(i).getValue()[pColumnaCondicionPos2].getDate())){
                         tail=tmp.size();
                         ArrayList<String> tmpRegister= new ArrayList<>();    
+                        
 
                         
                         for (int k = 0; k < ColumnsToSelect.get(0).size(); k++) {
@@ -467,32 +470,35 @@ public class TableOperations {
                         //System.out.println("Register with Select"+tmpRegister.get(2));
                         
                         typeData[] myTypeData= new typeData[tmpRegister.size()];
-                            
-
+                        
                         for (int k = 0; k <ColumnsToSelect.get(0).size(); k++) {
-                            
+
                             if (typesToSelect.get(0).get(k).equals("VARCHAR")) {
                                 myTypeData[k] = new VARCHAR(tmpRegister.get(k));
                                 typesSelectedTable[sizeTypesSelected]="VARCHAR";
                                 sizeTypesSelected++;
                             }
+
                      
                             else if (typesToSelect.get(0).get(k).equals("INTEGER")) {
                                 myTypeData[k] = new INTEGER(tmpRegister.get(k));
                                 typesSelectedTable[sizeTypesSelected]="INTEGER";
                                 sizeTypesSelected++;
                             }
+
                         }
                         int backupK=ColumnsToSelect.get(0).size();
- 
-                        for (int k = 0; k <ColumnsToSelect.get(1).size(); k++) {
+                        
+                        for (int k = 0; k <ColumnsToSelect.get(1).size(); k++) {                            
                             if (typesToSelect.get(1).get(k).equals("VARCHAR")) {
                                 myTypeData[backupK] = new VARCHAR(tmpRegister.get(backupK));
                                 backupK++;
 
                                 typesSelectedTable[sizeTypesSelected]="VARCHAR";
                                 sizeTypesSelected++;
-                            } else if (typesToSelect.get(0).get(k).equals("INTEGER")) {
+                            } else if (typesToSelect.get(1).get(k).equals("INTEGER")) {
+                                System.out.println("Entra");
+                                
                                 myTypeData[backupK] = new INTEGER(tmpRegister.get(backupK));
                                 backupK++;
                               
@@ -501,6 +507,10 @@ public class TableOperations {
 
                             }
                         }
+
+
+
+                        
                         //System.out.println("metadata types"+typesSelectedTable[2]);
                         
 
@@ -526,7 +536,7 @@ public class TableOperations {
                         
                         tmp.put(tail, myTypeData);     
                         
-                        
+
                         //backupInt++;
                         //insertedFlag=true;
                     }
@@ -557,6 +567,107 @@ public class TableOperations {
     
     }
     
+    
+    
+   public Integer selectAggregateFunction( String pSchema, String pTable,
+            ArrayList<String> AggregateFunction,String[] pColumnasCondiciones,
+            String[] pDatosCondiciones,String[] pOpes, int[] pTipoCondiciones){
+        
+        String[][] md = getMetaDataTable(pSchema, pTable);
+        ArrayList<String[]> salida = new ArrayList<>();
+        
+        
+        
+        if (md!=null){
+
+            File file = new File(Constants.DATABASE+pTable);
+            try(DB thedb = DBMaker.newFileDB(file).closeOnJvmShutdown().make()){
+                BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
+                        .keySerializer(BTreeKeySerializer.INTEGER)
+                        .makeOrGet();
+                
+                int tail = primary.size();
+                System.err.println("Col Cond"+pColumnasCondiciones[0]);
+                System.err.println("Dat Cond"+pDatosCondiciones[0]);
+
+                if(pColumnasCondiciones.length!=0){
+                    ArrayList<typeData[]> newTypeData=new ArrayList<>();
+                    for (int i = 0; i < primary.size(); i++) {
+                        boolean verif = where(primary.ceilingEntry(i).getValue(), md[0], pColumnasCondiciones, pDatosCondiciones, pOpes, pTipoCondiciones);
+                        if (verif == true) {
+                            System.out.println("Entra");
+                            newTypeData.add(primary.ceilingEntry(i).getValue());
+                        }
+                    }
+
+                    primary.clear();
+                    for (int i = 0; i < newTypeData.size(); i++) {
+                        primary.put(primary.size(), newTypeData.get(i));
+                    }
+                }
+                
+
+                String columnOperation=AggregateFunction.get(1);
+                //ArrayList<Integer> dataOperation= new ArrayList<>();
+                int indexColumn=0;
+                for (int i = 0; i < md[0].length; i++) {
+                        if(columnOperation.equals(md[0][i])==true){
+                            indexColumn=i;
+                        }
+                }
+                
+                if(AggregateFunction.get(0).equals("AVERAGE")==true){
+                    int dataOperation=0;
+                    for (int i = 0; i < primary.size(); i++) {
+                        dataOperation+=Integer.parseInt(primary.ceilingEntry(i).getValue()[indexColumn].getDate());
+                        //dataOperation.add(Integer.parseInt(primary.ceilingEntry(i).getValue()[indexColumn].getDate())); 
+                    }
+              
+                    return (dataOperation/primary.size());
+                    
+                    
+                }
+                else if(AggregateFunction.get(0).equals("MAX")==true){
+                    
+                    int maxData=Integer.parseInt(primary.ceilingEntry(0).getValue()[indexColumn].getDate());
+
+                    for (int i = 0; i < primary.size(); i++) {
+                        if(maxData<Integer.parseInt(primary.ceilingEntry(i).getValue()[indexColumn].getDate())){
+                            maxData=Integer.parseInt(primary.ceilingEntry(i).getValue()[indexColumn].getDate());
+                        }              
+                    }
+                    return (maxData);
+                }
+                else if(AggregateFunction.get(0).equals("MIN")==true){
+                    int minData=Integer.parseInt(primary.ceilingEntry(0).getValue()[indexColumn].getDate());
+                    
+                    for (int i = 0; i < primary.size(); i++) {
+                        if(minData>Integer.parseInt(primary.ceilingEntry(i).getValue()[indexColumn].getDate())){
+                            minData=Integer.parseInt(primary.ceilingEntry(i).getValue()[indexColumn].getDate());
+                        }              
+                    }
+                    return (minData);
+                    
+                }
+                
+                else if(AggregateFunction.get(0).equals("COUNT")==true){    
+                    int counter=0;
+                    for (int i = 0; i < primary.size(); i++) {
+                        counter+=Integer.parseInt(primary.ceilingEntry(i).getValue()[indexColumn].getDate()); 
+                    }
+                    return (counter);     
+                }
+                
+                
+            }
+            catch(Exception e){
+                System.out.println("n1");
+                //return salida;
+            }
+        }
+        System.out.println("n2");
+        return null;
+    }
     
     
     public ArrayList<typeData[]> selectJoin(String[] pColSelect1, String[] pColSelect2, String pSchema,
@@ -623,11 +734,14 @@ public class TableOperations {
                             }
                         }
                     }
+                    
                     for (int j = 0; j < pColSelect2.length; j++) {
                         for (int k = 0; k < metadataTable2[0].length; k++) {
+                            System.out.println("Metadata"+pColSelect2[j]);
                             if (pColSelect2[j].equals(metadataTable2[0][k])) {
                                 ColumnsToSelectTab2.add(k);
                             }
+                            
                         }
                     }
                     for (int k = 0; k < ColumnsToSelectTab1.size(); k++) {
@@ -637,9 +751,8 @@ public class TableOperations {
                     for (int k = 0; k < ColumnsToSelectTab2.size(); k++) {
                             typesToSelectTab2.add(metadataTable2[1][ColumnsToSelectTab2.get(k)]);
                     }
-                    //System.out.println("Verif type to select1"+typesToSelectTab2.get(0));
-                    
-                    
+                    //System.out.println("Verif type to select2"+typesToSelectTab2.get(0));
+       
 
                     ColumnsToSelect.add(ColumnsToSelectTab1);
                     ColumnsToSelect.add(ColumnsToSelectTab2);
@@ -1004,7 +1117,7 @@ public class TableOperations {
         
     }
     
-    private String[][] getMetaDataTable(String pSchema, String pTable){
+    public String[][] getMetaDataTable(String pSchema, String pTable){
         
         ArrayList<Metadata> m = getMetaDataTable2(pSchema, pTable);
       

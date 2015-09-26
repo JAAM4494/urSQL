@@ -8,7 +8,10 @@ import RuntimeDBProcessor.commands.DML.DMLParser;
 import StoredDataManager.TableOperations;
 import java.util.ArrayList;
 import java.util.List;
+import org.json.JSONArray;
 import org.json.JSONObject;
+import urSQL.Ejemplos.Funciones;
+import urSQL.tipos.typeData;
 
 /**
  *
@@ -174,7 +177,8 @@ for (int i = 0; i < pCreateTable.size(); i++) {
         
     }
          
-    public void select (ArrayList<String> pSelect){
+       
+     public void select (ArrayList<String> pSelect){
             ArrayList<String> tablesJoin= new ArrayList<>();
             ArrayList<String> columnasCondiciones=new ArrayList<>();
             ArrayList<String> datosCondiciones=new ArrayList<>();
@@ -194,7 +198,9 @@ for (int i = 0; i < pCreateTable.size(); i++) {
             
             Boolean inWhere=false;     
             int whereIndex=0;
+            Boolean inAggregate=false;
             ArrayList<Integer> condisLog = new ArrayList<>();
+            ArrayList<String> aggregateFunction= new ArrayList<>();
 
            for (int i = 0; i < pSelect.size(); i++) {
                   System.out.println(" El:" +pSelect.get(i));
@@ -213,7 +219,12 @@ for (int i = 0; i < pCreateTable.size(); i++) {
                   }
                   
                   
-                  else if(pSelect.get(i).equals("Join Finish")){
+                  else if(pSelect.get(i).equals("Aggregate Function")){
+                      inAggregate=true;
+                      
+                  }
+                  
+                  else if(pSelect.get(i).equals("")){
                       joinIndex=0;
                       inJoin=false;
                   }
@@ -242,10 +253,92 @@ for (int i = 0; i < pCreateTable.size(); i++) {
                       datosCondiciones.add(pSelect.get(i+2));
                       inWhere=false; 
                       whereIndex++;
-                  } 
+                  }
+                  
+                  else if (inAggregate){
+                      String aggregateFunctionStr=pSelect.get(i);
+                      String[] splittedStr = aggregateFunctionStr.split("\\(");
+
+                      aggregateFunction.add(splittedStr[0]);
+
+                      String[] splittedStr2=splittedStr[1].split("\\)");
+                      aggregateFunction.add(splittedStr2[0]);
+                      
+                      
+
+                      inAggregate=false;
+                      
+                      
+                  }
            }
            if(whereIndex==1){
                 condisLog.add(-1);
+           }
+           if(aggregateFunction.isEmpty()!=true){
+                
+
+                String[] pColCondToSend;
+                String[] pDatosToSend;
+                String[] pOpToSend;
+                
+                if(columnasCondiciones.isEmpty()!=true){
+                    pColCondToSend = new String[columnasCondiciones.size()];
+                    pColCondToSend = columnasCondiciones.toArray(pColCondToSend);
+                }
+                else {
+                    pColCondToSend=new String[]{};
+                }
+                
+                if(datosCondiciones.isEmpty()!=true){
+                    pDatosToSend = new String[datosCondiciones.size()];
+
+                    pDatosToSend = datosCondiciones.toArray(pDatosToSend);
+                    
+                }
+                else{
+                      pDatosToSend=new String[]{};
+                }
+                
+                if(operadorCondiciones.isEmpty()!=true){
+                      pOpToSend = new String[operadorCondiciones.size()];
+                      pOpToSend = operadorCondiciones.toArray(pOpToSend);
+                     
+                }
+                else{
+                    pOpToSend = new String[]{};
+                }   
+
+                int[] condisLogicArr;
+                
+                if(condisLog.isEmpty()!=true){
+                    if(condisLog.get(0)==-1){
+                        condisLogicArr= new int[]{};
+                    }
+                    else {
+                        condisLogicArr=TableOperations.convertIntegers(condisLog);
+                    }
+                }
+                else{
+                    condisLogicArr=new int[]{};
+                }
+                
+                newOperation = new TableOperations();
+                int result = newOperation.selectAggregateFunction("TEC_DB", table1,
+                        aggregateFunction, pColCondToSend,
+                        pDatosToSend, pOpToSend, condisLogicArr);
+                
+                
+                CommunicationProtocol respuesta = new CommunicationProtocol();
+
+                JSONArray tmpArr = new JSONArray();
+                tmpArr.put(Integer.toString(result));
+                respuesta.accumulateData(aggregateFunction.get(0), tmpArr);
+                
+                System.out.println(respuesta.getReturnObj());
+                _json= respuesta.getReturnObj();
+               
+               
+               
            }
            
            //System.out.println("Condis Log"+condisLog.get(0));
@@ -334,8 +427,7 @@ for (int i = 0; i < pCreateTable.size(); i++) {
                     pColCondToSend=new String[]{};
                 }
                 
-                if(columnasCondiciones.isEmpty()!=true){
-                
+                if(datosCondiciones.isEmpty()!=true){
                     pDatosToSend = new String[datosCondiciones.size()];
 
                     pDatosToSend = datosCondiciones.toArray(pDatosToSend);
@@ -349,7 +441,6 @@ for (int i = 0; i < pCreateTable.size(); i++) {
                       pOpToSend = new String[operadorCondiciones.size()];
                       pOpToSend = operadorCondiciones.toArray(pOpToSend);
                      
-                     
                 }
                 else{
                     pOpToSend = new String[]{};
@@ -360,7 +451,6 @@ for (int i = 0; i < pCreateTable.size(); i++) {
                 if(condisLog.isEmpty()!=true){
                     if(condisLog.get(0)==-1){
                         condisLogicArr= new int[]{};
-
                     }
                     else {
                         condisLogicArr=TableOperations.convertIntegers(condisLog);
@@ -370,6 +460,7 @@ for (int i = 0; i < pCreateTable.size(); i++) {
                     condisLogicArr=new int[]{};
                 }
                 
+                
                 ArrayList<String> coltoSelect= new ArrayList<>();
                 
                 inWhere=false;
@@ -377,8 +468,43 @@ for (int i = 0; i < pCreateTable.size(); i++) {
                 for (int i = 0; i < pSelect.size(); i++) {
                     if(pSelect.get(i).equals("*")){
                         String[] all={"="} ;
-                        System.out.println( "Printing"+newOperation.select(all,
-                                "TEC_DB",table1,pColCondToSend,pDatosToSend,pOpToSend,condisLogicArr));
+                        //System.out.println( "Printing"+newOperation.select(all,
+                        //        "TEC_DB",table1,pColCondToSend,pDatosToSend,pOpToSend,condisLogicArr).get(0)[1]);
+                        ArrayList<String[]> selected =newOperation.select(all,"TEC_DB",table1,pColCondToSend,pDatosToSend,pOpToSend,condisLogicArr);
+                        //for  (int j = 0; j < selected.size(); j++) {
+                        //        System.out.println("Selected"+selected.get(i)[1]);
+                        //    }
+                        String[][] md = newOperation.getMetaDataTable("TEC_DB", table1);
+                        
+                        for (int j = 0; j < md[0].length; j++) {
+                            System.out.println("Metadata"+md[0][j]);
+                        }
+                        
+                        ArrayList<JSONArray> toSendJson = new ArrayList();
+                        JSONArray array1 = new JSONArray();
+                        for (int j = 0; j < md[0].length ; j++) { 
+                            array1 = new JSONArray();
+                            for (int k = 0; k < selected.size(); k++) {
+                                array1.put(selected.get(k)[j]);
+                                System.out.println("Selected join" + selected.get(k)[j]);
+                            }
+                            toSendJson.add(array1);
+
+                        }
+                        CommunicationProtocol respuesta = new CommunicationProtocol();
+                        
+                       // System.out.println("Printing size"+ toSendJson.size());
+                       // System.out.println("Printing size 2"+ md[0].length);
+
+                        for (int j = 0; j < md[0].length; j++) {
+                        respuesta.accumulateData(md[0][j] , toSendJson.get(j) ); 
+                        }
+                        System.out.println(respuesta.getReturnObj());
+                    
+                        _json=respuesta.getReturnObj();
+                        
+                        
+                        
                         break;
                     }
                     else{
@@ -399,12 +525,10 @@ for (int i = 0; i < pCreateTable.size(); i++) {
                             
                             //System.out.println("Cold Cond"+pColCondToSend[0]);
 
-
                             System.out.println("Revisando EL"+
                                     newOperation.select(coltoSelecttoSend,"TEC_DB",table1,
                                             pColCondToSend,pDatosToSend,pOpToSend,condisLogicArr).get(0)[0]);
                             
-                            //newOperation.select(
                             
                             break;
                         }
@@ -421,9 +545,60 @@ for (int i = 0; i < pCreateTable.size(); i++) {
                     columnsJoinArr[1] = columnsJoin.get(1);
                 }
                 
-                newOperation.selectJoin(columnsToSelectArr1, columnsToSelectArr2,
+                Funciones.recorrerArchivo("Profes");
+                Funciones.recorrerArchivo("Estudiantes");
+
+                //System.out.println("Columns to select2"+columnsToSelectArr2[0]);
+                System.out.println("Join El"+newOperation.selectJoin(columnsToSelectArr1, columnsToSelectArr2,
+                 "TEC_DB", table1, table2, columnsJoinArr, columnasCondiciones, operadorCondiciones, 
+                 datosCondiciones, condisLog, "").get(0)[0].getDate() );
+                
+                ArrayList<typeData[]> selectedJoin=newOperation.selectJoin(columnsToSelectArr1, columnsToSelectArr2,
                  "TEC_DB", table1, table2, columnsJoinArr, columnasCondiciones, operadorCondiciones, 
                  datosCondiciones, condisLog, "");
+                
+                ArrayList<String[]> metadataTableSel= newOperation.metadataTableSelected;
+                //array1.put("Pedro");
+                CommunicationProtocol respuesta = new CommunicationProtocol();
+
+                
+                ArrayList<JSONArray> toSendJson= new ArrayList();
+                JSONArray array1 = new JSONArray();
+                for (int i = 0; i < metadataTableSel.get(0).length; i++) {
+                    array1 = new JSONArray();
+
+                    for (int j = 0; j < selectedJoin.size(); j++) {
+
+                        array1.put(selectedJoin.get(j)[i].getDate());
+                        System.out.println("Selected join"+selectedJoin.get(j)[i].getDate());              
+                    }
+                    toSendJson.add(array1);
+                }
+  
+                    // System.out.println("Metadata"+metadataTableSel.get(0)[0]);
+                    //System.out.println("Data to send"+toSendJson.get(0));
+                /*for (int i = 0; i < toSendJson.get(0).length(); i++) {
+                    try {
+                        System.out.println("Printind data"+toSendJson.get(1).get(0).toString());
+                    } catch (JSONException ex) {
+                        Logger.getLogger(RuntimeDB.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                }*/
+                
+                    for (int j = 0; j < metadataTableSel.get(0).length; j++) {
+                        respuesta.accumulateData(metadataTableSel.get(0)[j], toSendJson.get(j) );
+
+                    }
+                    
+                    System.out.println(respuesta.getReturnObj());
+                    
+                    _json= respuesta.getReturnObj();
+
+                    
+              
+
+                
                 
             }
         }
