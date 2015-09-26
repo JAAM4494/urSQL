@@ -143,7 +143,7 @@ public class TableOperations {
                         salida[i] = new VARCHAR(pValues[j]);
                     }
                     else{
-                        String[] a = metadata[1][i].split("(");
+                        String[] a = metadata[1][i].split("\\(");
                         if(a[0].equals("DECIMAL")){
                             salida[i] = new DECIMAL(pValues[j]);
                         }
@@ -327,6 +327,10 @@ public class TableOperations {
             String[] pDatosCondiciones, String[] pOpes, int[] pTipoCondiciones){
         String[][] md = getMetaDataTable(pSchema, pTable);
         ArrayList<String[]> salida = new ArrayList<>();
+        
+        
+
+        
         if (md!=null){
             File file = new File(pSchema+pTable);
             try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
@@ -576,6 +580,17 @@ public class TableOperations {
         String[][] md = getMetaDataTable(pSchema, pTable);
         ArrayList<String[]> salida = new ArrayList<>();
         
+        Boolean exists=false;
+        for (int i = 0; i < md[0].length; i++) {
+            if(md[0][i].equals(AggregateFunction.get(1))){
+                exists=true;
+            }
+        }
+        if(exists=false){
+            int returnError=-1;
+            return returnError;
+        }
+        
         
         
         if (md!=null){
@@ -682,9 +697,8 @@ public class TableOperations {
         //System.out.println("Metadata Table 1"+metadataTable1[0][0]);
 
         if (metadataTable1 != null) {
-            File file = new File(Constants.DATABASE + pTable1);
+            File file = new File(pSchema + pTable1);
 
-            
             try (DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()) {
                 BTreeMap<Integer, typeData[]> primary = thedb.treeMapCreate("pri")
                         .keySerializer(BTreeKeySerializer.INTEGER)
@@ -693,7 +707,7 @@ public class TableOperations {
                 ArrayList<typeData[]> salida = new ArrayList<>();
 
                 //System.out.println("metadata" +md[0][0]);
-                File fileToJoin = new File(Constants.DATABASE + pTable2);
+                File fileToJoin = new File(pSchema + pTable2);
                 
                 try (DB thedbToJoin = DBMaker.fileDB(fileToJoin).closeOnJvmShutdown().make()) {
 
@@ -889,6 +903,7 @@ public class TableOperations {
      *         -1637 -> Error al intentar abrir el achivo, puede que este dañado o concurrencia
      *         -1146 -> no se encontro la tabla en la que se va a insertar
      */
+    
     public int update(String pCol, String pValor, String pSchema, String pTable, String[] pColumnasCondiciones,
             String[] pDatosCondiciones,String[] pOpes, int[] pTipoCondiciones){
         
@@ -1064,8 +1079,6 @@ public class TableOperations {
                     new VARCHAR("No existe la tabla")};
         insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
         return -1146;//-3 -> no se encontro la tabla en la que se va a borrar
-    
-    
     
     }
     

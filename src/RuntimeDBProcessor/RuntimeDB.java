@@ -6,6 +6,7 @@ import RuntimeDBProcessor.commands.DDL.DDLCommands;
 import RuntimeDBProcessor.commands.DDL.DDLParser;
 import RuntimeDBProcessor.commands.DML.DMLParser;
 import StoredDataManager.TableOperations;
+import SystemCatalog.Metadata;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
@@ -201,7 +202,8 @@ for (int i = 0; i < pCreateTable.size(); i++) {
             Boolean inAggregate=false;
             ArrayList<Integer> condisLog = new ArrayList<>();
             ArrayList<String> aggregateFunction= new ArrayList<>();
-
+            
+            
            for (int i = 0; i < pSelect.size(); i++) {
                   System.out.println(" El:" +pSelect.get(i));
                   if(pSelect.get(i).equals("Join")){
@@ -323,48 +325,45 @@ for (int i = 0; i < pCreateTable.size(); i++) {
                 }
                 
                 newOperation = new TableOperations();
-                int result = newOperation.selectAggregateFunction("TEC_DB", table1,
+                String schema = DDLCommands.getSchema();
+                CommunicationProtocol respuesta = new CommunicationProtocol();
+
+                if(schema.equals("NULA")){
+                    respuesta.setStatus("1046", "0");
+                    respuesta.setFormat("default");
+                    _json= respuesta.getReturnObj();
+                    System.out.println(respuesta.getReturnObj());
+                    return ;
+                }
+                int result = newOperation.selectAggregateFunction(schema, table1,
                         aggregateFunction, pColCondToSend,
                         pDatosToSend, pOpToSend, condisLogicArr);
+
+                if(result==-1){
+                    respuesta.setStatus("1072", "0");
+                    respuesta.setFormat("default");
+                    _json= respuesta.getReturnObj();
+                    System.out.println(respuesta.getReturnObj());
+
+                    return ;
+                }
                 
-                
-                CommunicationProtocol respuesta = new CommunicationProtocol();
 
                 JSONArray tmpArr = new JSONArray();
                 tmpArr.put(Integer.toString(result));
                 respuesta.accumulateData(aggregateFunction.get(0), tmpArr);
                 
                 System.out.println(respuesta.getReturnObj());
+                respuesta.setStatus("0", "0");
+                respuesta.setFormat("default");
                 _json= respuesta.getReturnObj();
                
                
                
            }
            
-           //System.out.println("Condis Log"+condisLog.get(0));
-           
-           //System.out.println("Where index"+whereIndex);
-           
-           
-           //System.out.println("Columnas condiciones"+columnasCondiciones.get(0));
-           
-           //System.out.println("Operador Condiciones"+operadorCondiciones.get(0));
-           
-          // System.out.println("Datos Condiciones"+datosCondiciones.get(0));
-
-           
-          // System.out.println("tables Join"+tablesJoin.get(0));
-           
-          // System.out.println("tables Join"+tablesJoin.get(1));
-           
-          
-           
-           //System.out.println("Primer elemento"+columnsJoinArr[0]);
-           
-           //System.out.println("Segundo elemento"+columnsJoinArr[1]);      
-           
-           
-           
+             
+ 
            for (int i = 0; i < pSelect.size(); i++) {
                  if(pSelect.get(i).equals(".")){
                      //System.out.println("Antes del punto"+pSelect.get(i-1));
@@ -378,27 +377,7 @@ for (int i = 0; i < pCreateTable.size(); i++) {
                      }
                  }
              }
-            
-            
-             
-           // System.out.println("Columns to Select 1:"+ColumnsToSelect1.get(0));
-             
-            //System.out.println("Columns to Select 1:"+ColumnsToSelect1.get(1));
 
-             
-            //System.out.println("Tables Join 1:"+table1); 
-            
-
-           // System.out.println("Tables Join 2:"+table2); 
-            
-            
-           // System.out.println("Columns Join 1:"+columnsJoin.get(0));
-            
-          //  System.out.println("Columns Join 2:"+columnsJoin.get(1));
-            
-           //  System.out.println("Columns to Select from table 1 :"+ColumnsToSelect1.get(0));
-            
-           // System.out.println("Columns to Select from table 2:"+ColumnsToSelect2.get(0));
              
             
             newOperation = new TableOperations();
@@ -406,7 +385,6 @@ for (int i = 0; i < pCreateTable.size(); i++) {
             String[] columnsToSelectArr1 = ColumnsToSelect1.toArray(new String[ColumnsToSelect1.size()]);
             
             String[] columnsToSelectArr2 = ColumnsToSelect2.toArray(new String[ColumnsToSelect2.size()]);
-            DDLCommands ddl = new DDLCommands();
             
             //System.out.println( "Set DB"+ ddl.setDatabase("TEC_DB")  );
             
@@ -470,11 +448,35 @@ for (int i = 0; i < pCreateTable.size(); i++) {
                         String[] all={"="} ;
                         //System.out.println( "Printing"+newOperation.select(all,
                         //        "TEC_DB",table1,pColCondToSend,pDatosToSend,pOpToSend,condisLogicArr).get(0)[1]);
-                        ArrayList<String[]> selected =newOperation.select(all,"TEC_DB",table1,pColCondToSend,pDatosToSend,pOpToSend,condisLogicArr);
+                         String schema = DDLCommands.getSchema();
+                         CommunicationProtocol respuesta = new CommunicationProtocol();
+
+                         if(schema.equals("NULA")){
+                             respuesta.setStatus("1046", "0");
+                             respuesta.setFormat("default");
+                             _json = respuesta.getReturnObj();
+                             System.out.println(respuesta.getReturnObj());
+
+                             return;
+                         }
+                        
+                        
+                        
+                        
+                        ArrayList<String[]> selected =newOperation.select(all,schema,table1,pColCondToSend,pDatosToSend,pOpToSend,condisLogicArr);
                         //for  (int j = 0; j < selected.size(); j++) {
                         //        System.out.println("Selected"+selected.get(i)[1]);
                         //    }
-                        String[][] md = newOperation.getMetaDataTable("TEC_DB", table1);
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        String[][] md = newOperation.getMetaDataTable(schema, table1);
                         
                         for (int j = 0; j < md[0].length; j++) {
                             System.out.println("Metadata"+md[0][j]);
@@ -486,12 +488,11 @@ for (int i = 0; i < pCreateTable.size(); i++) {
                             array1 = new JSONArray();
                             for (int k = 0; k < selected.size(); k++) {
                                 array1.put(selected.get(k)[j]);
-                                System.out.println("Selected join" + selected.get(k)[j]);
+                                System.out.println("Selected " + selected.get(k)[j]);
                             }
                             toSendJson.add(array1);
 
                         }
-                        CommunicationProtocol respuesta = new CommunicationProtocol();
                         
                        // System.out.println("Printing size"+ toSendJson.size());
                        // System.out.println("Printing size 2"+ md[0].length);
@@ -499,13 +500,16 @@ for (int i = 0; i < pCreateTable.size(); i++) {
                         for (int j = 0; j < md[0].length; j++) {
                         respuesta.accumulateData(md[0][j] , toSendJson.get(j) ); 
                         }
-                        System.out.println(respuesta.getReturnObj());
-                    
+                        respuesta.setStatus("0", "0");
+                        respuesta.setFormat("default");
                         _json=respuesta.getReturnObj();
+                        System.out.println(respuesta.getReturnObj());
+
+                       
                         
+                        return ;
+
                         
-                        
-                        break;
                     }
                     else{
                         if(pSelect.get(i).equals("FROM")==false && pSelect.get(i).equals("WHERE")==false ){
@@ -518,19 +522,77 @@ for (int i = 0; i < pCreateTable.size(); i++) {
                             String[] coltoSelecttoSend = new String[coltoSelect.size()];
                             coltoSelecttoSend= coltoSelect.toArray(coltoSelecttoSend); 
                             
-                            System.out.println("Columns to Select"+coltoSelecttoSend[0]);
                             
-                            //System.out.println("Columns to Select"+table1);
-                            
-                            
-                            //System.out.println("Cold Cond"+pColCondToSend[0]);
+                            //System.out.println("Columns to Select"+pColCondToSend[0]);
+                            String schema = DDLCommands.getSchema();
+                            if (schema.equals("NULA")) {
 
-                            System.out.println("Revisando EL"+
-                                    newOperation.select(coltoSelecttoSend,"TEC_DB",table1,
+                            }
+                            String[][] metaDataVerification = newOperation.getMetaDataTable(schema, table1);
+                            ArrayList<String> verifying=verifyColumn(metaDataVerification, coltoSelecttoSend);
+                            if(verifying!=null){
+                                CommunicationProtocol respuesta = new CommunicationProtocol();
+
+                                respuesta.setStatus(verifying.get(0), "0");
+                                respuesta.setFormat("default");
+                                _json=respuesta.getReturnObj();
+                                System.out.println(respuesta.getReturnObj());
+                                return ;
+                                
+                            }
+                            
+                            if (pColCondToSend.length != 0) {
+                                String[][] metadataToVerify = newOperation.getMetaDataTable(schema, table1);
+                                ArrayList<String> verifyingColumns = verifyColumn(metadataToVerify, pColCondToSend);
+                                
+                                if (verifyingColumns != null) {
+                                    CommunicationProtocol respuesta = new CommunicationProtocol();
+
+                                    respuesta.setStatus(verifyingColumns.get(0), "0");
+                                    respuesta.setFormat("default");
+                                    _json = respuesta.getReturnObj();
+                                    System.out.println(respuesta.getReturnObj());
+                                    return;
+                                }
+
+                            }
+
+                             System.out.println("Revisando EL"+
+                                    newOperation.select(coltoSelecttoSend,schema,table1,
                                             pColCondToSend,pDatosToSend,pOpToSend,condisLogicArr).get(0)[0]);
+                             
+                             
+                             ArrayList<String[]> ArrayListSelected=  newOperation.select(coltoSelecttoSend,schema,table1,
+                                            pColCondToSend,pDatosToSend,pOpToSend,condisLogicArr);
+                            String [][] md;
+                            md=newOperation.getMetaDataTable(schema, table1);
                             
+                            ArrayList<JSONArray> toSendJson = new ArrayList();
+                            JSONArray array1 = new JSONArray();
+                            for (int j = 0; j < ArrayListSelected.get(0).length ; j++) {
+                                array1 = new JSONArray();
+                                for (int k = 0; k < ArrayListSelected.size(); k++) {
+                                    array1.put(ArrayListSelected.get(k)[j]);
+                                    System.out.println("Selected " + ArrayListSelected.get(k)[j]);
+                                    
+                                }
+                                toSendJson.add(array1);
+
+                            }
+                            CommunicationProtocol respuesta = new CommunicationProtocol();
+
+                       // System.out.println("Printing size"+ toSendJson.size());
+                            // System.out.println("Printing size 2"+ md[0].length);
+                            for (int j = 0; j < coltoSelecttoSend.length; j++) {
+                                respuesta.accumulateData(coltoSelecttoSend[j], toSendJson.get(j) ) ;
+                            }
+                            System.out.println(respuesta.getReturnObj());
                             
-                            break;
+                            respuesta.setStatus("0", "0");
+                            respuesta.setFormat("default");
+                            _json=respuesta.getReturnObj();
+                            
+                            return ;
                         }
                     }
                 }
@@ -545,16 +607,56 @@ for (int i = 0; i < pCreateTable.size(); i++) {
                     columnsJoinArr[1] = columnsJoin.get(1);
                 }
                 
-                Funciones.recorrerArchivo("Profes");
-                Funciones.recorrerArchivo("Estudiantes");
+                
 
                 //System.out.println("Columns to select2"+columnsToSelectArr2[0]);
-                System.out.println("Join El"+newOperation.selectJoin(columnsToSelectArr1, columnsToSelectArr2,
-                 "TEC_DB", table1, table2, columnsJoinArr, columnasCondiciones, operadorCondiciones, 
-                 datosCondiciones, condisLog, "").get(0)[0].getDate() );
+                
+                //System.out.println("Join El"+newOperation.selectJoin(columnsToSelectArr1, columnsToSelectArr2,
+                // "TEC_DB", table1, table2, columnsJoinArr, columnasCondiciones, operadorCondiciones, 
+                // datosCondiciones, condisLog, "").get(0)[0].getDate() );
+                
+                String schema = DDLCommands.getSchema();
+                if (schema.equals("NULA")) {
+                    CommunicationProtocol respuesta = new CommunicationProtocol();
+
+                    respuesta.setStatus("1046", "0");
+                    respuesta.setFormat("default");
+                    _json = respuesta.getReturnObj();
+                    return;
+                }
+                
+                String[][] mDataTable1= newOperation.getMetaDataTable(schema, table1);
+                
+                String[][] mDataTable2= newOperation.getMetaDataTable(schema, table2);
+                
+                ArrayList<String> resultVerify1= verifyColumn(mDataTable1, columnsToSelectArr1);
+                ArrayList<String> resultVerify2= verifyColumn(mDataTable2, columnsToSelectArr2);
+
+                if(resultVerify1!=null){
+                    CommunicationProtocol respuesta = new CommunicationProtocol();
+                    respuesta.setStatus(resultVerify1.get(0), "0");
+                    respuesta.setFormat("default");
+                    _json = respuesta.getReturnObj();
+                    System.out.println(respuesta.getReturnObj());
+                    return ;
+                }
+                
+                if(resultVerify2!=null){
+                    CommunicationProtocol respuesta = new CommunicationProtocol();
+                    respuesta.setStatus(resultVerify2.get(0), "0");
+                    respuesta.setFormat("default");
+                    _json = respuesta.getReturnObj();
+                    System.out.println(respuesta.getReturnObj());
+                    return ;
+                }
+                
+                
+                
+                
+                
                 
                 ArrayList<typeData[]> selectedJoin=newOperation.selectJoin(columnsToSelectArr1, columnsToSelectArr2,
-                 "TEC_DB", table1, table2, columnsJoinArr, columnasCondiciones, operadorCondiciones, 
+                 schema, table1, table2, columnsJoinArr, columnasCondiciones, operadorCondiciones, 
                  datosCondiciones, condisLog, "");
                 
                 ArrayList<String[]> metadataTableSel= newOperation.metadataTableSelected;
@@ -564,6 +666,7 @@ for (int i = 0; i < pCreateTable.size(); i++) {
                 
                 ArrayList<JSONArray> toSendJson= new ArrayList();
                 JSONArray array1 = new JSONArray();
+                
                 for (int i = 0; i < metadataTableSel.get(0).length; i++) {
                     array1 = new JSONArray();
 
@@ -592,9 +695,11 @@ for (int i = 0; i < pCreateTable.size(); i++) {
                     }
                     
                     System.out.println(respuesta.getReturnObj());
-                    
+                    respuesta.setStatus("0", "0");
+                    respuesta.setFormat("default");
                     _json= respuesta.getReturnObj();
-
+                    
+                    return ;
                     
               
 
@@ -603,8 +708,67 @@ for (int i = 0; i < pCreateTable.size(); i++) {
             }
         }
      
-    public void reportedError(String pError){
-      
+     
+     private  ArrayList<String> verifyColumn(String[][] metadata,String [] pColumntoCompare){
+         if(metadata==null){
+            ArrayList<String> errorDetected= new ArrayList<>();
+            errorDetected.add("1146");
+            
+            return errorDetected;
+        }
+         
+        if(pColumntoCompare.length==0){
+             return null;
+        }
+         
+        ArrayList<Boolean> verifyColumns = new ArrayList<>();
+        for (int i = 0; i < pColumntoCompare.length; i++) {
+            for (int j = 0; j < metadata[0].length; j++) {
+                if (metadata[0][j].equals(pColumntoCompare[i])) {
+                    verifyColumns.add(true);
+                }
+            }
+        }
+        
+        if (verifyColumns.size()!= pColumntoCompare.length ){
+            ArrayList<String[]> result = new ArrayList<>();
+            ArrayList<String> errorDetected= new ArrayList<>();
+            errorDetected.add("1072");
+            return errorDetected;
+            
+        }
+        return null;
+         
+     }
+     
+    public void reportedError(String pError,String type){
+        CommunicationProtocol respuesta = new CommunicationProtocol();
+
+        if(type.equals("lexer")){  
+            System.out.println("lexer");
+            respuesta.setStatus("900", "0");
+            respuesta.setFormat("default");
+            _json=respuesta.getReturnObj();
+
+        }
+        else {
+            type.equals("parser");
+            String[] verif=pError.split("\\(");
+            
+            if(verif[0].equals("MismatchedTokenException")){
+                respuesta.setStatus("900", "0");
+                respuesta.setFormat("default");
+                _json=respuesta.getReturnObj();
+                return ;
+                
+            }
+            respuesta.setStatus("901", "0");
+            respuesta.setFormat("default");
+            _json=respuesta.getReturnObj();
+            return ;
+            
+            
+        }
             
     }
                 
