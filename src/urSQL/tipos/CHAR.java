@@ -19,7 +19,7 @@ public class CHAR extends typeData {
             return true;
         }
 
-        if (pOperador.equals("not") && pDate.equals(getDate())) {
+        if (pOperador.equals("not") && !pDate.equals(getDate())) {
             return true;
         }
 

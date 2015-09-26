@@ -39,9 +39,8 @@ public class RuntimePreParser {
         RuntimeDB d = new RuntimeDB();
         d.setDB("TecDB");
         RuntimePreParser prueba = new RuntimePreParser();
-        prueba.recievemsg("DISPLAY DATABASE TecDB");  
-       
-        TableOperations t = new TableOperations();
+        //prueba.recievemsg("CREATE TABLE Est AS (Carne INTEGER NOT NULL,Nombre CHAR() NOT NULL, PRIMARY KEY(Carne))");  
+        
         
         //t.getArbolMetadata();
         //Funciones.recorrerArchivo2(Constants.DATABASE+"TecDB\\"+Constants.CONSTRAIT_CATALOG);

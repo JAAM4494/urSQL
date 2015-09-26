@@ -20,12 +20,8 @@ public class DATETIME extends typeData {
             return true;
         }
 
-        if (pOperador.equals("not") && pDate.equals(getDate())) {
+        if (pOperador.equals("not") && !pDate.equals(getDate())) {
             return true;
-        }
-
-        if (pOperador.equals("like")) {
-            return false;
         }
 
         if (pOperador.equals("is not null")) {

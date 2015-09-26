@@ -95,7 +95,9 @@ public class RuntimeDB {
     }
 
     public void createTable(ArrayList<String> pCreateTable){
-
+for (int i = 0; i < pCreateTable.size(); i++) {
+                System.out.println(pCreateTable.get(i));
+        }
         String nombre = pCreateTable.get(0);
         String pk = pCreateTable.get(pCreateTable.size()-1);
         pCreateTable.remove(0);
@@ -146,6 +148,7 @@ public class RuntimeDB {
         
     public void insertInto(ArrayList<String> pDelete){
         System.out.println("INSERT");
+        
         String table = pDelete.get(0);
         pDelete.remove(0);
         int largo = pDelete.size(), i;

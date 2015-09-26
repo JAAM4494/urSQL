@@ -139,7 +139,29 @@ public class TableOperations {
                     if(metadata[1][i].equals("VARCHAR")){
                         salida[i] = new VARCHAR(pValues[j]);
                     }
-                    
+                    if(metadata[1][i].equals("DATATIME")){
+                        salida[i] = new VARCHAR(pValues[j]);
+                    }
+                    else{
+                        String[] a = metadata[1][i].split("(");
+                        if(a[0].equals("DECIMAL")){
+                            salida[i] = new DECIMAL(pValues[j]);
+                        }
+                        if(a[0].equals("CHAR")){
+                            
+                            try{
+                                int precision = Integer.parseInt(a[1].substring(0, a[1].length()-1));
+                                salida[i] = new CHAR(pValues[j], precision);
+                            }
+                            catch(Exception e){
+                                typeData[] r_a = {new NULL(), new INTEGER("1232"), new VARCHAR("INSERT_INTO"), 
+                                new VARCHAR("Error el dato no es del tipo correspondiente")};
+                                insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
+                                return -1232;
+                            }
+                        }
+                        
+                    }
                     //agregar los otros tipos
                     
                     if(salida[i].verificarTipo()){
