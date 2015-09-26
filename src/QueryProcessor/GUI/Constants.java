@@ -11,14 +11,14 @@ package QueryProcessor.GUI;
  */
 public interface Constants {
 
-    final String[] PalabrasReservadas = {"where", "create", "drop", "databases",
-        "list", "database", "start", "get", "status", "stop", "display", "set",
-        "table", "as", "type", "constraint", "null", "not", "alter", "xml", "json",
-        "add", "primary", "foreign", "references", "drop", "index", "on", "select",
-        "from", "group", "join", "count", "average", "max", "min", "update", "by",
-        "set", "delete", "insert", "values", "for", "is", "into", "key"};
+    final String[] PalabrasReservadas = {"WHERE", "CREATE", "DROP", "DATABASES",
+        "LIST", "DATABASE", "START", "GET", "STATUS", "STOP", "DISPLAY", "SET",
+        "TABLE", "AS", "TYPE", "CONSTRAINT", "NULL", "NOT", "ALTER", "XML", "JSON",
+        "ADD", "PRIMARY", "FOREIGN", "REFERENCES", "INDEX", "ON", "SELECT",
+        "FROM", "GROUP", "JOIN", "COUNT", "AVERAGE", "MAX", "MIN", "UPDATE", "BY",
+        "SET", "DELETE", "INSERT", "VALUES", "FOR", "IS", "INTO", "KEY"};
     
-    final String[] OperatorsAndTypes = {">", "<", "=", "like", "true", "false",
-        "integer", "char", "varchar", "datetime", "decimal", "0", "1", "2",
+    final String[] OperatorsAndTypes = {">", "<", "=", "like",
+        "INTEGER", "CHAR", "VARCHAR", "DATETIME", "DECIMAL", "0", "1", "2",
     "3", "4", "5", "6", "7", "8", "9"};
 }

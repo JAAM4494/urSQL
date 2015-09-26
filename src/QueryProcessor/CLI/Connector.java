@@ -27,7 +27,8 @@ public class Connector {
     private BufferedReader input;
 
     public Connector(int pPort) {
-        host = "127.0.0.1";
+        //host = "127.0.0.1";
+        host = "192.168.1.106";
         output = null;
         input = null;
         port = pPort;
@@ -48,7 +49,7 @@ public class Connector {
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } //Host not found
         catch (UnknownHostException e) {
-            System.err.println("Don't know about host : " + host);
+            System.out.println("Error 1184: Connecting to urSQL, verify connection.");
             System.exit(1);
         }
 
