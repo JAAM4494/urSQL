@@ -350,7 +350,7 @@ public class MainWindow extends JFrame implements Observer, Runnable {
         schemasTree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         jScrollPane1.setViewportView(schemasTree);
 
-        executePortionBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/urgui/images/runportion.png"))); // NOI18N
+        executePortionBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/QueryProcessor/GUI/images/runportion.png"))); // NOI18N
         executePortionBtn.setToolTipText("execute the selected portion of the script");
         executePortionBtn.setContentAreaFilled(false);
         executePortionBtn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -359,7 +359,7 @@ public class MainWindow extends JFrame implements Observer, Runnable {
             }
         });
 
-        executeAllBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/urgui/images/runall.png"))); // NOI18N
+        executeAllBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/QueryProcessor/GUI/images/runall.png"))); // NOI18N
         executeAllBtn.setToolTipText("execute everthing in the script");
         executeAllBtn.setContentAreaFilled(false);
         executeAllBtn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -386,7 +386,7 @@ public class MainWindow extends JFrame implements Observer, Runnable {
 
         jTabbedPane1.addTab("urSQL File 1", jScrollPane2);
 
-        newSQLFileBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/urgui/images/plus.png"))); // NOI18N
+        newSQLFileBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/QueryProcessor/GUI/images/plus.png"))); // NOI18N
         newSQLFileBtn.setToolTipText("add new urSQL File");
         newSQLFileBtn.setContentAreaFilled(false);
         newSQLFileBtn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -395,7 +395,7 @@ public class MainWindow extends JFrame implements Observer, Runnable {
             }
         });
 
-        saveFileBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/urgui/images/save.png"))); // NOI18N
+        saveFileBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/QueryProcessor/GUI/images/save.png"))); // NOI18N
         saveFileBtn.setToolTipText("save urSQL File");
         saveFileBtn.setContentAreaFilled(false);
         saveFileBtn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -409,7 +409,7 @@ public class MainWindow extends JFrame implements Observer, Runnable {
             }
         });
 
-        closeScriptTabBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/urgui/images/closetab.png"))); // NOI18N
+        closeScriptTabBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/QueryProcessor/GUI/images/closetab.png"))); // NOI18N
         closeScriptTabBtn.setToolTipText("close selected urSQL File");
         closeScriptTabBtn.setContentAreaFilled(false);
         closeScriptTabBtn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -425,7 +425,7 @@ public class MainWindow extends JFrame implements Observer, Runnable {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("urSQL");
 
-        refreshBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/urgui/images/refresh.png"))); // NOI18N
+        refreshBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/QueryProcessor/GUI/images/refresh.png"))); // NOI18N
         refreshBtn.setToolTipText("refresh");
         refreshBtn.setContentAreaFilled(false);
         refreshBtn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -434,7 +434,7 @@ public class MainWindow extends JFrame implements Observer, Runnable {
             }
         });
 
-        loadFileBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/urgui/images/load.png"))); // NOI18N
+        loadFileBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/QueryProcessor/GUI/images/load.png"))); // NOI18N
         loadFileBtn.setToolTipText("load urSQL File");
         loadFileBtn.setContentAreaFilled(false);
         loadFileBtn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -443,7 +443,7 @@ public class MainWindow extends JFrame implements Observer, Runnable {
             }
         });
 
-        getPlanBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/urgui/images/plan.png"))); // NOI18N
+        getPlanBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/QueryProcessor/GUI/images/plan.png"))); // NOI18N
         getPlanBtn.setText("Get Query Plan");
         getPlanBtn.setToolTipText("get query plan");
         getPlanBtn.addMouseListener(new java.awt.event.MouseAdapter() {

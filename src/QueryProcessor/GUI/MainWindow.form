@@ -240,7 +240,7 @@
     <Component class="javax.swing.JButton" name="executePortionBtn">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/urgui/images/runportion.png"/>
+          <Image iconType="3" name="/QueryProcessor/GUI/images/runportion.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="execute the selected portion of the script"/>
         <Property name="contentAreaFilled" type="boolean" value="false"/>
@@ -252,7 +252,7 @@
     <Component class="javax.swing.JButton" name="executeAllBtn">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/urgui/images/runall.png"/>
+          <Image iconType="3" name="/QueryProcessor/GUI/images/runall.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="execute everthing in the script"/>
         <Property name="contentAreaFilled" type="boolean" value="false"/>
@@ -314,7 +314,7 @@
     <Component class="javax.swing.JButton" name="newSQLFileBtn">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/urgui/images/plus.png"/>
+          <Image iconType="3" name="/QueryProcessor/GUI/images/plus.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="add new urSQL File"/>
         <Property name="contentAreaFilled" type="boolean" value="false"/>
@@ -326,7 +326,7 @@
     <Component class="javax.swing.JButton" name="saveFileBtn">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/urgui/images/save.png"/>
+          <Image iconType="3" name="/QueryProcessor/GUI/images/save.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="save urSQL File"/>
         <Property name="contentAreaFilled" type="boolean" value="false"/>
@@ -339,7 +339,7 @@
     <Component class="javax.swing.JButton" name="closeScriptTabBtn">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/urgui/images/closetab.png"/>
+          <Image iconType="3" name="/QueryProcessor/GUI/images/closetab.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="close selected urSQL File"/>
         <Property name="contentAreaFilled" type="boolean" value="false"/>
@@ -368,7 +368,7 @@
     <Component class="javax.swing.JButton" name="refreshBtn">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/urgui/images/refresh.png"/>
+          <Image iconType="3" name="/QueryProcessor/GUI/images/refresh.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="refresh"/>
         <Property name="contentAreaFilled" type="boolean" value="false"/>
@@ -380,7 +380,7 @@
     <Component class="javax.swing.JButton" name="loadFileBtn">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/urgui/images/load.png"/>
+          <Image iconType="3" name="/QueryProcessor/GUI/images/load.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="load urSQL File"/>
         <Property name="contentAreaFilled" type="boolean" value="false"/>
@@ -392,7 +392,7 @@
     <Component class="javax.swing.JButton" name="getPlanBtn">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/urgui/images/plan.png"/>
+          <Image iconType="3" name="/QueryProcessor/GUI/images/plan.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Get Query Plan"/>
         <Property name="toolTipText" type="java.lang.String" value="get query plan"/>
