@@ -41,9 +41,15 @@ public class RuntimePreParser {
         RuntimePreParser prueba = new RuntimePreParser();
         //prueba.recievemsg("CREATE TABLE Est AS (Carne INTEGER NOT NULL,Nombre CHAR() NOT NULL, PRIMARY KEY(Carne))");  
         
+        //prueba.recievemsg("INSERT INTO Est (Carne,Nombre) VALUES (201311, Aaron)");  
+        
+       // Funciones.recorrerArchivo(Constants.DATABASE+"TecDB\\Est");
+        
+        prueba.recievemsg("SELECT Nombre,Carne FROM Est WHERE ID=1  ");  
+
         
         //t.getArbolMetadata();
-        //Funciones.recorrerArchivo2(Constants.DATABASE+"TecDB\\"+Constants.CONSTRAIT_CATALOG);
+       // Funciones.recorrerArchivo2(Constants.DATABASE+"TecDB\\"+Constants.CONSTRAIT_CATALOG);
         //Funciones.recorrerArchivo(Constants.DATABASE+"TecDB\\Cursos");
         /*System.out.println("HISTORY CATALOG");
         Funciones.recorrerArchivo(Constants.HISTORY_CATALOG);

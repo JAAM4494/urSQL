@@ -1,4 +1,4 @@
-// $ANTLR 3.5.1 /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g 2015-09-26 12:19:04
+// $ANTLR 3.5.1 /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g 2015-09-26 15:45:54
 
 	package RuntimeDBProcessor.parser;
 	import RuntimeDBProcessor.*;
@@ -66,6 +66,17 @@ public class urSQLLexer extends Lexer {
 	public static final int WS=12;
 
 		RuntimeDB mainRuntime= new RuntimeDB();
+		
+		@Override
+		  public void reportError(RecognitionException e) {
+			System.out.println("ERROR \n "+e.toString());
+			
+		  	//System.out.println("ERROR \n "+e.getMessage());
+		  	mainRuntime.reportedError(e.toString(),"lexer");
+		       	//InError=true;       
+		}  
+		
+		
 
 
 
@@ -89,8 +100,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__13;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:12:7: ( '(' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:12:9: '('
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:23:7: ( '(' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:23:9: '('
 			{
 			match('('); 
 			}
@@ -109,8 +120,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__14;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:13:7: ( ')' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:13:9: ')'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:24:7: ( ')' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:24:9: ')'
 			{
 			match(')'); 
 			}
@@ -129,8 +140,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__15;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:14:7: ( '*' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:14:9: '*'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:25:7: ( '*' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:25:9: '*'
 			{
 			match('*'); 
 			}
@@ -149,8 +160,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__16;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:15:7: ( ',' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:15:9: ','
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:26:7: ( ',' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:26:9: ','
 			{
 			match(','); 
 			}
@@ -169,8 +180,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__17;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:16:7: ( '.' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:16:9: '.'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:27:7: ( '.' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:27:9: '.'
 			{
 			match('.'); 
 			}
@@ -189,8 +200,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__18;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:17:7: ( '<' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:17:9: '<'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:28:7: ( '<' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:28:9: '<'
 			{
 			match('<'); 
 			}
@@ -209,8 +220,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__19;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:18:7: ( '=' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:18:9: '='
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:29:7: ( '=' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:29:9: '='
 			{
 			match('='); 
 			}
@@ -229,8 +240,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__20;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:19:7: ( '>' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:19:9: '>'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:30:7: ( '>' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:30:9: '>'
 			{
 			match('>'); 
 			}
@@ -249,8 +260,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__21;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:20:7: ( 'ADD' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:20:9: 'ADD'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:31:7: ( 'ADD' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:31:9: 'ADD'
 			{
 			match("ADD"); 
 
@@ -270,8 +281,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__22;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:21:7: ( 'ALTER TABLE' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:21:9: 'ALTER TABLE'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:32:7: ( 'ALTER TABLE' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:32:9: 'ALTER TABLE'
 			{
 			match("ALTER TABLE"); 
 
@@ -291,8 +302,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__23;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:22:7: ( 'AS' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:22:9: 'AS'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:33:7: ( 'AS' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:33:9: 'AS'
 			{
 			match("AS"); 
 
@@ -312,8 +323,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__24;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:23:7: ( 'CONSTRAINT' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:23:9: 'CONSTRAINT'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:34:7: ( 'CONSTRAINT' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:34:9: 'CONSTRAINT'
 			{
 			match("CONSTRAINT"); 
 
@@ -333,8 +344,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__25;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:24:7: ( 'CREATE DATABASE' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:24:9: 'CREATE DATABASE'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:35:7: ( 'CREATE DATABASE' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:35:9: 'CREATE DATABASE'
 			{
 			match("CREATE DATABASE"); 
 
@@ -354,8 +365,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__26;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:25:7: ( 'CREATE INDEX' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:25:9: 'CREATE INDEX'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:36:7: ( 'CREATE INDEX' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:36:9: 'CREATE INDEX'
 			{
 			match("CREATE INDEX"); 
 
@@ -375,8 +386,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__27;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:26:7: ( 'CREATE TABLE' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:26:9: 'CREATE TABLE'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:37:7: ( 'CREATE TABLE' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:37:9: 'CREATE TABLE'
 			{
 			match("CREATE TABLE"); 
 
@@ -396,8 +407,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__28;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:27:7: ( 'DELETE' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:27:9: 'DELETE'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:38:7: ( 'DELETE' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:38:9: 'DELETE'
 			{
 			match("DELETE"); 
 
@@ -417,8 +428,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__29;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:28:7: ( 'DISPLAY DATABASE' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:28:9: 'DISPLAY DATABASE'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:39:7: ( 'DISPLAY DATABASE' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:39:9: 'DISPLAY DATABASE'
 			{
 			match("DISPLAY DATABASE"); 
 
@@ -438,8 +449,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__30;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:29:7: ( 'DROP DATABASE' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:29:9: 'DROP DATABASE'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:40:7: ( 'DROP DATABASE' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:40:9: 'DROP DATABASE'
 			{
 			match("DROP DATABASE"); 
 
@@ -459,8 +470,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__31;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:30:7: ( 'DROP TABLE' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:30:9: 'DROP TABLE'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:41:7: ( 'DROP TABLE' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:41:9: 'DROP TABLE'
 			{
 			match("DROP TABLE"); 
 
@@ -480,8 +491,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__32;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:31:7: ( 'FOR JSON' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:31:9: 'FOR JSON'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:42:7: ( 'FOR JSON' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:42:9: 'FOR JSON'
 			{
 			match("FOR JSON"); 
 
@@ -501,8 +512,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__33;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:32:7: ( 'FOR XML' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:32:9: 'FOR XML'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:43:7: ( 'FOR XML' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:43:9: 'FOR XML'
 			{
 			match("FOR XML"); 
 
@@ -522,8 +533,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__34;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:33:7: ( 'FOREIGN KEY' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:33:9: 'FOREIGN KEY'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:44:7: ( 'FOREIGN KEY' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:44:9: 'FOREIGN KEY'
 			{
 			match("FOREIGN KEY"); 
 
@@ -543,8 +554,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__35;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:34:7: ( 'FROM' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:34:9: 'FROM'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:45:7: ( 'FROM' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:45:9: 'FROM'
 			{
 			match("FROM"); 
 
@@ -564,8 +575,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__36;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:35:7: ( 'GROUP BY' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:35:9: 'GROUP BY'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:46:7: ( 'GROUP BY' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:46:9: 'GROUP BY'
 			{
 			match("GROUP BY"); 
 
@@ -585,8 +596,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__37;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:36:7: ( 'INSERT INTO' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:36:9: 'INSERT INTO'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:47:7: ( 'INSERT INTO' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:47:9: 'INSERT INTO'
 			{
 			match("INSERT INTO"); 
 
@@ -606,8 +617,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__38;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:37:7: ( 'JOIN' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:37:9: 'JOIN'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:48:7: ( 'JOIN' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:48:9: 'JOIN'
 			{
 			match("JOIN"); 
 
@@ -627,8 +638,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__39;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:38:7: ( 'LIST DATABASES' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:38:9: 'LIST DATABASES'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:49:7: ( 'LIST DATABASES' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:49:9: 'LIST DATABASES'
 			{
 			match("LIST DATABASES"); 
 
@@ -648,8 +659,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__40;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:39:7: ( 'ON' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:39:9: 'ON'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:50:7: ( 'ON' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:50:9: 'ON'
 			{
 			match("ON"); 
 
@@ -669,8 +680,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__41;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:40:7: ( 'PRIMARY KEY(' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:40:9: 'PRIMARY KEY('
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:51:7: ( 'PRIMARY KEY(' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:51:9: 'PRIMARY KEY('
 			{
 			match("PRIMARY KEY("); 
 
@@ -690,8 +701,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__42;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:41:7: ( 'REFERENCES' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:41:9: 'REFERENCES'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:52:7: ( 'REFERENCES' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:52:9: 'REFERENCES'
 			{
 			match("REFERENCES"); 
 
@@ -711,8 +722,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__43;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:42:7: ( 'SELECT' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:42:9: 'SELECT'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:53:7: ( 'SELECT' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:53:9: 'SELECT'
 			{
 			match("SELECT"); 
 
@@ -732,8 +743,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__44;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:43:7: ( 'SET DATABASE' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:43:9: 'SET DATABASE'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:54:7: ( 'SET DATABASE' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:54:9: 'SET DATABASE'
 			{
 			match("SET DATABASE"); 
 
@@ -753,8 +764,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__45;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:44:7: ( 'START' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:44:9: 'START'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:55:7: ( 'START' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:55:9: 'START'
 			{
 			match("START"); 
 
@@ -774,8 +785,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__46;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:45:7: ( 'STOP' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:45:9: 'STOP'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:56:7: ( 'STOP' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:56:9: 'STOP'
 			{
 			match("STOP"); 
 
@@ -795,8 +806,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__47;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:46:7: ( 'Set' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:46:9: 'Set'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:57:7: ( 'Set' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:57:9: 'Set'
 			{
 			match("Set"); 
 
@@ -816,8 +827,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__48;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:47:7: ( 'UPDATE' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:47:9: 'UPDATE'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:58:7: ( 'UPDATE' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:58:9: 'UPDATE'
 			{
 			match("UPDATE"); 
 
@@ -837,8 +848,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__49;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:48:7: ( 'VALUES' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:48:9: 'VALUES'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:59:7: ( 'VALUES' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:59:9: 'VALUES'
 			{
 			match("VALUES"); 
 
@@ -858,8 +869,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__50;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:49:7: ( 'WHERE' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:49:9: 'WHERE'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:60:7: ( 'WHERE' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:60:9: 'WHERE'
 			{
 			match("WHERE"); 
 
@@ -879,8 +890,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__51;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:50:7: ( 'is not null' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:50:9: 'is not null'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:61:7: ( 'is not null' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:61:9: 'is not null'
 			{
 			match("is not null"); 
 
@@ -900,8 +911,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__52;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:51:7: ( 'is null' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:51:9: 'is null'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:62:7: ( 'is null' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:62:9: 'is null'
 			{
 			match("is null"); 
 
@@ -921,8 +932,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__53;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:52:7: ( 'like' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:52:9: 'like'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:63:7: ( 'like' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:63:9: 'like'
 			{
 			match("like"); 
 
@@ -942,8 +953,8 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = T__54;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:53:7: ( 'not' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:53:9: 'not'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:64:7: ( 'not' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:64:9: 'not'
 			{
 			match("not"); 
 
@@ -963,7 +974,7 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = AggregateFunctions;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:358:2: ( ( 'COUNT' '(' Identifier ')' ) | 'AVERAGE' '(' Identifier ')' | 'MIN' '(' Identifier ')' | 'MAX' '(' Identifier ')' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:367:2: ( ( 'COUNT' '(' Identifier ')' ) | 'AVERAGE' '(' Identifier ')' | 'MIN' '(' Identifier ')' | 'MAX' '(' Identifier ')' )
 			int alt1=4;
 			switch ( input.LA(1) ) {
 			case 'C':
@@ -1007,10 +1018,10 @@ public class urSQLLexer extends Lexer {
 			}
 			switch (alt1) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:358:4: ( 'COUNT' '(' Identifier ')' )
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:367:4: ( 'COUNT' '(' Identifier ')' )
 					{
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:358:4: ( 'COUNT' '(' Identifier ')' )
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:358:5: 'COUNT' '(' Identifier ')'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:367:4: ( 'COUNT' '(' Identifier ')' )
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:367:5: 'COUNT' '(' Identifier ')'
 					{
 					match("COUNT"); 
 
@@ -1023,7 +1034,7 @@ public class urSQLLexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:358:35: 'AVERAGE' '(' Identifier ')'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:367:35: 'AVERAGE' '(' Identifier ')'
 					{
 					match("AVERAGE"); 
 
@@ -1034,7 +1045,7 @@ public class urSQLLexer extends Lexer {
 					}
 					break;
 				case 3 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:358:65: 'MIN' '(' Identifier ')'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:367:65: 'MIN' '(' Identifier ')'
 					{
 					match("MIN"); 
 
@@ -1045,7 +1056,7 @@ public class urSQLLexer extends Lexer {
 					}
 					break;
 				case 4 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:358:91: 'MAX' '(' Identifier ')'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:367:91: 'MAX' '(' Identifier ')'
 					{
 					match("MAX"); 
 
@@ -1079,7 +1090,7 @@ public class urSQLLexer extends Lexer {
 			CommonToken id7=null;
 			CommonToken id8=null;
 
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:383:6: (id1= 'INTEGER' |id2= 'DECIMAL' '(' id3= Number ',' id4= Number ')' |id5= 'CHAR' '(' ( Number | Identifier ) ')' |id7= 'VARCHAR' |id8= 'DATETIME' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:392:6: (id1= 'INTEGER' |id2= 'DECIMAL' '(' id3= Number ',' id4= Number ')' |id5= 'CHAR' '(' ( Number | Identifier ) ')' |id7= 'VARCHAR' |id8= 'DATETIME' )
 			int alt3=5;
 			switch ( input.LA(1) ) {
 			case 'I':
@@ -1128,7 +1139,7 @@ public class urSQLLexer extends Lexer {
 			}
 			switch (alt3) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:384:2: id1= 'INTEGER'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:393:2: id1= 'INTEGER'
 					{
 					int id1Start = getCharIndex();
 					match("INTEGER"); 
@@ -1141,7 +1152,7 @@ public class urSQLLexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:384:19: id2= 'DECIMAL' '(' id3= Number ',' id4= Number ')'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:393:19: id2= 'DECIMAL' '(' id3= Number ',' id4= Number ')'
 					{
 					int id2Start = getCharIndex();
 					match("DECIMAL"); 
@@ -1173,7 +1184,7 @@ public class urSQLLexer extends Lexer {
 					}
 					break;
 				case 3 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:385:3: id5= 'CHAR' '(' ( Number | Identifier ) ')'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:394:3: id5= 'CHAR' '(' ( Number | Identifier ) ')'
 					{
 					int id5Start = getCharIndex();
 					match("CHAR"); 
@@ -1184,7 +1195,7 @@ public class urSQLLexer extends Lexer {
 					id5.setCharPositionInLine(id5StartCharPos438);
 
 					match('('); 
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:385:18: ( Number | Identifier )
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:394:18: ( Number | Identifier )
 					int alt2=2;
 					int LA2_0 = input.LA(1);
 					if ( (LA2_0==')'||(LA2_0 >= '0' && LA2_0 <= '9')) ) {
@@ -1202,14 +1213,14 @@ public class urSQLLexer extends Lexer {
 
 					switch (alt2) {
 						case 1 :
-							// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:385:19: Number
+							// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:394:19: Number
 							{
 							mNumber(); 
 
 							}
 							break;
 						case 2 :
-							// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:385:26: Identifier
+							// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:394:26: Identifier
 							{
 							mIdentifier(); 
 
@@ -1222,7 +1233,7 @@ public class urSQLLexer extends Lexer {
 					}
 					break;
 				case 4 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:385:44: id7= 'VARCHAR'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:394:44: id7= 'VARCHAR'
 					{
 					int id7Start = getCharIndex();
 					match("VARCHAR"); 
@@ -1235,7 +1246,7 @@ public class urSQLLexer extends Lexer {
 					}
 					break;
 				case 5 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:385:61: id8= 'DATETIME'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:394:61: id8= 'DATETIME'
 					{
 					int id8Start = getCharIndex();
 					match("DATETIME"); 
@@ -1263,7 +1274,7 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = Nullability;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:395:2: ( 'NULL' | 'NOT NULL' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:404:2: ( 'NULL' | 'NOT NULL' )
 			int alt4=2;
 			int LA4_0 = input.LA(1);
 			if ( (LA4_0=='N') ) {
@@ -1297,14 +1308,14 @@ public class urSQLLexer extends Lexer {
 
 			switch (alt4) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:395:4: 'NULL'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:404:4: 'NULL'
 					{
 					match("NULL"); 
 
 					}
 					break;
 				case 2 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:395:12: 'NOT NULL'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:404:12: 'NOT NULL'
 					{
 					match("NOT NULL"); 
 
@@ -1326,7 +1337,7 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = LogicToken;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:407:2: ( 'AND' | 'OR' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:416:2: ( 'AND' | 'OR' )
 			int alt5=2;
 			int LA5_0 = input.LA(1);
 			if ( (LA5_0=='A') ) {
@@ -1344,14 +1355,14 @@ public class urSQLLexer extends Lexer {
 
 			switch (alt5) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:407:4: 'AND'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:416:4: 'AND'
 					{
 					match("AND"); 
 
 					}
 					break;
 				case 2 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:407:12: 'OR'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:416:12: 'OR'
 					{
 					match("OR"); 
 
@@ -1373,12 +1384,12 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = Identifier;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:410:3: ( LETTER ( LETTER | DIGIT )* )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:410:6: LETTER ( LETTER | DIGIT )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:419:3: ( LETTER ( LETTER | DIGIT )* )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:419:6: LETTER ( LETTER | DIGIT )*
 			{
 			mLETTER(); 
 
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:410:13: ( LETTER | DIGIT )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:419:13: ( LETTER | DIGIT )*
 			loop6:
 			while (true) {
 				int alt6=2;
@@ -1423,10 +1434,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = Number;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:411:8: ( ( DIGIT )* )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:412:3: ( DIGIT )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:420:8: ( ( DIGIT )* )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:421:3: ( DIGIT )*
 			{
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:412:3: ( DIGIT )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:421:3: ( DIGIT )*
 			loop7:
 			while (true) {
 				int alt7=2;
@@ -1469,7 +1480,7 @@ public class urSQLLexer extends Lexer {
 	// $ANTLR start "LETTER"
 	public final void mLETTER() throws RecognitionException {
 		try {
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:414:17: ( ( 'a' .. 'z' | 'A' .. 'Z' ) )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:423:17: ( ( 'a' .. 'z' | 'A' .. 'Z' ) )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:
 			{
 			if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
@@ -1492,7 +1503,7 @@ public class urSQLLexer extends Lexer {
 	// $ANTLR start "DIGIT"
 	public final void mDIGIT() throws RecognitionException {
 		try {
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:415:16: ( '0' .. '9' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:424:16: ( '0' .. '9' )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:
 			{
 			if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
@@ -1517,10 +1528,10 @@ public class urSQLLexer extends Lexer {
 		try {
 			int _type = WS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:417:4: ( ( ' ' | '\\n' | '\\t' )+ )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:417:6: ( ' ' | '\\n' | '\\t' )+
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:426:4: ( ( ' ' | '\\n' | '\\t' )+ )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:426:6: ( ' ' | '\\n' | '\\t' )+
 			{
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:417:6: ( ' ' | '\\n' | '\\t' )+
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:426:6: ( ' ' | '\\n' | '\\t' )+
 			int cnt8=0;
 			loop8:
 			while (true) {
