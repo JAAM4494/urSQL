@@ -39,6 +39,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -67,33 +68,52 @@ public class MainWindow extends JFrame implements Observer, Runnable {
         this.setLocationRelativeTo(null);
 
     }
-    
+
     ///////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
-    
     private void processQueries(String pQueries) {
         String[] qList = pQueries.split(";");
-        
+
         for (int i = 0; i < qList.length; i++) {
             try {
                 //System.out.println(tempText);
                 Connector conn = new Connector(8080);
                 String out = conn.sendMessage(qList[i]);
                 //System.out.println(out);
-                ResultSetManager nn = new ResultSetManager();
-                jTable1.setModel(nn.displayColumns(out));
-                
-                if(logErrorArea.getText().equals("")) 
-                    logErrorArea.append(nn.displayStatus(out));
-                else
-                    logErrorArea.append("\n" + nn.displayStatus(out));
+                processQueriesAux(out);
+
             } catch (IOException ex) {
                 System.out.println("Error 1184: Connecting to urSQL, verify connection.");
                 //Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-    
+
+    private void processQueriesAux(String pResponse) {
+        JSONObject json = null;
+        try {
+            json = new JSONObject(pResponse);
+
+            if (json.get("format").equals("json") | json.get("format").equals("xml")) {
+                ForXMLForJSONWindow display = ForXMLForJSONWindow.getObject();
+                display.setTextArea(pResponse);
+                display.setVisible(true);
+            } else {
+                ResultSetManager nn = new ResultSetManager();
+                jTable1.setModel(nn.displayColumns(pResponse));
+
+                if (logErrorArea.getText().equals("")) {
+                    logErrorArea.append(nn.displayStatus(pResponse));
+                } else {
+                    logErrorArea.append("\n" + nn.displayStatus(pResponse));
+                }
+            }
+
+        } catch (JSONException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     private void saveFile() {
         JFileChooser saveFile = new JFileChooser();
         //saveFile.showSaveDialog(null);
@@ -125,9 +145,9 @@ public class MainWindow extends JFrame implements Observer, Runnable {
                 }
             }
         }
-        
+
     }
-    
+
     private void loadFile() {
         JFileChooser loadFile = new JFileChooser();
         //saveFile.showSaveDialog(null);
@@ -173,9 +193,9 @@ public class MainWindow extends JFrame implements Observer, Runnable {
                 }
             }
         }
-        
+
     }
-    
+
     private void refresh() {
         String tempText = "metadata";
 
@@ -190,24 +210,24 @@ public class MainWindow extends JFrame implements Observer, Runnable {
         } catch (JSONException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
     private void getPlan() {
         String tempText = "plan";
 
         try {
-                //System.out.println(tempText);
-                Connector conn = new Connector(8080);
-                String out = conn.sendMessage(tempText);
-                //System.out.println(out);
-                ResultSetManager nn = new ResultSetManager();
-                jTable1.setModel(nn.displayColumns(out));
-            } catch (IOException ex) {
-                System.out.println("Error 1184: Connecting to urSQL, verify connection.");
-            }
+            //System.out.println(tempText);
+            Connector conn = new Connector(8080);
+            String out = conn.sendMessage(tempText);
+            //System.out.println(out);
+            ResultSetManager nn = new ResultSetManager();
+            jTable1.setModel(nn.displayColumns(out));
+        } catch (IOException ex) {
+            System.out.println("Error 1184: Connecting to urSQL, verify connection.");
+        }
     }
-    
+
     private void execPortionCode() {
         String tempText = null;
 
@@ -226,7 +246,7 @@ public class MainWindow extends JFrame implements Observer, Runnable {
             processQueries(tempText);
         }
     }
-    
+
     private void execAllCode() {
         String tempText = null;
 
@@ -244,11 +264,11 @@ public class MainWindow extends JFrame implements Observer, Runnable {
         if (tempText != null) {
             processQueries(tempText);
         }
-        
+
     }
-    
+
     private void closeScript() {
-         if (paneList.size() > 1) {
+        if (paneList.size() > 1) {
             Component selectedTab = jTabbedPane1.getSelectedComponent();
             if (selectedTab != null) {
                 numTabs -= 1;
@@ -257,9 +277,9 @@ public class MainWindow extends JFrame implements Observer, Runnable {
                 paneList.remove(index);
             }
         }
-        
+
     }
-    
+
     private void newScript() {
         JTextPane newScriptPane = new JTextPane();
 
@@ -271,15 +291,11 @@ public class MainWindow extends JFrame implements Observer, Runnable {
         jTabbedPane1.setSelectedIndex(numTabs += 1);
 
         paneList.add(newScriptPane);
-        
-    }
-    
-            
-    
-    
-    ///////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////
 
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

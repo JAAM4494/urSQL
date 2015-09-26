@@ -63,8 +63,8 @@
                 <Column editable="false" title="Error Code" type="java.lang.String">
                   <Data value="900"/>
                   <Data value="901"/>
-                  <Data value="902"/>
                   <Data value="903"/>
+                  <Data value="904"/>
                   <Data value="1007"/>
                   <Data value="1008"/>
                   <Data value="1046"/>
@@ -86,8 +86,8 @@
                 <Column editable="false" title="Description" type="java.lang.String">
                   <Data value="Lexical error."/>
                   <Data value="Syntax error."/>
-                  <Data value="null"/>
-                  <Data value="null"/>
+                  <Data value="Semantic error."/>
+                  <Data value="Index cannot be created."/>
                   <Data value="Database already exist."/>
                   <Data value="Can&apos;t drop database; database doesn&apos;t exist."/>
                   <Data value="No database selected."/>

@@ -12,7 +12,7 @@ package QueryProcessor.GUI;
 public interface Constants {
 
     final String[] PalabrasReservadas = {"WHERE", "CREATE", "DROP", "DATABASES",
-        "LIST", "DATABASE", "START", "GET", "STATUS", "STOP", "DISPLAY", "SET",
+        "LIST", "DATABASE", "START", "GET", "STATUS", "STOP", "DISPLAY", "Set",
         "TABLE", "AS", "TYPE", "CONSTRAINT", "NULL", "NOT", "ALTER", "XML", "JSON",
         "ADD", "PRIMARY", "FOREIGN", "REFERENCES", "INDEX", "ON", "SELECT",
         "FROM", "GROUP", "JOIN", "COUNT", "AVERAGE", "MAX", "MIN", "UPDATE", "BY",

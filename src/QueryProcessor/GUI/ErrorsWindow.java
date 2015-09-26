@@ -49,8 +49,8 @@ public class ErrorsWindow extends javax.swing.JFrame {
             new Object [][] {
                 {"900", "Lexical error."},
                 {"901", "Syntax error."},
-                {"902", null},
-                {"903", null},
+                {"903", "Semantic error."},
+                {"904", "Index cannot be created."},
                 {"1007", "Database already exist."},
                 {"1008", "Can't drop database; database doesn't exist."},
                 {"1046", "No database selected."},
