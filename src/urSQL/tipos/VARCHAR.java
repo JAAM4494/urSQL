@@ -36,7 +36,7 @@ public class VARCHAR extends typeData{
             return true;
         
         if (pOperador.equals("like"))
-            return false;
+            return like(pDate);
         
         if (pOperador.equals("is not null"))
             return true; 
@@ -56,4 +56,26 @@ public class VARCHAR extends typeData{
     public boolean verificarTipo() {
         return true; 
     }    
+
+    @Override
+    public boolean like(String pDate) {
+        boolean rValue = false;
+        String stringtoCompare = pDate.replaceAll("/", "");;
+
+        if (pDate.startsWith("/") && pDate.endsWith("/")) {
+            if(getDate().matches("(?i).*" + stringtoCompare + ".*")) {
+                rValue = true;
+            }
+        } else if (pDate.startsWith("/")) {
+            if(getDate().matches("(?i).*" + stringtoCompare)) {
+                rValue = true;
+            }
+        } else if (pDate.endsWith("/")) {
+            if(getDate().matches("(?i)" + stringtoCompare + ".*")) {
+                rValue = true;
+            }
+        }
+
+        return rValue;
+    }
 }

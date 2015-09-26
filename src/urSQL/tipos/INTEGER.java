@@ -49,10 +49,6 @@ public class INTEGER extends typeData {
                 return true;
             }
 
-            if (pOperador.equals("like")) {
-                return false;
-            }
-
             if (pOperador.equals("is not null")) {
                 return true;
             }
@@ -87,5 +83,10 @@ public class INTEGER extends typeData {
             return false;
         }
 
+    }
+
+    @Override
+    public boolean like(String pDate) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

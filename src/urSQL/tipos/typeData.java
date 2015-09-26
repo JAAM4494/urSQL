@@ -31,6 +31,8 @@ public abstract class typeData implements Serializable {
     
     abstract public boolean verificarTipo();
     
+    abstract public boolean like(String pDate);
+    
     public String getDate(){
         return _date;
     }

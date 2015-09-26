@@ -44,5 +44,10 @@ public class NULL extends typeData{
     public boolean verificarTipo() {
         return getDate().equals("NULL");
     }
+
+    @Override
+    public boolean like(String pDate) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
