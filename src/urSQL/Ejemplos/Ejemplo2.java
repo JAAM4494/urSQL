@@ -1,5 +1,6 @@
 package urSQL.Ejemplos;
 
+import Runtime.Server.CommunicationProtocol;
 import RuntimeDBProcessor.commands.CLP.CLPCommands;
 import RuntimeDBProcessor.commands.DDL.DDLCommands;
 import RuntimeDBProcessor.commands.DML.DMLCommands;
@@ -18,10 +19,13 @@ public class Ejemplo2 {
         DDLCommands ddl = new DDLCommands();
         CLPCommands clp = new CLPCommands();
         
-        clp.createDatabase("TEC_DB");   
-        System.out.println(ddl.setDatabase("TEC_DB"));
-        Funciones.recorrerArchivo(Constants.DB);
-        
+        //clp.createDatabase("TEC_DB");   
+        //System.out.println(ddl.setDatabase("TEC_DB"));
+        //Funciones.recorrerArchivo(Constants.DB);
+        CommunicationProtocol respuesta = new CommunicationProtocol();
+        respuesta.setFormat("default");
+        respuesta.setStatus("0", "0");
+        System.out.println(respuesta.getReturnObj());
         /*
         String[] str = {"Carne-INTEGER-NOT NULL", "Nombre-VARCHAR-NULL", "Edad-INTEGER-NOT NULL"};
         System.out.println("CREATE TABLE "+ddl.createTable("Estudiantes", str , "Carne"));

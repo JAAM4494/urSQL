@@ -85,6 +85,10 @@ class client_handler extends Thread {
                         out.println(tp.getArbolMetadata());
                         continue;
                     }
+                    if(line.equals("plan")){
+                        out.println(QueryPlan.getQueryPlan());
+                        continue;
+                    }
                     prueba.recievemsg(line);
                     if(RuntimeDB.getStart()){
                         out.println(RuntimeDB.getJson());

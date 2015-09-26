@@ -230,15 +230,51 @@ public class DDLCommands {
           
     } 
     
-    public boolean createIndex(String pTable, String pTableColumn){
+    public int createIndex(String pTable, String pTableColumn){
         
         TableOperations t = new TableOperations();
+        if (_schema.equals("NULA")){
+            typeData[] r = {new NULL(), new INTEGER("-1046"), new VARCHAR("ALTER_TABLE"), 
+                new VARCHAR("No ha seleccionado ninguna base de datos")};
+            t.insert(Constants.DATABASE+Constants.LOG_ERRORS, r, true);
+            return -1046;
+        }
+        String[][] metadata = t.getMetaDataTable(_schema, pTable);
+        if(metadata!=null){
+            if (pTableColumn.equals(metadata[0][0])){
+                
+            }
+            else{
+                typeData[] r_a = {new NULL(), new INTEGER("904"), new VARCHAR("ALTER_TABLE"), 
+                new VARCHAR("Columna acepta repetidos")};
+                t.insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
+                return  -904;
+            }
+        }
+        else{
+            typeData[] r_a = {new NULL(), new INTEGER("-1146 "), new VARCHAR("ALTER_TABLE"), 
+            new VARCHAR("No existe la tabla")};
+            t.insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
+            return  -1146 ;
+        }
+       /* TableOperations t = new TableOperations();
         typeData[] r1 = {new VARCHAR("CREATE_INDEX"), new VARCHAR(pTable)};
         t.insert(Constants.INDEX_CATALOG, r1, false);
         typeData[] r2 = {new VARCHAR("ON"), new VARCHAR(pTableColumn)};
         t.insert(Constants.INDEX_CATALOG, r2, false);   
         return false;
-        //Falta meterla en la tabla de index        
-    } 
+        //Falta meterla en la tabla de index   
+               */
+        return 0;
+    }
+    
+    public ArrayList<typeData[]> getDates(String pTable, String pCol){
+        
+        TableOperations t = new TableOperations();
+        
+        
+        String[][] metadata = t.getMetaDataTable(_schema, pTable);
+        return null;
+    }
       
 }

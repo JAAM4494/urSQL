@@ -25,6 +25,7 @@ public class DDLParser {
         else{
             respuesta.setStatus(Integer.toString(Math.abs(i)), "0");
         }
+        respuesta.setFormat("default");
         return respuesta.getReturnObj();
     }
     
@@ -45,6 +46,7 @@ public class DDLParser {
         else{
             respuesta.setStatus(Integer.toString(Math.abs(sal)), "0");
         }
+        respuesta.setFormat("default");
         return respuesta.getReturnObj();
         
 
@@ -60,6 +62,7 @@ public class DDLParser {
         else{
             respuesta.setStatus(Integer.toString(Math.abs(sal)), "0");
         }
+        respuesta.setFormat("default");
         return respuesta.getReturnObj();
     }
     
@@ -72,6 +75,7 @@ public class DDLParser {
         else{
             respuesta.setStatus(Integer.toString(Math.abs(i)), "0");
         }
+        respuesta.setFormat("default");
         return respuesta.getReturnObj();
     }
     

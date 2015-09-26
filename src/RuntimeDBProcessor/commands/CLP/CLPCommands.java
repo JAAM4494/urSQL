@@ -88,6 +88,8 @@ public class CLPCommands {
         array2.put(str);
         respuesta.accumulateData("Component", array1);
         respuesta.accumulateData("Status", array2);
+        respuesta.setFormat("default");
+        respuesta.setStatus("0", "0");
         return respuesta.getReturnObj();
     }
         
@@ -101,6 +103,8 @@ public class CLPCommands {
                 array.put(dbs.get(i));
             }
             respuesta.accumulateData("Databases", array);
+                    respuesta.setFormat("default");
+            respuesta.setStatus("0", "0");
             return respuesta.getReturnObj();
         }
         
