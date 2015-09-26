@@ -86,7 +86,7 @@ public class urStatement {
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } //Host not found
         catch (UnknownHostException e) {
-            System.err.println("Don't know about host : " + host);
+            System.out.println("Error 1184: Connecting to urSQL, verify connection.");
             System.exit(1);
         }
 

@@ -41,6 +41,14 @@ public class CommunicationProtocol {
         }
     }
     
+    public void setFormat(String pFormat) {
+        try {
+            returnObj.put("format", pFormat);
+        } catch (JSONException ex) {
+            Logger.getLogger(CommunicationProtocol.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void setStatus(String pCodeStatus, String pRowsModified)
     {
         try {

@@ -38,11 +38,10 @@ public class urCLI {
                     manager.displayResult(out);
                     manager.displayStatus(out);
                 } catch (IOException ex) {
-                    Logger.getLogger(urCLI.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("Error 1184: Connecting to urSQL, verify connection.");
                 }
             }
         }
     }
-
 }
 
