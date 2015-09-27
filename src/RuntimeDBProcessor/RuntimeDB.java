@@ -737,6 +737,7 @@ public class RuntimeDB {
                 }*/
                 
                 
+                
                     for (int j = 0; j < metadataTableSel.get(0).length; j++) {
                         respuesta.accumulateData(metadataTableSel.get(0)[j], toSendJson.get(j) );
 
