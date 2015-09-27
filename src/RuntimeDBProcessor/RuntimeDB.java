@@ -362,8 +362,15 @@ public class RuntimeDB {
                 int result = newOperation.selectAggregateFunction(schema, table1,
                         aggregateFunction, pColCondToSend,
                         pDatosToSend, pOpToSend, condisLogicArr);
+                JSONArray tmpArr = new JSONArray();
+                tmpArr.put(Integer.toString(result));
+                respuesta.accumulateData(aggregateFunction.get(0), tmpArr);
                 
-
+                System.out.println(respuesta.getReturnObj());
+                respuesta.setStatus("0", "0");
+                respuesta.setFormat("default");
+                _json= respuesta.getReturnObj();
+                
                 if(result==-1){
                     respuesta.setStatus("1072", "0");
                     respuesta.setFormat("default");
@@ -372,6 +379,10 @@ public class RuntimeDB {
 
                     return ;
                 }
+
+                return ;
+/*
+                
                 
                 if(forJSONXml.isEmpty()!=false){
                     if (forJSONXml.equals("FOR JSON")){
@@ -423,7 +434,7 @@ public class RuntimeDB {
                 respuesta.setFormat("default");
                 _json= respuesta.getReturnObj();
                
-               
+            */   
                
            }
            
