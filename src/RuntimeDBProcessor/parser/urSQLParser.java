@@ -1,4 +1,4 @@
-// $ANTLR 3.5.1 /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g 2015-09-26 23:23:56
+// $ANTLR 3.5.1 /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g 2015-09-27 00:00:27
 
 	package RuntimeDBProcessor.parser;
 	import RuntimeDBProcessor.*;
@@ -13,17 +13,18 @@ import java.util.ArrayList;
 public class urSQLParser extends Parser {
 	public static final String[] tokenNames = new String[] {
 		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "AggregateFunctions", "DIGIT", 
-		"Identifier", "LETTER", "LogicToken", "Nullability", "Number", "Types", 
-		"WS", "'('", "')'", "'*'", "','", "'.'", "'<'", "'='", "'>'", "'ADD'", 
-		"'ALTER TABLE'", "'AS'", "'CONSTRAINT'", "'CREATE DATABASE'", "'CREATE INDEX'", 
-		"'CREATE TABLE'", "'DELETE'", "'DISPLAY DATABASE'", "'DROP DATABASE'", 
-		"'DROP TABLE'", "'FOR JSON'", "'FOR XML'", "'FOREIGN KEY'", "'FROM'", 
-		"'GET STATUS'", "'GROUP BY'", "'INSERT INTO'", "'JOIN'", "'LIST DATABASES'", 
-		"'ON'", "'PRIMARY KEY('", "'REFERENCES'", "'SELECT'", "'SET DATABASE'", 
-		"'START'", "'STOP'", "'Set'", "'UPDATE'", "'VALUES'", "'WHERE'", "'is not null'", 
-		"'is null'", "'like'", "'not'"
+		"Identifier", "LETTER", "LogicToken", "Nullability", "Types", "WS", "'('", 
+		"')'", "'*'", "','", "'.'", "'<'", "'='", "'>'", "'ADD'", "'ALTER TABLE'", 
+		"'AS'", "'CONSTRAINT'", "'CREATE DATABASE'", "'CREATE INDEX'", "'CREATE TABLE'", 
+		"'DELETE'", "'DISPLAY DATABASE'", "'DROP DATABASE'", "'DROP TABLE'", "'FOR JSON'", 
+		"'FOR XML'", "'FOREIGN KEY'", "'FROM'", "'GET STATUS'", "'GROUP BY'", 
+		"'INSERT INTO'", "'JOIN'", "'LIST DATABASES'", "'ON'", "'PRIMARY KEY('", 
+		"'REFERENCES'", "'SELECT'", "'SET DATABASE'", "'START'", "'STOP'", "'Set'", 
+		"'UPDATE'", "'VALUES'", "'WHERE'", "'is not null'", "'is null'", "'like'", 
+		"'not'"
 	};
 	public static final int EOF=-1;
+	public static final int T__12=12;
 	public static final int T__13=13;
 	public static final int T__14=14;
 	public static final int T__15=15;
@@ -66,16 +67,14 @@ public class urSQLParser extends Parser {
 	public static final int T__52=52;
 	public static final int T__53=53;
 	public static final int T__54=54;
-	public static final int T__55=55;
 	public static final int AggregateFunctions=4;
 	public static final int DIGIT=5;
 	public static final int Identifier=6;
 	public static final int LETTER=7;
 	public static final int LogicToken=8;
 	public static final int Nullability=9;
-	public static final int Number=10;
-	public static final int Types=11;
-	public static final int WS=12;
+	public static final int Types=10;
+	public static final int WS=11;
 
 	// delegates
 	public Parser[] getDelegates() {
@@ -140,7 +139,7 @@ public class urSQLParser extends Parser {
 			while (true) {
 				int alt1=2;
 				int LA1_0 = input.LA(1);
-				if ( (LA1_0==22||(LA1_0 >= 25 && LA1_0 <= 31)||LA1_0==36||LA1_0==38||LA1_0==40||(LA1_0 >= 44 && LA1_0 <= 47)||LA1_0==49) ) {
+				if ( (LA1_0==21||(LA1_0 >= 24 && LA1_0 <= 30)||LA1_0==35||LA1_0==37||LA1_0==39||(LA1_0 >= 43 && LA1_0 <= 46)||LA1_0==48) ) {
 					alt1=1;
 				}
 
@@ -182,82 +181,82 @@ public class urSQLParser extends Parser {
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:74:8: ( createDB | dropDB | listDB | startDB | stopDB | displayDB | setDB | createTable | getStatus | alterTable | dropTable | createIndex | selectStatement | updateStatement | delete | insertInto )
 			int alt2=16;
 			switch ( input.LA(1) ) {
-			case 25:
+			case 24:
 				{
 				alt2=1;
 				}
 				break;
-			case 30:
+			case 29:
 				{
 				alt2=2;
 				}
 				break;
-			case 40:
+			case 39:
 				{
 				alt2=3;
 				}
 				break;
-			case 46:
+			case 45:
 				{
 				alt2=4;
 				}
 				break;
-			case 47:
+			case 46:
 				{
 				alt2=5;
 				}
 				break;
-			case 29:
+			case 28:
 				{
 				alt2=6;
 				}
 				break;
-			case 45:
+			case 44:
 				{
 				alt2=7;
 				}
 				break;
-			case 27:
+			case 26:
 				{
 				alt2=8;
 				}
 				break;
-			case 36:
+			case 35:
 				{
 				alt2=9;
 				}
 				break;
-			case 22:
+			case 21:
 				{
 				alt2=10;
 				}
 				break;
-			case 31:
+			case 30:
 				{
 				alt2=11;
 				}
 				break;
-			case 26:
+			case 25:
 				{
 				alt2=12;
 				}
 				break;
-			case 44:
+			case 43:
 				{
 				alt2=13;
 				}
 				break;
-			case 49:
+			case 48:
 				{
 				alt2=14;
 				}
 				break;
-			case 28:
+			case 27:
 				{
 				alt2=15;
 				}
 				break;
-			case 38:
+			case 37:
 				{
 				alt2=16;
 				}
@@ -436,7 +435,7 @@ public class urSQLParser extends Parser {
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:82:2: ( 'CREATE DATABASE' Identifier )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:82:4: 'CREATE DATABASE' Identifier
 			{
-			match(input,25,FOLLOW_25_in_createDB147); 
+			match(input,24,FOLLOW_24_in_createDB147); 
 			Identifier1=(Token)match(input,Identifier,FOLLOW_Identifier_in_createDB149); 
 
 				if(InError==false){
@@ -470,7 +469,7 @@ public class urSQLParser extends Parser {
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:93:2: ( 'DROP DATABASE' Identifier )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:93:4: 'DROP DATABASE' Identifier
 			{
-			match(input,30,FOLLOW_30_in_dropDB163); 
+			match(input,29,FOLLOW_29_in_dropDB163); 
 			Identifier2=(Token)match(input,Identifier,FOLLOW_Identifier_in_dropDB165); 
 				
 				
@@ -501,7 +500,7 @@ public class urSQLParser extends Parser {
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:104:8: ( 'LIST DATABASES' )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:104:10: 'LIST DATABASES'
 			{
-			match(input,40,FOLLOW_40_in_listDB184); 
+			match(input,39,FOLLOW_39_in_listDB184); 
 
 					if(InError==false){
 						mainRuntime.ListDB();
@@ -532,7 +531,7 @@ public class urSQLParser extends Parser {
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:113:9: ( 'START' )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:113:11: 'START'
 			{
-			match(input,46,FOLLOW_46_in_startDB194); 
+			match(input,45,FOLLOW_45_in_startDB194); 
 			}
 
 		}
@@ -555,7 +554,7 @@ public class urSQLParser extends Parser {
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:117:8: ( 'STOP' )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:117:10: 'STOP'
 			{
-			match(input,47,FOLLOW_47_in_stopDB205); 
+			match(input,46,FOLLOW_46_in_stopDB205); 
 			}
 
 		}
@@ -580,7 +579,7 @@ public class urSQLParser extends Parser {
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:120:2: ( 'DISPLAY DATABASE' Identifier )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:120:4: 'DISPLAY DATABASE' Identifier
 			{
-			match(input,29,FOLLOW_29_in_displayDB216); 
+			match(input,28,FOLLOW_28_in_displayDB216); 
 			Identifier3=(Token)match(input,Identifier,FOLLOW_Identifier_in_displayDB218); 
 
 						if(InError==false){
@@ -610,7 +609,12 @@ public class urSQLParser extends Parser {
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:128:2: ( 'GET STATUS' )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:128:4: 'GET STATUS'
 			{
-			match(input,36,FOLLOW_36_in_getStatus232); 
+			match(input,35,FOLLOW_35_in_getStatus232); 
+
+					if(InError==false){
+						mainRuntime.GetStatus();		
+					}
+				
 			}
 
 		}
@@ -627,16 +631,16 @@ public class urSQLParser extends Parser {
 
 
 	// $ANTLR start "setDB"
-	// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:130:1: setDB : 'SET DATABASE' id1= Identifier ;
+	// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:135:1: setDB : 'SET DATABASE' id1= Identifier ;
 	public final void setDB() throws RecognitionException {
 		Token id1=null;
 
 		try {
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:131:2: ( 'SET DATABASE' id1= Identifier )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:131:4: 'SET DATABASE' id1= Identifier
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:136:2: ( 'SET DATABASE' id1= Identifier )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:136:4: 'SET DATABASE' id1= Identifier
 			{
-			match(input,45,FOLLOW_45_in_setDB243); 
-			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_setDB247); 
+			match(input,44,FOLLOW_44_in_setDB247); 
+			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_setDB251); 
 
 					if(InError==false){
 						mainRuntime.setDB((id1!=null?id1.getText():null));		
@@ -662,29 +666,29 @@ public class urSQLParser extends Parser {
 
 
 	// $ANTLR start "createTable"
-	// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:141:1: createTable : 'CREATE TABLE' Identifier 'AS' '(' columnDefinition ( ',' columnDefinition )* ',' primaryKey ')' ;
+	// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:146:1: createTable : 'CREATE TABLE' Identifier 'AS' '(' columnDefinition ( ',' columnDefinition )* ',' primaryKey ')' ;
 	public final void createTable() throws RecognitionException {
 		Token Identifier4=null;
 
 		try {
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:142:2: ( 'CREATE TABLE' Identifier 'AS' '(' columnDefinition ( ',' columnDefinition )* ',' primaryKey ')' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:142:4: 'CREATE TABLE' Identifier 'AS' '(' columnDefinition ( ',' columnDefinition )* ',' primaryKey ')'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:147:2: ( 'CREATE TABLE' Identifier 'AS' '(' columnDefinition ( ',' columnDefinition )* ',' primaryKey ')' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:147:4: 'CREATE TABLE' Identifier 'AS' '(' columnDefinition ( ',' columnDefinition )* ',' primaryKey ')'
 			{
-			match(input,27,FOLLOW_27_in_createTable259); 
-			Identifier4=(Token)match(input,Identifier,FOLLOW_Identifier_in_createTable261); 
+			match(input,26,FOLLOW_26_in_createTable263); 
+			Identifier4=(Token)match(input,Identifier,FOLLOW_Identifier_in_createTable265); 
 			ColumnsCreateTable.add((Identifier4!=null?Identifier4.getText():null));
-			match(input,23,FOLLOW_23_in_createTable263); 
-			match(input,13,FOLLOW_13_in_createTable265); 
-			pushFollow(FOLLOW_columnDefinition_in_createTable267);
+			match(input,22,FOLLOW_22_in_createTable267); 
+			match(input,12,FOLLOW_12_in_createTable269); 
+			pushFollow(FOLLOW_columnDefinition_in_createTable271);
 			columnDefinition();
 			state._fsp--;
 
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:142:100: ( ',' columnDefinition )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:147:100: ( ',' columnDefinition )*
 			loop3:
 			while (true) {
 				int alt3=2;
 				int LA3_0 = input.LA(1);
-				if ( (LA3_0==16) ) {
+				if ( (LA3_0==15) ) {
 					int LA3_1 = input.LA(2);
 					if ( (LA3_1==Identifier) ) {
 						alt3=1;
@@ -694,10 +698,10 @@ public class urSQLParser extends Parser {
 
 				switch (alt3) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:142:101: ',' columnDefinition
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:147:101: ',' columnDefinition
 					{
-					match(input,16,FOLLOW_16_in_createTable272); 
-					pushFollow(FOLLOW_columnDefinition_in_createTable275);
+					match(input,15,FOLLOW_15_in_createTable276); 
+					pushFollow(FOLLOW_columnDefinition_in_createTable279);
 					columnDefinition();
 					state._fsp--;
 
@@ -709,12 +713,12 @@ public class urSQLParser extends Parser {
 				}
 			}
 
-			match(input,16,FOLLOW_16_in_createTable280); 
-			pushFollow(FOLLOW_primaryKey_in_createTable283);
+			match(input,15,FOLLOW_15_in_createTable284); 
+			pushFollow(FOLLOW_primaryKey_in_createTable287);
 			primaryKey();
 			state._fsp--;
 
-			match(input,14,FOLLOW_14_in_createTable285); 
+			match(input,13,FOLLOW_13_in_createTable289); 
 
 					if(InError==false){
 						mainRuntime.createTable(ColumnsCreateTable);
@@ -741,20 +745,20 @@ public class urSQLParser extends Parser {
 
 
 	// $ANTLR start "alterTable"
-	// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:153:1: alterTable : 'ALTER TABLE' Identifier 'ADD' 'CONSTRAINT' constraintDefinition ;
+	// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:158:1: alterTable : 'ALTER TABLE' Identifier 'ADD' 'CONSTRAINT' constraintDefinition ;
 	public final void alterTable() throws RecognitionException {
 		Token Identifier5=null;
 
 		try {
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:154:2: ( 'ALTER TABLE' Identifier 'ADD' 'CONSTRAINT' constraintDefinition )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:154:4: 'ALTER TABLE' Identifier 'ADD' 'CONSTRAINT' constraintDefinition
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:159:2: ( 'ALTER TABLE' Identifier 'ADD' 'CONSTRAINT' constraintDefinition )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:159:4: 'ALTER TABLE' Identifier 'ADD' 'CONSTRAINT' constraintDefinition
 			{
-			match(input,22,FOLLOW_22_in_alterTable299); 
-			Identifier5=(Token)match(input,Identifier,FOLLOW_Identifier_in_alterTable301); 
+			match(input,21,FOLLOW_21_in_alterTable303); 
+			Identifier5=(Token)match(input,Identifier,FOLLOW_Identifier_in_alterTable305); 
 			ColumnsAlterTable.add((Identifier5!=null?Identifier5.getText():null));
-			match(input,21,FOLLOW_21_in_alterTable304); 
-			match(input,24,FOLLOW_24_in_alterTable306); 
-			pushFollow(FOLLOW_constraintDefinition_in_alterTable308);
+			match(input,20,FOLLOW_20_in_alterTable308); 
+			match(input,23,FOLLOW_23_in_alterTable310); 
+			pushFollow(FOLLOW_constraintDefinition_in_alterTable312);
 			constraintDefinition();
 			state._fsp--;
 
@@ -781,16 +785,16 @@ public class urSQLParser extends Parser {
 
 
 	// $ANTLR start "dropTable"
-	// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:162:1: dropTable : 'DROP TABLE' Identifier ;
+	// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:167:1: dropTable : 'DROP TABLE' Identifier ;
 	public final void dropTable() throws RecognitionException {
 		Token Identifier6=null;
 
 		try {
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:163:2: ( 'DROP TABLE' Identifier )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:163:4: 'DROP TABLE' Identifier
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:168:2: ( 'DROP TABLE' Identifier )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:168:4: 'DROP TABLE' Identifier
 			{
-			match(input,31,FOLLOW_31_in_dropTable319); 
-			Identifier6=(Token)match(input,Identifier,FOLLOW_Identifier_in_dropTable321); 
+			match(input,30,FOLLOW_30_in_dropTable323); 
+			Identifier6=(Token)match(input,Identifier,FOLLOW_Identifier_in_dropTable325); 
 
 					if(InError==false){
 						mainRuntime.dropTable((Identifier6!=null?Identifier6.getText():null));
@@ -813,23 +817,23 @@ public class urSQLParser extends Parser {
 
 
 	// $ANTLR start "createIndex"
-	// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:174:1: createIndex : 'CREATE INDEX' id1= Identifier 'ON' id2= Identifier '(' id3= Identifier ')' ;
+	// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:179:1: createIndex : 'CREATE INDEX' id1= Identifier 'ON' id2= Identifier '(' id3= Identifier ')' ;
 	public final void createIndex() throws RecognitionException {
 		Token id1=null;
 		Token id2=null;
 		Token id3=null;
 
 		try {
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:175:2: ( 'CREATE INDEX' id1= Identifier 'ON' id2= Identifier '(' id3= Identifier ')' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:175:4: 'CREATE INDEX' id1= Identifier 'ON' id2= Identifier '(' id3= Identifier ')'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:180:2: ( 'CREATE INDEX' id1= Identifier 'ON' id2= Identifier '(' id3= Identifier ')' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:180:4: 'CREATE INDEX' id1= Identifier 'ON' id2= Identifier '(' id3= Identifier ')'
 			{
-			match(input,26,FOLLOW_26_in_createIndex338); 
-			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_createIndex342); 
-			match(input,41,FOLLOW_41_in_createIndex344); 
-			id2=(Token)match(input,Identifier,FOLLOW_Identifier_in_createIndex348); 
-			match(input,13,FOLLOW_13_in_createIndex350); 
-			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_createIndex353); 
-			match(input,14,FOLLOW_14_in_createIndex355); 
+			match(input,25,FOLLOW_25_in_createIndex342); 
+			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_createIndex346); 
+			match(input,40,FOLLOW_40_in_createIndex348); 
+			id2=(Token)match(input,Identifier,FOLLOW_Identifier_in_createIndex352); 
+			match(input,12,FOLLOW_12_in_createIndex354); 
+			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_createIndex357); 
+			match(input,13,FOLLOW_13_in_createIndex359); 
 
 					
 					ColumnsCreateIndex.add((id1!=null?id1.getText():null));
@@ -866,7 +870,7 @@ public class urSQLParser extends Parser {
 
 
 	// $ANTLR start "selectStatement"
-	// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:200:1: selectStatement : 'SELECT' id1= ( '*' )* (id2= Identifier )* ( '.' id3= Identifier )* ( ',' id4= Identifier )* ( '.' id5= Identifier )* ( ',' )* (Ag= AggregateFunctions )* 'FROM' fromId= Identifier ( joinStatement )* ( whereStatement )* (logic= LogicToken whereStatementAUX )* ( 'GROUP BY' id6= Identifier )* id7= ( 'FOR JSON' | 'FOR XML' )* ;
+	// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:205:1: selectStatement : 'SELECT' id1= ( '*' )* (id2= Identifier )* ( '.' id3= Identifier )* ( ',' id4= Identifier )* ( '.' id5= Identifier )* ( ',' )* (Ag= AggregateFunctions )* 'FROM' fromId= Identifier ( joinStatement )* ( whereStatement )* (logic= LogicToken whereStatementAUX )* ( 'GROUP BY' id6= Identifier )* id7= ( 'FOR JSON' | 'FOR XML' )* ;
 	public final void selectStatement() throws RecognitionException {
 		Token id1=null;
 		Token id2=null;
@@ -880,24 +884,24 @@ public class urSQLParser extends Parser {
 		Token id7=null;
 
 		try {
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:200:17: ( 'SELECT' id1= ( '*' )* (id2= Identifier )* ( '.' id3= Identifier )* ( ',' id4= Identifier )* ( '.' id5= Identifier )* ( ',' )* (Ag= AggregateFunctions )* 'FROM' fromId= Identifier ( joinStatement )* ( whereStatement )* (logic= LogicToken whereStatementAUX )* ( 'GROUP BY' id6= Identifier )* id7= ( 'FOR JSON' | 'FOR XML' )* )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:201:3: 'SELECT' id1= ( '*' )* (id2= Identifier )* ( '.' id3= Identifier )* ( ',' id4= Identifier )* ( '.' id5= Identifier )* ( ',' )* (Ag= AggregateFunctions )* 'FROM' fromId= Identifier ( joinStatement )* ( whereStatement )* (logic= LogicToken whereStatementAUX )* ( 'GROUP BY' id6= Identifier )* id7= ( 'FOR JSON' | 'FOR XML' )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:205:17: ( 'SELECT' id1= ( '*' )* (id2= Identifier )* ( '.' id3= Identifier )* ( ',' id4= Identifier )* ( '.' id5= Identifier )* ( ',' )* (Ag= AggregateFunctions )* 'FROM' fromId= Identifier ( joinStatement )* ( whereStatement )* (logic= LogicToken whereStatementAUX )* ( 'GROUP BY' id6= Identifier )* id7= ( 'FOR JSON' | 'FOR XML' )* )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:206:3: 'SELECT' id1= ( '*' )* (id2= Identifier )* ( '.' id3= Identifier )* ( ',' id4= Identifier )* ( '.' id5= Identifier )* ( ',' )* (Ag= AggregateFunctions )* 'FROM' fromId= Identifier ( joinStatement )* ( whereStatement )* (logic= LogicToken whereStatementAUX )* ( 'GROUP BY' id6= Identifier )* id7= ( 'FOR JSON' | 'FOR XML' )*
 			{
-			match(input,44,FOLLOW_44_in_selectStatement372); 
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:201:16: ( '*' )*
+			match(input,43,FOLLOW_43_in_selectStatement376); 
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:206:16: ( '*' )*
 			loop4:
 			while (true) {
 				int alt4=2;
 				int LA4_0 = input.LA(1);
-				if ( (LA4_0==15) ) {
+				if ( (LA4_0==14) ) {
 					alt4=1;
 				}
 
 				switch (alt4) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:201:17: '*'
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:206:17: '*'
 					{
-					id1=(Token)match(input,15,FOLLOW_15_in_selectStatement377); 
+					id1=(Token)match(input,14,FOLLOW_14_in_selectStatement381); 
 					}
 					break;
 
@@ -906,7 +910,7 @@ public class urSQLParser extends Parser {
 				}
 			}
 
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:201:25: (id2= Identifier )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:206:25: (id2= Identifier )*
 			loop5:
 			while (true) {
 				int alt5=2;
@@ -917,9 +921,9 @@ public class urSQLParser extends Parser {
 
 				switch (alt5) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:201:26: id2= Identifier
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:206:26: id2= Identifier
 					{
-					id2=(Token)match(input,Identifier,FOLLOW_Identifier_in_selectStatement386); 
+					id2=(Token)match(input,Identifier,FOLLOW_Identifier_in_selectStatement390); 
 					}
 					break;
 
@@ -928,12 +932,12 @@ public class urSQLParser extends Parser {
 				}
 			}
 
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:201:43: ( '.' id3= Identifier )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:206:43: ( '.' id3= Identifier )*
 			loop6:
 			while (true) {
 				int alt6=2;
 				int LA6_0 = input.LA(1);
-				if ( (LA6_0==17) ) {
+				if ( (LA6_0==16) ) {
 					int LA6_2 = input.LA(2);
 					if ( (LA6_2==Identifier) ) {
 						alt6=1;
@@ -943,10 +947,10 @@ public class urSQLParser extends Parser {
 
 				switch (alt6) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:201:44: '.' id3= Identifier
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:206:44: '.' id3= Identifier
 					{
-					match(input,17,FOLLOW_17_in_selectStatement391); 
-					id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_selectStatement395); 
+					match(input,16,FOLLOW_16_in_selectStatement395); 
+					id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_selectStatement399); 
 					}
 					break;
 
@@ -955,12 +959,12 @@ public class urSQLParser extends Parser {
 				}
 			}
 
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:201:68: ( ',' id4= Identifier )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:206:68: ( ',' id4= Identifier )*
 			loop7:
 			while (true) {
 				int alt7=2;
 				int LA7_0 = input.LA(1);
-				if ( (LA7_0==16) ) {
+				if ( (LA7_0==15) ) {
 					int LA7_2 = input.LA(2);
 					if ( (LA7_2==Identifier) ) {
 						alt7=1;
@@ -970,10 +974,10 @@ public class urSQLParser extends Parser {
 
 				switch (alt7) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:201:69: ',' id4= Identifier
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:206:69: ',' id4= Identifier
 					{
-					match(input,16,FOLLOW_16_in_selectStatement403); 
-					id4=(Token)match(input,Identifier,FOLLOW_Identifier_in_selectStatement407); 
+					match(input,15,FOLLOW_15_in_selectStatement407); 
+					id4=(Token)match(input,Identifier,FOLLOW_Identifier_in_selectStatement411); 
 					}
 					break;
 
@@ -982,21 +986,21 @@ public class urSQLParser extends Parser {
 				}
 			}
 
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:201:92: ( '.' id5= Identifier )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:206:92: ( '.' id5= Identifier )*
 			loop8:
 			while (true) {
 				int alt8=2;
 				int LA8_0 = input.LA(1);
-				if ( (LA8_0==17) ) {
+				if ( (LA8_0==16) ) {
 					alt8=1;
 				}
 
 				switch (alt8) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:201:93: '.' id5= Identifier
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:206:93: '.' id5= Identifier
 					{
-					match(input,17,FOLLOW_17_in_selectStatement414); 
-					id5=(Token)match(input,Identifier,FOLLOW_Identifier_in_selectStatement418); 
+					match(input,16,FOLLOW_16_in_selectStatement418); 
+					id5=(Token)match(input,Identifier,FOLLOW_Identifier_in_selectStatement422); 
 					}
 					break;
 
@@ -1005,20 +1009,20 @@ public class urSQLParser extends Parser {
 				}
 			}
 
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:201:116: ( ',' )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:206:116: ( ',' )*
 			loop9:
 			while (true) {
 				int alt9=2;
 				int LA9_0 = input.LA(1);
-				if ( (LA9_0==16) ) {
+				if ( (LA9_0==15) ) {
 					alt9=1;
 				}
 
 				switch (alt9) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:201:117: ','
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:206:117: ','
 					{
-					match(input,16,FOLLOW_16_in_selectStatement425); 
+					match(input,15,FOLLOW_15_in_selectStatement429); 
 					}
 					break;
 
@@ -1027,7 +1031,7 @@ public class urSQLParser extends Parser {
 				}
 			}
 
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:201:124: (Ag= AggregateFunctions )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:206:124: (Ag= AggregateFunctions )*
 			loop10:
 			while (true) {
 				int alt10=2;
@@ -1038,9 +1042,9 @@ public class urSQLParser extends Parser {
 
 				switch (alt10) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:201:125: Ag= AggregateFunctions
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:206:125: Ag= AggregateFunctions
 					{
-					Ag=(Token)match(input,AggregateFunctions,FOLLOW_AggregateFunctions_in_selectStatement433); 
+					Ag=(Token)match(input,AggregateFunctions,FOLLOW_AggregateFunctions_in_selectStatement437); 
 					}
 					break;
 
@@ -1049,22 +1053,22 @@ public class urSQLParser extends Parser {
 				}
 			}
 
-			match(input,35,FOLLOW_35_in_selectStatement438); 
-			fromId=(Token)match(input,Identifier,FOLLOW_Identifier_in_selectStatement442); 
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:201:175: ( joinStatement )*
+			match(input,34,FOLLOW_34_in_selectStatement442); 
+			fromId=(Token)match(input,Identifier,FOLLOW_Identifier_in_selectStatement446); 
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:206:175: ( joinStatement )*
 			loop11:
 			while (true) {
 				int alt11=2;
 				int LA11_0 = input.LA(1);
-				if ( (LA11_0==39) ) {
+				if ( (LA11_0==38) ) {
 					alt11=1;
 				}
 
 				switch (alt11) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:201:176: joinStatement
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:206:176: joinStatement
 					{
-					pushFollow(FOLLOW_joinStatement_in_selectStatement445);
+					pushFollow(FOLLOW_joinStatement_in_selectStatement449);
 					joinStatement();
 					state._fsp--;
 
@@ -1076,20 +1080,20 @@ public class urSQLParser extends Parser {
 				}
 			}
 
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:202:4: ( whereStatement )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:207:4: ( whereStatement )*
 			loop12:
 			while (true) {
 				int alt12=2;
 				int LA12_0 = input.LA(1);
-				if ( (LA12_0==51) ) {
+				if ( (LA12_0==50) ) {
 					alt12=1;
 				}
 
 				switch (alt12) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:202:5: whereStatement
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:207:5: whereStatement
 					{
-					pushFollow(FOLLOW_whereStatement_in_selectStatement453);
+					pushFollow(FOLLOW_whereStatement_in_selectStatement457);
 					whereStatement();
 					state._fsp--;
 
@@ -1101,7 +1105,7 @@ public class urSQLParser extends Parser {
 				}
 			}
 
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:202:23: (logic= LogicToken whereStatementAUX )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:207:23: (logic= LogicToken whereStatementAUX )*
 			loop13:
 			while (true) {
 				int alt13=2;
@@ -1112,11 +1116,11 @@ public class urSQLParser extends Parser {
 
 				switch (alt13) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:202:25: logic= LogicToken whereStatementAUX
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:207:25: logic= LogicToken whereStatementAUX
 					{
-					logic=(Token)match(input,LogicToken,FOLLOW_LogicToken_in_selectStatement462); 
+					logic=(Token)match(input,LogicToken,FOLLOW_LogicToken_in_selectStatement466); 
 					 ColumnsSelect.add((logic!=null?logic.getText():null));   
-					pushFollow(FOLLOW_whereStatementAUX_in_selectStatement466);
+					pushFollow(FOLLOW_whereStatementAUX_in_selectStatement470);
 					whereStatementAUX();
 					state._fsp--;
 
@@ -1128,21 +1132,21 @@ public class urSQLParser extends Parser {
 				}
 			}
 
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:202:105: ( 'GROUP BY' id6= Identifier )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:207:105: ( 'GROUP BY' id6= Identifier )*
 			loop14:
 			while (true) {
 				int alt14=2;
 				int LA14_0 = input.LA(1);
-				if ( (LA14_0==37) ) {
+				if ( (LA14_0==36) ) {
 					alt14=1;
 				}
 
 				switch (alt14) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:202:106: 'GROUP BY' id6= Identifier
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:207:106: 'GROUP BY' id6= Identifier
 					{
-					match(input,37,FOLLOW_37_in_selectStatement476); 
-					id6=(Token)match(input,Identifier,FOLLOW_Identifier_in_selectStatement480); 
+					match(input,36,FOLLOW_36_in_selectStatement480); 
+					id6=(Token)match(input,Identifier,FOLLOW_Identifier_in_selectStatement484); 
 					}
 					break;
 
@@ -1151,12 +1155,12 @@ public class urSQLParser extends Parser {
 				}
 			}
 
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:202:138: ( 'FOR JSON' | 'FOR XML' )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:207:138: ( 'FOR JSON' | 'FOR XML' )*
 			loop15:
 			while (true) {
 				int alt15=2;
 				int LA15_0 = input.LA(1);
-				if ( ((LA15_0 >= 32 && LA15_0 <= 33)) ) {
+				if ( ((LA15_0 >= 31 && LA15_0 <= 32)) ) {
 					alt15=1;
 				}
 
@@ -1164,7 +1168,7 @@ public class urSQLParser extends Parser {
 				case 1 :
 					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:
 					{
-					if ( (input.LA(1) >= 32 && input.LA(1) <= 33) ) {
+					if ( (input.LA(1) >= 31 && input.LA(1) <= 32) ) {
 						input.consume();
 						state.errorRecovery=false;
 					}
@@ -1238,7 +1242,7 @@ public class urSQLParser extends Parser {
 
 
 	// $ANTLR start "updateStatement"
-	// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:250:1: updateStatement : 'UPDATE' id1= Identifier 'Set' id2= Identifier '=' id3= Identifier ( whereStatementUpdate )* (id4= ( LogicToken ) ( whereStatementUpdateDuplicate ) )* ;
+	// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:255:1: updateStatement : 'UPDATE' id1= Identifier 'Set' id2= Identifier '=' id3= Identifier ( whereStatementUpdate )* (id4= ( LogicToken ) ( whereStatementUpdateDuplicate ) )* ;
 	public final void updateStatement() throws RecognitionException {
 		Token id1=null;
 		Token id2=null;
@@ -1246,32 +1250,32 @@ public class urSQLParser extends Parser {
 		Token id4=null;
 
 		try {
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:251:2: ( 'UPDATE' id1= Identifier 'Set' id2= Identifier '=' id3= Identifier ( whereStatementUpdate )* (id4= ( LogicToken ) ( whereStatementUpdateDuplicate ) )* )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:251:4: 'UPDATE' id1= Identifier 'Set' id2= Identifier '=' id3= Identifier ( whereStatementUpdate )* (id4= ( LogicToken ) ( whereStatementUpdateDuplicate ) )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:256:2: ( 'UPDATE' id1= Identifier 'Set' id2= Identifier '=' id3= Identifier ( whereStatementUpdate )* (id4= ( LogicToken ) ( whereStatementUpdateDuplicate ) )* )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:256:4: 'UPDATE' id1= Identifier 'Set' id2= Identifier '=' id3= Identifier ( whereStatementUpdate )* (id4= ( LogicToken ) ( whereStatementUpdateDuplicate ) )*
 			{
-			match(input,49,FOLLOW_49_in_updateStatement523); 
-			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_updateStatement527); 
+			match(input,48,FOLLOW_48_in_updateStatement527); 
+			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_updateStatement531); 
 			ColumnsUpdate.add((id1!=null?id1.getText():null));
-			match(input,48,FOLLOW_48_in_updateStatement530); 
-			id2=(Token)match(input,Identifier,FOLLOW_Identifier_in_updateStatement534); 
+			match(input,47,FOLLOW_47_in_updateStatement534); 
+			id2=(Token)match(input,Identifier,FOLLOW_Identifier_in_updateStatement538); 
 			ColumnsUpdate.add((id2!=null?id2.getText():null));
-			match(input,19,FOLLOW_19_in_updateStatement537); 
-			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_updateStatement543); 
+			match(input,18,FOLLOW_18_in_updateStatement541); 
+			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_updateStatement547); 
 			ColumnsUpdate.add((id3!=null?id3.getText():null));
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:253:5: ( whereStatementUpdate )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:258:5: ( whereStatementUpdate )*
 			loop16:
 			while (true) {
 				int alt16=2;
 				int LA16_0 = input.LA(1);
-				if ( (LA16_0==51) ) {
+				if ( (LA16_0==50) ) {
 					alt16=1;
 				}
 
 				switch (alt16) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:253:6: whereStatementUpdate
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:258:6: whereStatementUpdate
 					{
-					pushFollow(FOLLOW_whereStatementUpdate_in_updateStatement552);
+					pushFollow(FOLLOW_whereStatementUpdate_in_updateStatement556);
 					whereStatementUpdate();
 					state._fsp--;
 
@@ -1283,7 +1287,7 @@ public class urSQLParser extends Parser {
 				}
 			}
 
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:253:29: (id4= ( LogicToken ) ( whereStatementUpdateDuplicate ) )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:258:29: (id4= ( LogicToken ) ( whereStatementUpdateDuplicate ) )*
 			loop17:
 			while (true) {
 				int alt17=2;
@@ -1294,19 +1298,19 @@ public class urSQLParser extends Parser {
 
 				switch (alt17) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:253:31: id4= ( LogicToken ) ( whereStatementUpdateDuplicate )
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:258:31: id4= ( LogicToken ) ( whereStatementUpdateDuplicate )
 					{
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:253:35: ( LogicToken )
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:253:36: LogicToken
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:258:35: ( LogicToken )
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:258:36: LogicToken
 					{
-					id4=(Token)match(input,LogicToken,FOLLOW_LogicToken_in_updateStatement561); 
+					id4=(Token)match(input,LogicToken,FOLLOW_LogicToken_in_updateStatement565); 
 					}
 
 					  ColumnsUpdate.add((id4!=null?id4.getText():null)); 
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:253:82: ( whereStatementUpdateDuplicate )
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:253:83: whereStatementUpdateDuplicate
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:258:82: ( whereStatementUpdateDuplicate )
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:258:83: whereStatementUpdateDuplicate
 					{
-					pushFollow(FOLLOW_whereStatementUpdateDuplicate_in_updateStatement566);
+					pushFollow(FOLLOW_whereStatementUpdateDuplicate_in_updateStatement570);
 					whereStatementUpdateDuplicate();
 					state._fsp--;
 
@@ -1344,33 +1348,33 @@ public class urSQLParser extends Parser {
 
 
 	// $ANTLR start "delete"
-	// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:263:1: delete : 'DELETE' 'FROM' Identifier ( whereStatementDelete )* (id1= ( LogicToken ) ( whereStatementDeleteDuplicate ) )* ;
+	// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:268:1: delete : 'DELETE' 'FROM' Identifier ( whereStatementDelete )* (id1= ( LogicToken ) ( whereStatementDeleteDuplicate ) )* ;
 	public final void delete() throws RecognitionException {
 		Token id1=null;
 		Token Identifier7=null;
 
 		try {
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:263:8: ( 'DELETE' 'FROM' Identifier ( whereStatementDelete )* (id1= ( LogicToken ) ( whereStatementDeleteDuplicate ) )* )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:264:3: 'DELETE' 'FROM' Identifier ( whereStatementDelete )* (id1= ( LogicToken ) ( whereStatementDeleteDuplicate ) )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:268:8: ( 'DELETE' 'FROM' Identifier ( whereStatementDelete )* (id1= ( LogicToken ) ( whereStatementDeleteDuplicate ) )* )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:269:3: 'DELETE' 'FROM' Identifier ( whereStatementDelete )* (id1= ( LogicToken ) ( whereStatementDeleteDuplicate ) )*
 			{
-			match(input,28,FOLLOW_28_in_delete593); 
-			match(input,35,FOLLOW_35_in_delete595); 
-			Identifier7=(Token)match(input,Identifier,FOLLOW_Identifier_in_delete597); 
+			match(input,27,FOLLOW_27_in_delete597); 
+			match(input,34,FOLLOW_34_in_delete599); 
+			Identifier7=(Token)match(input,Identifier,FOLLOW_Identifier_in_delete601); 
 			ColumnsDelete.add((Identifier7!=null?Identifier7.getText():null));
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:264:68: ( whereStatementDelete )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:269:68: ( whereStatementDelete )*
 			loop18:
 			while (true) {
 				int alt18=2;
 				int LA18_0 = input.LA(1);
-				if ( (LA18_0==51) ) {
+				if ( (LA18_0==50) ) {
 					alt18=1;
 				}
 
 				switch (alt18) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:264:69: whereStatementDelete
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:269:69: whereStatementDelete
 					{
-					pushFollow(FOLLOW_whereStatementDelete_in_delete601);
+					pushFollow(FOLLOW_whereStatementDelete_in_delete605);
 					whereStatementDelete();
 					state._fsp--;
 
@@ -1382,7 +1386,7 @@ public class urSQLParser extends Parser {
 				}
 			}
 
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:264:93: (id1= ( LogicToken ) ( whereStatementDeleteDuplicate ) )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:269:93: (id1= ( LogicToken ) ( whereStatementDeleteDuplicate ) )*
 			loop19:
 			while (true) {
 				int alt19=2;
@@ -1393,19 +1397,19 @@ public class urSQLParser extends Parser {
 
 				switch (alt19) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:264:95: id1= ( LogicToken ) ( whereStatementDeleteDuplicate )
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:269:95: id1= ( LogicToken ) ( whereStatementDeleteDuplicate )
 					{
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:264:99: ( LogicToken )
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:264:100: LogicToken
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:269:99: ( LogicToken )
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:269:100: LogicToken
 					{
-					id1=(Token)match(input,LogicToken,FOLLOW_LogicToken_in_delete611); 
+					id1=(Token)match(input,LogicToken,FOLLOW_LogicToken_in_delete615); 
 					}
 
 					  ColumnsDelete.add((id1!=null?id1.getText():null)); 
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:264:146: ( whereStatementDeleteDuplicate )
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:264:147: whereStatementDeleteDuplicate
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:269:146: ( whereStatementDeleteDuplicate )
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:269:147: whereStatementDeleteDuplicate
 					{
-					pushFollow(FOLLOW_whereStatementDeleteDuplicate_in_delete616);
+					pushFollow(FOLLOW_whereStatementDeleteDuplicate_in_delete620);
 					whereStatementDeleteDuplicate();
 					state._fsp--;
 
@@ -1441,7 +1445,7 @@ public class urSQLParser extends Parser {
 
 
 	// $ANTLR start "insertInto"
-	// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:271:1: insertInto : 'INSERT INTO' id1= Identifier '(' id2= Identifier ( ',' id3= Identifier )* ')' 'VALUES' '(' id4= ( Identifier | Number ) ( ',' id5= Identifier )* ')' ;
+	// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:276:1: insertInto : 'INSERT INTO' id1= Identifier '(' id2= Identifier ( ',' id3= Identifier )* ')' 'VALUES' '(' id4= ( Identifier ) ( ',' id5= Identifier )* ')' ;
 	public final void insertInto() throws RecognitionException {
 		Token id1=null;
 		Token id2=null;
@@ -1450,30 +1454,30 @@ public class urSQLParser extends Parser {
 		Token id5=null;
 
 		try {
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:272:2: ( 'INSERT INTO' id1= Identifier '(' id2= Identifier ( ',' id3= Identifier )* ')' 'VALUES' '(' id4= ( Identifier | Number ) ( ',' id5= Identifier )* ')' )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:272:4: 'INSERT INTO' id1= Identifier '(' id2= Identifier ( ',' id3= Identifier )* ')' 'VALUES' '(' id4= ( Identifier | Number ) ( ',' id5= Identifier )* ')'
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:277:2: ( 'INSERT INTO' id1= Identifier '(' id2= Identifier ( ',' id3= Identifier )* ')' 'VALUES' '(' id4= ( Identifier ) ( ',' id5= Identifier )* ')' )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:277:4: 'INSERT INTO' id1= Identifier '(' id2= Identifier ( ',' id3= Identifier )* ')' 'VALUES' '(' id4= ( Identifier ) ( ',' id5= Identifier )* ')'
 			{
-			match(input,38,FOLLOW_38_in_insertInto633); 
-			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_insertInto637); 
+			match(input,37,FOLLOW_37_in_insertInto637); 
+			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_insertInto641); 
 			ColumnsInsertInto.add((id1!=null?id1.getText():null)); 
-			match(input,13,FOLLOW_13_in_insertInto640); 
-			id2=(Token)match(input,Identifier,FOLLOW_Identifier_in_insertInto644); 
+			match(input,12,FOLLOW_12_in_insertInto644); 
+			id2=(Token)match(input,Identifier,FOLLOW_Identifier_in_insertInto648); 
 			ColumnsInsertInto.add((id2!=null?id2.getText():null));
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:272:124: ( ',' id3= Identifier )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:277:124: ( ',' id3= Identifier )*
 			loop20:
 			while (true) {
 				int alt20=2;
 				int LA20_0 = input.LA(1);
-				if ( (LA20_0==16) ) {
+				if ( (LA20_0==15) ) {
 					alt20=1;
 				}
 
 				switch (alt20) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:272:125: ',' id3= Identifier
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:277:125: ',' id3= Identifier
 					{
-					match(input,16,FOLLOW_16_in_insertInto649); 
-					id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_insertInto653); 
+					match(input,15,FOLLOW_15_in_insertInto653); 
+					id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_insertInto657); 
 					ColumnsInsertInto.add((id3!=null?id3.getText():null));
 					}
 					break;
@@ -1483,34 +1487,31 @@ public class urSQLParser extends Parser {
 				}
 			}
 
-			match(input,14,FOLLOW_14_in_insertInto660); 
-			match(input,50,FOLLOW_50_in_insertInto662); 
 			match(input,13,FOLLOW_13_in_insertInto664); 
-			id4=input.LT(1);
-			if ( input.LA(1)==Identifier||input.LA(1)==Number ) {
-				input.consume();
-				state.errorRecovery=false;
+			match(input,49,FOLLOW_49_in_insertInto666); 
+			match(input,12,FOLLOW_12_in_insertInto668); 
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:277:204: ( Identifier )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:277:205: Identifier
+			{
+			id4=(Token)match(input,Identifier,FOLLOW_Identifier_in_insertInto673); 
 			}
-			else {
-				MismatchedSetException mse = new MismatchedSetException(null,input);
-				throw mse;
-			}
+
 			 ColumnsInsertInto.add("VALUES");  ColumnsInsertInto.add((id4!=null?id4.getText():null));
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:273:2: ( ',' id5= Identifier )*
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:278:2: ( ',' id5= Identifier )*
 			loop21:
 			while (true) {
 				int alt21=2;
 				int LA21_0 = input.LA(1);
-				if ( (LA21_0==16) ) {
+				if ( (LA21_0==15) ) {
 					alt21=1;
 				}
 
 				switch (alt21) {
 				case 1 :
-					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:273:3: ',' id5= Identifier
+					// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:278:3: ',' id5= Identifier
 					{
-					match(input,16,FOLLOW_16_in_insertInto679); 
-					id5=(Token)match(input,Identifier,FOLLOW_Identifier_in_insertInto683); 
+					match(input,15,FOLLOW_15_in_insertInto682); 
+					id5=(Token)match(input,Identifier,FOLLOW_Identifier_in_insertInto686); 
 					ColumnsInsertInto.add((id5!=null?id5.getText():null)); 
 					}
 					break;
@@ -1520,7 +1521,7 @@ public class urSQLParser extends Parser {
 				}
 			}
 
-			match(input,14,FOLLOW_14_in_insertInto690); 
+			match(input,13,FOLLOW_13_in_insertInto693); 
 				
 					System.out.println("Verification");
 					if(InError==false){
@@ -1545,20 +1546,20 @@ public class urSQLParser extends Parser {
 
 
 	// $ANTLR start "whereStatement"
-	// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:284:1: whereStatement : 'WHERE' id1= Identifier id2= ( '>' | '<' | '=' | 'like' | 'not' | 'is null' | 'is not null' ) id3= Identifier ;
+	// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:289:1: whereStatement : 'WHERE' id1= Identifier id2= ( '>' | '<' | '=' | 'like' | 'not' | 'is null' | 'is not null' ) id3= Identifier ;
 	public final void whereStatement() throws RecognitionException {
 		Token id1=null;
 		Token id2=null;
 		Token id3=null;
 
 		try {
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:285:2: ( 'WHERE' id1= Identifier id2= ( '>' | '<' | '=' | 'like' | 'not' | 'is null' | 'is not null' ) id3= Identifier )
-			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:285:4: 'WHERE' id1= Identifier id2= ( '>' | '<' | '=' | 'like' | 'not' | 'is null' | 'is not null' ) id3= Identifier
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:290:2: ( 'WHERE' id1= Identifier id2= ( '>' | '<' | '=' | 'like' | 'not' | 'is null' | 'is not null' ) id3= Identifier )
+			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:290:4: 'WHERE' id1= Identifier id2= ( '>' | '<' | '=' | 'like' | 'not' | 'is null' | 'is not null' ) id3= Identifier
 			{
-			match(input,51,FOLLOW_51_in_whereStatement712); 
-			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatement716); 
+			match(input,50,FOLLOW_50_in_whereStatement715); 
+			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatement719); 
 			id2=input.LT(1);
-			if ( (input.LA(1) >= 18 && input.LA(1) <= 20)||(input.LA(1) >= 52 && input.LA(1) <= 55) ) {
+			if ( (input.LA(1) >= 17 && input.LA(1) <= 19)||(input.LA(1) >= 51 && input.LA(1) <= 54) ) {
 				input.consume();
 				state.errorRecovery=false;
 			}
@@ -1566,18 +1567,13 @@ public class urSQLParser extends Parser {
 				MismatchedSetException mse = new MismatchedSetException(null,input);
 				throw mse;
 			}
-			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatement748); 
+			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatement751); 
 
 					
 					ColumnsSelect.add("WHERE");
 					ColumnsSelect.add((id1!=null?id1.getText():null));
 					ColumnsSelect.add((id2!=null?id2.getText():null));
 					ColumnsSelect.add((id3!=null?id3.getText():null));
-
-
-
-					
-					
 				
 				
 			}
@@ -1606,9 +1602,9 @@ public class urSQLParser extends Parser {
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:300:2: (id1= Identifier id2= ( '>' | '<' | '=' | 'like' | 'not' | 'is null' | 'is not null' ) id3= Identifier )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:300:5: id1= Identifier id2= ( '>' | '<' | '=' | 'like' | 'not' | 'is null' | 'is not null' ) id3= Identifier
 			{
-			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementAUX763); 
+			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementAUX766); 
 			id2=input.LT(1);
-			if ( (input.LA(1) >= 18 && input.LA(1) <= 20)||(input.LA(1) >= 52 && input.LA(1) <= 55) ) {
+			if ( (input.LA(1) >= 17 && input.LA(1) <= 19)||(input.LA(1) >= 51 && input.LA(1) <= 54) ) {
 				input.consume();
 				state.errorRecovery=false;
 			}
@@ -1616,7 +1612,7 @@ public class urSQLParser extends Parser {
 				MismatchedSetException mse = new MismatchedSetException(null,input);
 				throw mse;
 			}
-			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementAUX795); 
+			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementAUX798); 
 
 					ColumnsSelect.add("WHERE AUX");
 					ColumnsSelect.add((id1!=null?id1.getText():null));
@@ -1649,10 +1645,10 @@ public class urSQLParser extends Parser {
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:309:2: ( 'WHERE' id1= Identifier id2= ( '>' | '<' | '=' | 'like' | 'not' | 'is null' | 'is not null' ) id3= Identifier )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:309:4: 'WHERE' id1= Identifier id2= ( '>' | '<' | '=' | 'like' | 'not' | 'is null' | 'is not null' ) id3= Identifier
 			{
-			match(input,51,FOLLOW_51_in_whereStatementDuplicate809); 
-			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementDuplicate813); 
+			match(input,50,FOLLOW_50_in_whereStatementDuplicate812); 
+			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementDuplicate816); 
 			id2=input.LT(1);
-			if ( (input.LA(1) >= 18 && input.LA(1) <= 20)||(input.LA(1) >= 52 && input.LA(1) <= 55) ) {
+			if ( (input.LA(1) >= 17 && input.LA(1) <= 19)||(input.LA(1) >= 51 && input.LA(1) <= 54) ) {
 				input.consume();
 				state.errorRecovery=false;
 			}
@@ -1660,7 +1656,7 @@ public class urSQLParser extends Parser {
 				MismatchedSetException mse = new MismatchedSetException(null,input);
 				throw mse;
 			}
-			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementDuplicate845); 
+			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementDuplicate848); 
 			}
 
 		}
@@ -1687,10 +1683,10 @@ public class urSQLParser extends Parser {
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:313:2: ( 'WHERE' id1= Identifier id2= ( '>' | '<' | '=' | 'like' | 'not' | 'is null' | 'is not null' ) id3= Identifier )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:313:4: 'WHERE' id1= Identifier id2= ( '>' | '<' | '=' | 'like' | 'not' | 'is null' | 'is not null' ) id3= Identifier
 			{
-			match(input,51,FOLLOW_51_in_whereStatementUpdate858); 
-			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementUpdate862); 
+			match(input,50,FOLLOW_50_in_whereStatementUpdate861); 
+			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementUpdate865); 
 			id2=input.LT(1);
-			if ( (input.LA(1) >= 18 && input.LA(1) <= 20)||(input.LA(1) >= 52 && input.LA(1) <= 55) ) {
+			if ( (input.LA(1) >= 17 && input.LA(1) <= 19)||(input.LA(1) >= 51 && input.LA(1) <= 54) ) {
 				input.consume();
 				state.errorRecovery=false;
 			}
@@ -1698,7 +1694,7 @@ public class urSQLParser extends Parser {
 				MismatchedSetException mse = new MismatchedSetException(null,input);
 				throw mse;
 			}
-			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementUpdate894); 
+			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementUpdate897); 
 
 				ColumnsUpdate.add("WHERE");
 				ColumnsUpdate.add((id1!=null?id1.getText():null));
@@ -1731,9 +1727,9 @@ public class urSQLParser extends Parser {
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:322:2: (id1= Identifier id2= ( '>' | '<' | '=' | 'like' | 'not' | 'is null' | 'is not null' ) id3= Identifier )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:322:5: id1= Identifier id2= ( '>' | '<' | '=' | 'like' | 'not' | 'is null' | 'is not null' ) id3= Identifier
 			{
-			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementUpdateDuplicate914); 
+			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementUpdateDuplicate917); 
 			id2=input.LT(1);
-			if ( (input.LA(1) >= 18 && input.LA(1) <= 20)||(input.LA(1) >= 52 && input.LA(1) <= 55) ) {
+			if ( (input.LA(1) >= 17 && input.LA(1) <= 19)||(input.LA(1) >= 51 && input.LA(1) <= 54) ) {
 				input.consume();
 				state.errorRecovery=false;
 			}
@@ -1741,7 +1737,7 @@ public class urSQLParser extends Parser {
 				MismatchedSetException mse = new MismatchedSetException(null,input);
 				throw mse;
 			}
-			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementUpdateDuplicate946); 
+			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementUpdateDuplicate949); 
 
 				ColumnsUpdate.add("WHERE");
 
@@ -1775,10 +1771,10 @@ public class urSQLParser extends Parser {
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:331:2: ( 'WHERE' id1= Identifier id2= ( '>' | '<' | '=' | 'like' | 'not' | 'is null' | 'is not null' ) id3= Identifier )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:331:4: 'WHERE' id1= Identifier id2= ( '>' | '<' | '=' | 'like' | 'not' | 'is null' | 'is not null' ) id3= Identifier
 			{
-			match(input,51,FOLLOW_51_in_whereStatementDelete961); 
-			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementDelete965); 
+			match(input,50,FOLLOW_50_in_whereStatementDelete964); 
+			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementDelete968); 
 			id2=input.LT(1);
-			if ( (input.LA(1) >= 18 && input.LA(1) <= 20)||(input.LA(1) >= 52 && input.LA(1) <= 55) ) {
+			if ( (input.LA(1) >= 17 && input.LA(1) <= 19)||(input.LA(1) >= 51 && input.LA(1) <= 54) ) {
 				input.consume();
 				state.errorRecovery=false;
 			}
@@ -1786,7 +1782,7 @@ public class urSQLParser extends Parser {
 				MismatchedSetException mse = new MismatchedSetException(null,input);
 				throw mse;
 			}
-			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementDelete997); 
+			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementDelete1000); 
 
 				
 				ColumnsDelete.add("WHERE");
@@ -1820,9 +1816,9 @@ public class urSQLParser extends Parser {
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:341:2: (id1= Identifier id2= ( '>' | '<' | '=' | 'like' | 'not' | 'is null' | 'is not null' ) id3= Identifier )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:341:5: id1= Identifier id2= ( '>' | '<' | '=' | 'like' | 'not' | 'is null' | 'is not null' ) id3= Identifier
 			{
-			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementDeleteDuplicate1015); 
+			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementDeleteDuplicate1018); 
 			id2=input.LT(1);
-			if ( (input.LA(1) >= 18 && input.LA(1) <= 20)||(input.LA(1) >= 52 && input.LA(1) <= 55) ) {
+			if ( (input.LA(1) >= 17 && input.LA(1) <= 19)||(input.LA(1) >= 51 && input.LA(1) <= 54) ) {
 				input.consume();
 				state.errorRecovery=false;
 			}
@@ -1830,7 +1826,7 @@ public class urSQLParser extends Parser {
 				MismatchedSetException mse = new MismatchedSetException(null,input);
 				throw mse;
 			}
-			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementDeleteDuplicate1047); 
+			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_whereStatementDeleteDuplicate1050); 
 
 				
 				ColumnsDelete.add("WHERE");
@@ -1866,16 +1862,16 @@ public class urSQLParser extends Parser {
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:351:2: ( 'JOIN' id1= Identifier 'ON' id2= Identifier '.' id3= Identifier '=' id4= Identifier '.' id5= Identifier )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:351:4: 'JOIN' id1= Identifier 'ON' id2= Identifier '.' id3= Identifier '=' id4= Identifier '.' id5= Identifier
 			{
-			match(input,39,FOLLOW_39_in_joinStatement1061); 
-			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_joinStatement1065); 
-			match(input,41,FOLLOW_41_in_joinStatement1067); 
-			id2=(Token)match(input,Identifier,FOLLOW_Identifier_in_joinStatement1071); 
-			match(input,17,FOLLOW_17_in_joinStatement1073); 
-			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_joinStatement1077); 
-			match(input,19,FOLLOW_19_in_joinStatement1079); 
-			id4=(Token)match(input,Identifier,FOLLOW_Identifier_in_joinStatement1083); 
-			match(input,17,FOLLOW_17_in_joinStatement1085); 
-			id5=(Token)match(input,Identifier,FOLLOW_Identifier_in_joinStatement1089); 
+			match(input,38,FOLLOW_38_in_joinStatement1064); 
+			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_joinStatement1068); 
+			match(input,40,FOLLOW_40_in_joinStatement1070); 
+			id2=(Token)match(input,Identifier,FOLLOW_Identifier_in_joinStatement1074); 
+			match(input,16,FOLLOW_16_in_joinStatement1076); 
+			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_joinStatement1080); 
+			match(input,18,FOLLOW_18_in_joinStatement1082); 
+			id4=(Token)match(input,Identifier,FOLLOW_Identifier_in_joinStatement1086); 
+			match(input,16,FOLLOW_16_in_joinStatement1088); 
+			id5=(Token)match(input,Identifier,FOLLOW_Identifier_in_joinStatement1092); 
 
 					
 					ColumnsSelect.add("Join");
@@ -1917,15 +1913,15 @@ public class urSQLParser extends Parser {
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:374:2: ( 'FOREIGN KEY' '(' id1= Identifier ')' 'REFERENCES' id2= Identifier '(' id3= Identifier ')' )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:374:4: 'FOREIGN KEY' '(' id1= Identifier ')' 'REFERENCES' id2= Identifier '(' id3= Identifier ')'
 			{
-			match(input,34,FOLLOW_34_in_constraintDefinition1155); 
-			match(input,13,FOLLOW_13_in_constraintDefinition1157); 
-			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_constraintDefinition1161); 
-			match(input,14,FOLLOW_14_in_constraintDefinition1163); 
-			match(input,43,FOLLOW_43_in_constraintDefinition1165); 
-			id2=(Token)match(input,Identifier,FOLLOW_Identifier_in_constraintDefinition1169); 
-			match(input,13,FOLLOW_13_in_constraintDefinition1171); 
-			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_constraintDefinition1175); 
-			match(input,14,FOLLOW_14_in_constraintDefinition1177); 
+			match(input,33,FOLLOW_33_in_constraintDefinition1158); 
+			match(input,12,FOLLOW_12_in_constraintDefinition1160); 
+			id1=(Token)match(input,Identifier,FOLLOW_Identifier_in_constraintDefinition1164); 
+			match(input,13,FOLLOW_13_in_constraintDefinition1166); 
+			match(input,42,FOLLOW_42_in_constraintDefinition1168); 
+			id2=(Token)match(input,Identifier,FOLLOW_Identifier_in_constraintDefinition1172); 
+			match(input,12,FOLLOW_12_in_constraintDefinition1174); 
+			id3=(Token)match(input,Identifier,FOLLOW_Identifier_in_constraintDefinition1178); 
+			match(input,13,FOLLOW_13_in_constraintDefinition1180); 
 
 					
 					ColumnsAlterTable.add((id1!=null?id1.getText():null));
@@ -1958,9 +1954,9 @@ public class urSQLParser extends Parser {
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:383:2: ( Identifier Types Nullability )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:383:4: Identifier Types Nullability
 			{
-			Identifier8=(Token)match(input,Identifier,FOLLOW_Identifier_in_columnDefinition1191); 
-			Types9=(Token)match(input,Types,FOLLOW_Types_in_columnDefinition1193); 
-			Nullability10=(Token)match(input,Nullability,FOLLOW_Nullability_in_columnDefinition1195); 
+			Identifier8=(Token)match(input,Identifier,FOLLOW_Identifier_in_columnDefinition1194); 
+			Types9=(Token)match(input,Types,FOLLOW_Types_in_columnDefinition1196); 
+			Nullability10=(Token)match(input,Nullability,FOLLOW_Nullability_in_columnDefinition1198); 
 
 				ColumnsCreateTable.add("Column Definition");
 				ColumnsCreateTable.add((Identifier8!=null?Identifier8.getText():null));
@@ -1994,9 +1990,9 @@ public class urSQLParser extends Parser {
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:408:2: ( 'PRIMARY KEY(' Identifier ')' )
 			// /Users/macbook/NetBeansProjects/urSQLNoRep/urSQL.g:408:4: 'PRIMARY KEY(' Identifier ')'
 			{
-			match(input,42,FOLLOW_42_in_primaryKey1292); 
-			Identifier11=(Token)match(input,Identifier,FOLLOW_Identifier_in_primaryKey1294); 
-			match(input,14,FOLLOW_14_in_primaryKey1296); 
+			match(input,41,FOLLOW_41_in_primaryKey1295); 
+			Identifier11=(Token)match(input,Identifier,FOLLOW_Identifier_in_primaryKey1297); 
+			match(input,13,FOLLOW_13_in_primaryKey1299); 
 
 					ColumnsCreateTable.add((Identifier11!=null?Identifier11.getText():null));
 					
@@ -2018,7 +2014,7 @@ public class urSQLParser extends Parser {
 
 
 
-	public static final BitSet FOLLOW_script_in_query64 = new BitSet(new long[]{0x0002F150FE400002L});
+	public static final BitSet FOLLOW_script_in_query64 = new BitSet(new long[]{0x000178A87F200002L});
 	public static final BitSet FOLLOW_createDB_in_script75 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_dropDB_in_script79 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_listDB_in_script83 = new BitSet(new long[]{0x0000000000000002L});
@@ -2035,137 +2031,137 @@ public class urSQLParser extends Parser {
 	public static final BitSet FOLLOW_updateStatement_in_script125 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_delete_in_script130 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_insertInto_in_script134 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_25_in_createDB147 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_24_in_createDB147 = new BitSet(new long[]{0x0000000000000040L});
 	public static final BitSet FOLLOW_Identifier_in_createDB149 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_30_in_dropDB163 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_29_in_dropDB163 = new BitSet(new long[]{0x0000000000000040L});
 	public static final BitSet FOLLOW_Identifier_in_dropDB165 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_40_in_listDB184 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_46_in_startDB194 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_47_in_stopDB205 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_29_in_displayDB216 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_39_in_listDB184 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_45_in_startDB194 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_46_in_stopDB205 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_28_in_displayDB216 = new BitSet(new long[]{0x0000000000000040L});
 	public static final BitSet FOLLOW_Identifier_in_displayDB218 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_36_in_getStatus232 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_45_in_setDB243 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_setDB247 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_27_in_createTable259 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_createTable261 = new BitSet(new long[]{0x0000000000800000L});
-	public static final BitSet FOLLOW_23_in_createTable263 = new BitSet(new long[]{0x0000000000002000L});
-	public static final BitSet FOLLOW_13_in_createTable265 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_columnDefinition_in_createTable267 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_16_in_createTable272 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_columnDefinition_in_createTable275 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_16_in_createTable280 = new BitSet(new long[]{0x0000040000000000L});
-	public static final BitSet FOLLOW_primaryKey_in_createTable283 = new BitSet(new long[]{0x0000000000004000L});
-	public static final BitSet FOLLOW_14_in_createTable285 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_22_in_alterTable299 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_alterTable301 = new BitSet(new long[]{0x0000000000200000L});
-	public static final BitSet FOLLOW_21_in_alterTable304 = new BitSet(new long[]{0x0000000001000000L});
-	public static final BitSet FOLLOW_24_in_alterTable306 = new BitSet(new long[]{0x0000000400000000L});
-	public static final BitSet FOLLOW_constraintDefinition_in_alterTable308 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_31_in_dropTable319 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_dropTable321 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_26_in_createIndex338 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_createIndex342 = new BitSet(new long[]{0x0000020000000000L});
-	public static final BitSet FOLLOW_41_in_createIndex344 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_createIndex348 = new BitSet(new long[]{0x0000000000002000L});
-	public static final BitSet FOLLOW_13_in_createIndex350 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_createIndex353 = new BitSet(new long[]{0x0000000000004000L});
-	public static final BitSet FOLLOW_14_in_createIndex355 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_44_in_selectStatement372 = new BitSet(new long[]{0x0000000800038050L});
-	public static final BitSet FOLLOW_15_in_selectStatement377 = new BitSet(new long[]{0x0000000800038050L});
-	public static final BitSet FOLLOW_Identifier_in_selectStatement386 = new BitSet(new long[]{0x0000000800030050L});
-	public static final BitSet FOLLOW_17_in_selectStatement391 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_selectStatement395 = new BitSet(new long[]{0x0000000800030010L});
-	public static final BitSet FOLLOW_16_in_selectStatement403 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_selectStatement407 = new BitSet(new long[]{0x0000000800030010L});
-	public static final BitSet FOLLOW_17_in_selectStatement414 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_selectStatement418 = new BitSet(new long[]{0x0000000800030010L});
-	public static final BitSet FOLLOW_16_in_selectStatement425 = new BitSet(new long[]{0x0000000800010010L});
-	public static final BitSet FOLLOW_AggregateFunctions_in_selectStatement433 = new BitSet(new long[]{0x0000000800000010L});
-	public static final BitSet FOLLOW_35_in_selectStatement438 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_selectStatement442 = new BitSet(new long[]{0x000800A300000102L});
-	public static final BitSet FOLLOW_joinStatement_in_selectStatement445 = new BitSet(new long[]{0x000800A300000102L});
-	public static final BitSet FOLLOW_whereStatement_in_selectStatement453 = new BitSet(new long[]{0x0008002300000102L});
-	public static final BitSet FOLLOW_LogicToken_in_selectStatement462 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_whereStatementAUX_in_selectStatement466 = new BitSet(new long[]{0x0000002300000102L});
-	public static final BitSet FOLLOW_37_in_selectStatement476 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_selectStatement480 = new BitSet(new long[]{0x0000002300000002L});
-	public static final BitSet FOLLOW_49_in_updateStatement523 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_updateStatement527 = new BitSet(new long[]{0x0001000000000000L});
-	public static final BitSet FOLLOW_48_in_updateStatement530 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_updateStatement534 = new BitSet(new long[]{0x0000000000080000L});
-	public static final BitSet FOLLOW_19_in_updateStatement537 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_updateStatement543 = new BitSet(new long[]{0x0008000000000102L});
-	public static final BitSet FOLLOW_whereStatementUpdate_in_updateStatement552 = new BitSet(new long[]{0x0008000000000102L});
-	public static final BitSet FOLLOW_LogicToken_in_updateStatement561 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_whereStatementUpdateDuplicate_in_updateStatement566 = new BitSet(new long[]{0x0000000000000102L});
-	public static final BitSet FOLLOW_28_in_delete593 = new BitSet(new long[]{0x0000000800000000L});
-	public static final BitSet FOLLOW_35_in_delete595 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_delete597 = new BitSet(new long[]{0x0008000000000102L});
-	public static final BitSet FOLLOW_whereStatementDelete_in_delete601 = new BitSet(new long[]{0x0008000000000102L});
-	public static final BitSet FOLLOW_LogicToken_in_delete611 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_whereStatementDeleteDuplicate_in_delete616 = new BitSet(new long[]{0x0000000000000102L});
-	public static final BitSet FOLLOW_38_in_insertInto633 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_insertInto637 = new BitSet(new long[]{0x0000000000002000L});
-	public static final BitSet FOLLOW_13_in_insertInto640 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_insertInto644 = new BitSet(new long[]{0x0000000000014000L});
-	public static final BitSet FOLLOW_16_in_insertInto649 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_insertInto653 = new BitSet(new long[]{0x0000000000014000L});
-	public static final BitSet FOLLOW_14_in_insertInto660 = new BitSet(new long[]{0x0004000000000000L});
-	public static final BitSet FOLLOW_50_in_insertInto662 = new BitSet(new long[]{0x0000000000002000L});
-	public static final BitSet FOLLOW_13_in_insertInto664 = new BitSet(new long[]{0x0000000000000440L});
-	public static final BitSet FOLLOW_set_in_insertInto668 = new BitSet(new long[]{0x0000000000014000L});
-	public static final BitSet FOLLOW_16_in_insertInto679 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_insertInto683 = new BitSet(new long[]{0x0000000000014000L});
-	public static final BitSet FOLLOW_14_in_insertInto690 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_51_in_whereStatement712 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_whereStatement716 = new BitSet(new long[]{0x00F00000001C0000L});
-	public static final BitSet FOLLOW_set_in_whereStatement720 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_whereStatement748 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_Identifier_in_whereStatementAUX763 = new BitSet(new long[]{0x00F00000001C0000L});
-	public static final BitSet FOLLOW_set_in_whereStatementAUX767 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_whereStatementAUX795 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_51_in_whereStatementDuplicate809 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_whereStatementDuplicate813 = new BitSet(new long[]{0x00F00000001C0000L});
-	public static final BitSet FOLLOW_set_in_whereStatementDuplicate817 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_whereStatementDuplicate845 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_51_in_whereStatementUpdate858 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_whereStatementUpdate862 = new BitSet(new long[]{0x00F00000001C0000L});
-	public static final BitSet FOLLOW_set_in_whereStatementUpdate866 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_whereStatementUpdate894 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_Identifier_in_whereStatementUpdateDuplicate914 = new BitSet(new long[]{0x00F00000001C0000L});
-	public static final BitSet FOLLOW_set_in_whereStatementUpdateDuplicate918 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_whereStatementUpdateDuplicate946 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_51_in_whereStatementDelete961 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_whereStatementDelete965 = new BitSet(new long[]{0x00F00000001C0000L});
-	public static final BitSet FOLLOW_set_in_whereStatementDelete969 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_whereStatementDelete997 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_Identifier_in_whereStatementDeleteDuplicate1015 = new BitSet(new long[]{0x00F00000001C0000L});
-	public static final BitSet FOLLOW_set_in_whereStatementDeleteDuplicate1019 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_whereStatementDeleteDuplicate1047 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_39_in_joinStatement1061 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_joinStatement1065 = new BitSet(new long[]{0x0000020000000000L});
-	public static final BitSet FOLLOW_41_in_joinStatement1067 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_joinStatement1071 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_17_in_joinStatement1073 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_joinStatement1077 = new BitSet(new long[]{0x0000000000080000L});
-	public static final BitSet FOLLOW_19_in_joinStatement1079 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_joinStatement1083 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_17_in_joinStatement1085 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_joinStatement1089 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_34_in_constraintDefinition1155 = new BitSet(new long[]{0x0000000000002000L});
-	public static final BitSet FOLLOW_13_in_constraintDefinition1157 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_constraintDefinition1161 = new BitSet(new long[]{0x0000000000004000L});
-	public static final BitSet FOLLOW_14_in_constraintDefinition1163 = new BitSet(new long[]{0x0000080000000000L});
-	public static final BitSet FOLLOW_43_in_constraintDefinition1165 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_constraintDefinition1169 = new BitSet(new long[]{0x0000000000002000L});
-	public static final BitSet FOLLOW_13_in_constraintDefinition1171 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_constraintDefinition1175 = new BitSet(new long[]{0x0000000000004000L});
-	public static final BitSet FOLLOW_14_in_constraintDefinition1177 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_Identifier_in_columnDefinition1191 = new BitSet(new long[]{0x0000000000000800L});
-	public static final BitSet FOLLOW_Types_in_columnDefinition1193 = new BitSet(new long[]{0x0000000000000200L});
-	public static final BitSet FOLLOW_Nullability_in_columnDefinition1195 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_42_in_primaryKey1292 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_Identifier_in_primaryKey1294 = new BitSet(new long[]{0x0000000000004000L});
-	public static final BitSet FOLLOW_14_in_primaryKey1296 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_35_in_getStatus232 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_44_in_setDB247 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_setDB251 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_26_in_createTable263 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_createTable265 = new BitSet(new long[]{0x0000000000400000L});
+	public static final BitSet FOLLOW_22_in_createTable267 = new BitSet(new long[]{0x0000000000001000L});
+	public static final BitSet FOLLOW_12_in_createTable269 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_columnDefinition_in_createTable271 = new BitSet(new long[]{0x0000000000008000L});
+	public static final BitSet FOLLOW_15_in_createTable276 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_columnDefinition_in_createTable279 = new BitSet(new long[]{0x0000000000008000L});
+	public static final BitSet FOLLOW_15_in_createTable284 = new BitSet(new long[]{0x0000020000000000L});
+	public static final BitSet FOLLOW_primaryKey_in_createTable287 = new BitSet(new long[]{0x0000000000002000L});
+	public static final BitSet FOLLOW_13_in_createTable289 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_21_in_alterTable303 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_alterTable305 = new BitSet(new long[]{0x0000000000100000L});
+	public static final BitSet FOLLOW_20_in_alterTable308 = new BitSet(new long[]{0x0000000000800000L});
+	public static final BitSet FOLLOW_23_in_alterTable310 = new BitSet(new long[]{0x0000000200000000L});
+	public static final BitSet FOLLOW_constraintDefinition_in_alterTable312 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_30_in_dropTable323 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_dropTable325 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_25_in_createIndex342 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_createIndex346 = new BitSet(new long[]{0x0000010000000000L});
+	public static final BitSet FOLLOW_40_in_createIndex348 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_createIndex352 = new BitSet(new long[]{0x0000000000001000L});
+	public static final BitSet FOLLOW_12_in_createIndex354 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_createIndex357 = new BitSet(new long[]{0x0000000000002000L});
+	public static final BitSet FOLLOW_13_in_createIndex359 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_43_in_selectStatement376 = new BitSet(new long[]{0x000000040001C050L});
+	public static final BitSet FOLLOW_14_in_selectStatement381 = new BitSet(new long[]{0x000000040001C050L});
+	public static final BitSet FOLLOW_Identifier_in_selectStatement390 = new BitSet(new long[]{0x0000000400018050L});
+	public static final BitSet FOLLOW_16_in_selectStatement395 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_selectStatement399 = new BitSet(new long[]{0x0000000400018010L});
+	public static final BitSet FOLLOW_15_in_selectStatement407 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_selectStatement411 = new BitSet(new long[]{0x0000000400018010L});
+	public static final BitSet FOLLOW_16_in_selectStatement418 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_selectStatement422 = new BitSet(new long[]{0x0000000400018010L});
+	public static final BitSet FOLLOW_15_in_selectStatement429 = new BitSet(new long[]{0x0000000400008010L});
+	public static final BitSet FOLLOW_AggregateFunctions_in_selectStatement437 = new BitSet(new long[]{0x0000000400000010L});
+	public static final BitSet FOLLOW_34_in_selectStatement442 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_selectStatement446 = new BitSet(new long[]{0x0004005180000102L});
+	public static final BitSet FOLLOW_joinStatement_in_selectStatement449 = new BitSet(new long[]{0x0004005180000102L});
+	public static final BitSet FOLLOW_whereStatement_in_selectStatement457 = new BitSet(new long[]{0x0004001180000102L});
+	public static final BitSet FOLLOW_LogicToken_in_selectStatement466 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_whereStatementAUX_in_selectStatement470 = new BitSet(new long[]{0x0000001180000102L});
+	public static final BitSet FOLLOW_36_in_selectStatement480 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_selectStatement484 = new BitSet(new long[]{0x0000001180000002L});
+	public static final BitSet FOLLOW_48_in_updateStatement527 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_updateStatement531 = new BitSet(new long[]{0x0000800000000000L});
+	public static final BitSet FOLLOW_47_in_updateStatement534 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_updateStatement538 = new BitSet(new long[]{0x0000000000040000L});
+	public static final BitSet FOLLOW_18_in_updateStatement541 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_updateStatement547 = new BitSet(new long[]{0x0004000000000102L});
+	public static final BitSet FOLLOW_whereStatementUpdate_in_updateStatement556 = new BitSet(new long[]{0x0004000000000102L});
+	public static final BitSet FOLLOW_LogicToken_in_updateStatement565 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_whereStatementUpdateDuplicate_in_updateStatement570 = new BitSet(new long[]{0x0000000000000102L});
+	public static final BitSet FOLLOW_27_in_delete597 = new BitSet(new long[]{0x0000000400000000L});
+	public static final BitSet FOLLOW_34_in_delete599 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_delete601 = new BitSet(new long[]{0x0004000000000102L});
+	public static final BitSet FOLLOW_whereStatementDelete_in_delete605 = new BitSet(new long[]{0x0004000000000102L});
+	public static final BitSet FOLLOW_LogicToken_in_delete615 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_whereStatementDeleteDuplicate_in_delete620 = new BitSet(new long[]{0x0000000000000102L});
+	public static final BitSet FOLLOW_37_in_insertInto637 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_insertInto641 = new BitSet(new long[]{0x0000000000001000L});
+	public static final BitSet FOLLOW_12_in_insertInto644 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_insertInto648 = new BitSet(new long[]{0x000000000000A000L});
+	public static final BitSet FOLLOW_15_in_insertInto653 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_insertInto657 = new BitSet(new long[]{0x000000000000A000L});
+	public static final BitSet FOLLOW_13_in_insertInto664 = new BitSet(new long[]{0x0002000000000000L});
+	public static final BitSet FOLLOW_49_in_insertInto666 = new BitSet(new long[]{0x0000000000001000L});
+	public static final BitSet FOLLOW_12_in_insertInto668 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_insertInto673 = new BitSet(new long[]{0x000000000000A000L});
+	public static final BitSet FOLLOW_15_in_insertInto682 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_insertInto686 = new BitSet(new long[]{0x000000000000A000L});
+	public static final BitSet FOLLOW_13_in_insertInto693 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_50_in_whereStatement715 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_whereStatement719 = new BitSet(new long[]{0x00780000000E0000L});
+	public static final BitSet FOLLOW_set_in_whereStatement723 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_whereStatement751 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_Identifier_in_whereStatementAUX766 = new BitSet(new long[]{0x00780000000E0000L});
+	public static final BitSet FOLLOW_set_in_whereStatementAUX770 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_whereStatementAUX798 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_50_in_whereStatementDuplicate812 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_whereStatementDuplicate816 = new BitSet(new long[]{0x00780000000E0000L});
+	public static final BitSet FOLLOW_set_in_whereStatementDuplicate820 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_whereStatementDuplicate848 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_50_in_whereStatementUpdate861 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_whereStatementUpdate865 = new BitSet(new long[]{0x00780000000E0000L});
+	public static final BitSet FOLLOW_set_in_whereStatementUpdate869 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_whereStatementUpdate897 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_Identifier_in_whereStatementUpdateDuplicate917 = new BitSet(new long[]{0x00780000000E0000L});
+	public static final BitSet FOLLOW_set_in_whereStatementUpdateDuplicate921 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_whereStatementUpdateDuplicate949 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_50_in_whereStatementDelete964 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_whereStatementDelete968 = new BitSet(new long[]{0x00780000000E0000L});
+	public static final BitSet FOLLOW_set_in_whereStatementDelete972 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_whereStatementDelete1000 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_Identifier_in_whereStatementDeleteDuplicate1018 = new BitSet(new long[]{0x00780000000E0000L});
+	public static final BitSet FOLLOW_set_in_whereStatementDeleteDuplicate1022 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_whereStatementDeleteDuplicate1050 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_38_in_joinStatement1064 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_joinStatement1068 = new BitSet(new long[]{0x0000010000000000L});
+	public static final BitSet FOLLOW_40_in_joinStatement1070 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_joinStatement1074 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_16_in_joinStatement1076 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_joinStatement1080 = new BitSet(new long[]{0x0000000000040000L});
+	public static final BitSet FOLLOW_18_in_joinStatement1082 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_joinStatement1086 = new BitSet(new long[]{0x0000000000010000L});
+	public static final BitSet FOLLOW_16_in_joinStatement1088 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_joinStatement1092 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_33_in_constraintDefinition1158 = new BitSet(new long[]{0x0000000000001000L});
+	public static final BitSet FOLLOW_12_in_constraintDefinition1160 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_constraintDefinition1164 = new BitSet(new long[]{0x0000000000002000L});
+	public static final BitSet FOLLOW_13_in_constraintDefinition1166 = new BitSet(new long[]{0x0000040000000000L});
+	public static final BitSet FOLLOW_42_in_constraintDefinition1168 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_constraintDefinition1172 = new BitSet(new long[]{0x0000000000001000L});
+	public static final BitSet FOLLOW_12_in_constraintDefinition1174 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_constraintDefinition1178 = new BitSet(new long[]{0x0000000000002000L});
+	public static final BitSet FOLLOW_13_in_constraintDefinition1180 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_Identifier_in_columnDefinition1194 = new BitSet(new long[]{0x0000000000000400L});
+	public static final BitSet FOLLOW_Types_in_columnDefinition1196 = new BitSet(new long[]{0x0000000000000200L});
+	public static final BitSet FOLLOW_Nullability_in_columnDefinition1198 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_41_in_primaryKey1295 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_Identifier_in_primaryKey1297 = new BitSet(new long[]{0x0000000000002000L});
+	public static final BitSet FOLLOW_13_in_primaryKey1299 = new BitSet(new long[]{0x0000000000000002L});
 }

@@ -573,7 +573,7 @@ public class TableOperations {
     
     
     
-   public Integer selectAggregateFunction( String pSchema, String pTable,
+   public Integer selectAggregateFunction(String pSchema, String pTable,
             ArrayList<String> AggregateFunction,String[] pColumnasCondiciones,
             String[] pDatosCondiciones,String[] pOpes, int[] pTipoCondiciones){
         
@@ -595,27 +595,26 @@ public class TableOperations {
         
         if (md!=null){
 
-            File file = new File(Constants.DATABASE+pTable);
+            File file = new File(pSchema + pTable);
             try(DB thedb = DBMaker.newFileDB(file).closeOnJvmShutdown().make()){
                 BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
                         .keySerializer(BTreeKeySerializer.INTEGER)
                         .makeOrGet();
                 
                 int tail = primary.size();
-                System.err.println("Col Cond"+pColumnasCondiciones[0]);
-                System.err.println("Dat Cond"+pDatosCondiciones[0]);
-
+                //System.err.println("Col Cond"+pColumnasCondiciones[0]);
+                //System.err.println("Dat Cond"+pDatosCondiciones[0]);
                 if(pColumnasCondiciones.length!=0){
                     ArrayList<typeData[]> newTypeData=new ArrayList<>();
                     for (int i = 0; i < primary.size(); i++) {
                         boolean verif = where(primary.ceilingEntry(i).getValue(), md[0], pColumnasCondiciones, pDatosCondiciones, pOpes, pTipoCondiciones);
                         if (verif == true) {
-                            System.out.println("Entra");
                             newTypeData.add(primary.ceilingEntry(i).getValue());
                         }
                     }
-
+                    
                     primary.clear();
+                    System.out.println("Clear");
                     for (int i = 0; i < newTypeData.size(); i++) {
                         primary.put(primary.size(), newTypeData.get(i));
                     }
@@ -626,10 +625,13 @@ public class TableOperations {
                 //ArrayList<Integer> dataOperation= new ArrayList<>();
                 int indexColumn=0;
                 for (int i = 0; i < md[0].length; i++) {
+                    System.out.println("Metada"+md[0][i]);
                         if(columnOperation.equals(md[0][i])==true){
                             indexColumn=i;
                         }
                 }
+                
+                
                 
                 if(AggregateFunction.get(0).equals("AVERAGE")==true){
                     int dataOperation=0;
@@ -637,6 +639,7 @@ public class TableOperations {
                         dataOperation+=Integer.parseInt(primary.ceilingEntry(i).getValue()[indexColumn].getDate());
                         //dataOperation.add(Integer.parseInt(primary.ceilingEntry(i).getValue()[indexColumn].getDate())); 
                     }
+                    
               
                     return (dataOperation/primary.size());
                     
