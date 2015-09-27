@@ -222,7 +222,7 @@ public class RuntimeDB {
                   System.out.println(" El:" +pSelect.get(i));
                   if(pSelect.get(i).equals("Join")){
                       inJoin=true;
-                      joinIndex++;       
+                      joinIndex++;   
                   }
                   else if(pSelect.get(i).equals("WHERE") ||  pSelect.get(i).equals("WHERE AUX") ){
                          inWhere=true;
@@ -292,7 +292,6 @@ public class RuntimeDB {
            }
            if(aggregateFunction.isEmpty()!=true){
                 
-
                 String[] pColCondToSend;
                 String[] pDatosToSend;
                 String[] pOpToSend;
@@ -473,6 +472,19 @@ public class RuntimeDB {
 
                              return;
                          }
+                        String[][] metadataVerif= newOperation.getMetaDataTable(schema,table1 );
+                         
+                        ArrayList<String> verification= verifyColumn(metadataVerif, pColCondToSend);
+                        
+                        if (verification!= null) {
+                            System.out.println("Entra");
+                            respuesta.setStatus(verification.get(0), "0");
+                             respuesta.setFormat("default");
+                             _json = respuesta.getReturnObj();
+                             System.out.println(respuesta.getReturnObj());
+                             return;
+                        }
+                         
 
                         ArrayList<String[]> selected =newOperation.select(all,schema,table1,pColCondToSend,pDatosToSend,pOpToSend,condisLogicArr);
 
@@ -501,14 +513,17 @@ public class RuntimeDB {
                         respuesta.setStatus("0", "0");
                         respuesta.setFormat("default");
                         _json=respuesta.getReturnObj();
-                        System.out.println(respuesta.getReturnObj());
-
+                        
+                        
+                        
                        
                         
                         return ;
 
                         
                     }
+                    
+                    
                     else{
                         if(pSelect.get(i).equals("FROM")==false && pSelect.get(i).equals("WHERE")==false ){
                             coltoSelect.add(pSelect.get(i)); 
@@ -640,6 +655,7 @@ public class RuntimeDB {
                 }
                 
                 if(resultVerify2!=null){
+                    
                     CommunicationProtocol respuesta = new CommunicationProtocol();
                     respuesta.setStatus(resultVerify2.get(0), "0");
                     respuesta.setFormat("default");
@@ -647,10 +663,6 @@ public class RuntimeDB {
                     System.out.println(respuesta.getReturnObj());
                     return ;
                 }
-                
-                
-                
-                
                 
                 
                 ArrayList<typeData[]> selectedJoin=newOperation.selectJoin(columnsToSelectArr1, columnsToSelectArr2,
@@ -669,7 +681,6 @@ public class RuntimeDB {
                     array1 = new JSONArray();
 
                     for (int j = 0; j < selectedJoin.size(); j++) {
-
                         array1.put(selectedJoin.get(j)[i].getDate());
                         System.out.println("Selected join"+selectedJoin.get(j)[i].getDate());              
                     }
@@ -686,6 +697,7 @@ public class RuntimeDB {
                     }
                     
                 }*/
+                
                 
                     for (int j = 0; j < metadataTableSel.get(0).length; j++) {
                         respuesta.accumulateData(metadataTableSel.get(0)[j], toSendJson.get(j) );
