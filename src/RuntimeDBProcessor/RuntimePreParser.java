@@ -45,11 +45,12 @@ public class RuntimePreParser {
         
        // Funciones.recorrerArchivo(Constants.DATABASE+"TecDB\\Est");
         
-        prueba.recievemsg("SELECT Nombre,Carne FROM Est WHERE ID=1 ");  
+        //prueba.recievemsg("SELECT Nombre,Carne FROM Est WHERE ID=1 ");  
+       // prueba.recievemsg("DISPLAY DATABASE TecDB");  
 
         
         //t.getArbolMetadata();
-       // Funciones.recorrerArchivo2(Constants.DATABASE+"TecDB\\"+Constants.CONSTRAIT_CATALOG);
+       Funciones.recorrerArchivo(Constants.DATABASE+"TecDB\\"+Constants.CONSTRAIT_CATALOG);
         //Funciones.recorrerArchivo(Constants.DATABASE+"TecDB\\Cursos");
         /*System.out.println("HISTORY CATALOG");
         Funciones.recorrerArchivo(Constants.HISTORY_CATALOG);

@@ -6,6 +6,8 @@ package urSQL.Constants;
 public class Constants {
     
     public static final String DATABASE = "/Users/macbook/NetBeansProjects/New/urSQL";
+    //public static final String DATABASE = "/home/jaam/NetBeansProjects/urSQL/src/Schemas";
+   // public static final String DATABASE = "/home/jaam/NetBeansProjects/urSQL/src/Schemas";
     public static final String HISTORY_CATALOG = "pg_history";
     public static final String CONSTRAIT_CATALOG = "pg_constrait";
     public static final String METADATA = "metadata";
