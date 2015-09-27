@@ -14,6 +14,7 @@ import java.net.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.antlr.runtime.RecognitionException;
+import org.json.JSONArray;
 
 public class EngineServer {
 
@@ -95,6 +96,16 @@ class client_handler extends Thread {
                     if(line.equals("START")){
                         RuntimeDB.setStart();
                         CommunicationProtocol respuesta = new CommunicationProtocol();
+                        JSONArray array1 = new JSONArray();
+                        JSONArray array2 = new JSONArray();
+                        array1.put("Runtime");
+                        array1.put("System Catalog");
+                        array1.put("Store Data Maneger");
+                        array2.put("Running");
+                        array2.put("Running");
+                        array2.put("Running");
+                        respuesta.accumulateData("Component", array1);
+                        respuesta.accumulateData("Status", array2);
                         respuesta.setStatus("0", "0");
                         respuesta.setFormat("default");
                         out.println(respuesta.getReturnObj());

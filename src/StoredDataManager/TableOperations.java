@@ -1488,24 +1488,21 @@ public class TableOperations {
             } 
             if(j!=largoDB){
                  
-                JSONArray arrayRaiz = new JSONArray();
-                
+                JSONArray columna1 = new JSONArray();
+                JSONArray columna2 = new JSONArray();
+                JSONArray columna3 = new JSONArray();
+                JSONArray columna4 = new JSONArray();
+                JSONArray columna5 = new JSONArray();
+                    
                 File file = new File(Constants.DATABASE+databases.get(j)+"\\"+Constants.METADATA);
                 File file2 = new File(Constants.DATABASE+databases.get(j)+"\\"+Constants.CONSTRAIT_CATALOG);
+                
                 try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()) {
 
                     BTreeMap <Integer, Metadata> primary = thedb.treeMapCreate("pri")
                             .keySerializer(BTreeKeySerializer.INTEGER)
                             .makeOrGet();
                     int tail = primary.size();
-    
-                    JSONArray columna1 = new JSONArray();
-                    JSONArray columna2 = new JSONArray();
-                    JSONArray columna3 = new JSONArray();
-                    JSONArray columna4 = new JSONArray();
-                    JSONArray columna5 = new JSONArray();
-                    
-                    String tableActual = null;
                     for (int k = 9; k < tail; k++){
                         
                         Metadata md = primary.ceilingEntry(k).getValue();
@@ -1515,13 +1512,20 @@ public class TableOperations {
                         columna4.put(md._type);
                         columna5.put(md._nullability);
                     }
-                    DB thedb2 = DBMaker.fileDB(file2).closeOnJvmShutdown().make();
+                }
+                catch(Exception e){
+                    respuesta.setStatus("1637", "0");
+                    return respuesta.getReturnObj();
+                }
+                try(DB thedb2 = DBMaker.fileDB(file2).closeOnJvmShutdown().make()) {
+
                     BTreeMap <Integer, typeData[]> primaryConstrait = thedb2.treeMapCreate("pri")
                             .keySerializer(BTreeKeySerializer.INTEGER)
                             .makeOrGet();
+                    
                     int tailCons = primaryConstrait.size();
+                    
                     for(int i=0; i<tailCons; i++){
-                        System.out.println(i);
                         typeData[] tp = primaryConstrait.ceilingEntry(i).getValue();
                         columna1.put("Constraints");
                         columna2.put("Table FK");
@@ -1529,6 +1533,7 @@ public class TableOperations {
                         columna4.put("Table REF");
                         columna5.put(tp[2].getDate()+"."+tp[3].getDate());
                     }
+                    
                     respuesta.accumulateData("Tipo información", columna1);
                     respuesta.accumulateData("Id", columna2);
                     respuesta.accumulateData("Nombre", columna3);
@@ -1536,12 +1541,15 @@ public class TableOperations {
                     respuesta.accumulateData("Nulabilidad", columna5);
                     respuesta.setStatus("0", "0");
                     return respuesta.getReturnObj();
+                    
                 }
-                
                 catch(Exception e){
                     respuesta.setStatus("1637", "0");
                     return respuesta.getReturnObj();
                 }
+                
+                
+                
                 
  
                 
