@@ -42,7 +42,6 @@ public class EngineServer {
         } catch (IOException e) {
             System.err.println("IOException");
         }
-
         //5. close the connections and stream
         try {
             s.close();

@@ -1,5 +1,6 @@
 package RuntimeDBProcessor;
 
+import JsonXMLBuilder.*;
 import Runtime.Server.CommunicationProtocol;
 import RuntimeDBProcessor.commands.CLP.CLPCommands;
 import RuntimeDBProcessor.commands.DDL.DDLCommands;
@@ -9,11 +10,15 @@ import StoredDataManager.TableOperations;
 import SystemCatalog.Metadata;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import urSQL.Ejemplos.Funciones;
 import urSQL.tipos.typeData;
-import JsonXMLBuilder.*;
 
 /**
  *
@@ -356,9 +361,11 @@ public class RuntimeDB {
                     System.out.println(respuesta.getReturnObj());
                     return ;
                 }
+                
                 int result = newOperation.selectAggregateFunction(schema, table1,
                         aggregateFunction, pColCondToSend,
                         pDatosToSend, pOpToSend, condisLogicArr);
+                
 
                 if(result==-1){
                     respuesta.setStatus("1072", "0");
@@ -371,13 +378,42 @@ public class RuntimeDB {
                 
                 if(forJSONXml.isEmpty()!=false){
                     if (forJSONXml.equals("FOR JSON")){
-                        JSONBuilder newJBuilder= new JSONBuilder(aggregateFunction.get(0));
-                       // newJBuilder.addElement(aggregateFunction.get(0), table2);
+                        System.out.println("veriff");
                         
+                        JSONBuilder newJBuilder= new JSONBuilder(aggregateFunction.get(0));
+                        JSONObject jsonTmp= new JSONObject();
+                        try {
+                            jsonTmp.put(aggregateFunction.get(0), Integer.toString(result));
+                            //newJBuilder.addElement(aggregateFunction.get(0), table2);
+                        } catch (JSONException ex) {
+                            Logger.getLogger(RuntimeDB.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                        newJBuilder.addElement(jsonTmp, aggregateFunction.get(0) );
+                        
+                        respuesta.setStatus("0", "0");
+                        respuesta.setFormat("default");
+                        
+                        //Verif
+                        
+                        _json = newJBuilder.getStringJSON();
+                        System.out.println("Printing JSON"+respuesta.getReturnObj());     
+                        return ;
                         
                     }
                     else{
+                        XMLBuilder newXMLB= new XMLBuilder(aggregateFunction.get(0));                                       
+	
+                        Element newXMLEl = new Element(aggregateFunction.get(0));
                         
+                         newXMLEl.setAttribute(new Attribute("ID", "001"));
+                         
+                         newXMLEl.addContent(new Element(aggregateFunction.get(0)).setText(Integer.toString(result)));
+
+                        newXMLB.addElement(newXMLEl);   
+                        
+                        System.out.println("PRINTING XML"+newXMLB.toString());
+                        return ;
                         
                     }
                     
