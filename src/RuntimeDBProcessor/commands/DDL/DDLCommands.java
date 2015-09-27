@@ -27,7 +27,7 @@ public class DDLCommands {
         TableOperations t = new TableOperations();
         if(!t.verificarDBRepetidas(pSchemaName)){
             _schemaName = pSchemaName;
-            _schema = Constants.DATABASE+pSchemaName+"\\";
+            _schema = Constants.DATABASE+pSchemaName+"/";
             typeData[] r1 = {new VARCHAR("SET_DATABASE"), new VARCHAR(pSchemaName), new VARCHAR("Correct")};
             t.insert(_schema+Constants.HISTORY_CATALOG, r1, false);
             return 0;//0 -> proceso correcto
@@ -36,8 +36,7 @@ public class DDLCommands {
             typeData[] r = {new NULL(), new INTEGER("1008"), new VARCHAR("SET_DATABASE"), new VARCHAR("No existe la base de datos")};
             t.insert(Constants.LOG_ERRORS, r, true);
             return -1008;
-        }
-        
+        }   
     }
     
     /**
