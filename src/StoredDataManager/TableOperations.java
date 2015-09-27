@@ -455,9 +455,7 @@ public class TableOperations {
         for (int i = 0; i < pDatosTable2.size(); i++) {
             for (int j = 0; j <pDatosTable1.size() ; j++) {
                     
-
-                            
-                    if(pDatosTable1.ceilingEntry(j).getValue()[pColumnaCondicionPos1].getDate().equals(pDatosTable2.ceilingEntry(i).getValue()[pColumnaCondicionPos2].getDate())){
+                  if(pDatosTable1.ceilingEntry(j).getValue()[pColumnaCondicionPos1].getDate().equals(pDatosTable2.ceilingEntry(i).getValue()[pColumnaCondicionPos2].getDate())){
                         tail=tmp.size();
                         ArrayList<String> tmpRegister= new ArrayList<>();    
                         
@@ -508,21 +506,10 @@ public class TableOperations {
                               
                                 typesSelectedTable[sizeTypesSelected]="INTEGER";
                                 sizeTypesSelected++;
-
                             }
                         }
 
 
-
-                        
-                        //System.out.println("metadata types"+typesSelectedTable[2]);
-                        
-
-                        //metadataTableSelected=new String[columnsSelectedTable.length][typesSelectedTable.length];
-                        
-                        //metadataTableSelected[0][]=columnsSelectedTable;
-                        //metadataTableSelected[1][]=typesSelectedTable;
-                        
                         metadataTableSelected.add(columnsSelectedTable);
                         metadataTableSelected.add(typesSelectedTable);
                         
@@ -691,7 +678,6 @@ public class TableOperations {
              ArrayList<String> pDatosCond,ArrayList<Integer> pCondisLog,
             String format) {
         
-        
         metadataTable1 = getMetaDataTable(pSchema, pTable1);
         
         //System.out.println("Metadata Table 1"+metadataTable1[0][0]);
@@ -708,7 +694,7 @@ public class TableOperations {
 
                 //System.out.println("metadata" +md[0][0]);
                 File fileToJoin = new File(pSchema + pTable2);
-                
+
                 try (DB thedbToJoin = DBMaker.fileDB(fileToJoin).closeOnJvmShutdown().make()) {
 
                     BTreeMap<Integer, typeData[]> primarytoJoin = thedbToJoin.treeMapCreate("pri")
@@ -717,7 +703,7 @@ public class TableOperations {
 
                     
                     metadataTable2 = getMetaDataTable(pSchema, pTable2);
-                    
+
                     
 
 
@@ -749,6 +735,7 @@ public class TableOperations {
                         }
                     }
                     
+                    
                     for (int j = 0; j < pColSelect2.length; j++) {
                         for (int k = 0; k < metadataTable2[0].length; k++) {
                             System.out.println("Metadata"+pColSelect2[j]);
@@ -765,6 +752,7 @@ public class TableOperations {
                     for (int k = 0; k < ColumnsToSelectTab2.size(); k++) {
                             typesToSelectTab2.add(metadataTable2[1][ColumnsToSelectTab2.get(k)]);
                     }
+
                     //System.out.println("Verif type to select2"+typesToSelectTab2.get(0));
        
 
@@ -803,18 +791,18 @@ public class TableOperations {
                     
                    // System.out.println("ColumnToJoinVerif"+columnToJoinVerif);
 
+                 
                     
-                    if (columnToJoinVerif.equals("") == true) {
-                        return null;
-                    } 
-                    else {
+                        
                         //System.out.println("DATOS TABLA 2" + primarytoJoin.ceilingEntry(0).getValue()._register[posColumnToJoin]);
                        // System.out.println("Pre join Logic");
                         
-                        BTreeMap<Integer, typeData[]> myJoinSelect = joinLogic(primary, primarytoJoin, posColumnToJoin, posColumnToJoin2, ColumnsToSelect,typesToSelect, thedb);
+                        BTreeMap<Integer, typeData[]> myJoinSelect = joinLogic(primary, primarytoJoin, posColumnToJoin, posColumnToJoin2,
+                                ColumnsToSelect,typesToSelect, thedb);
                         
                         
                         if (pColCond.isEmpty()==true) {
+                            System.out.println("Verif en vacio");
                             for (int i = 0; i < myJoinSelect.size(); i++) {
                                 salida.add(myJoinSelect.ceilingEntry(i).getValue()); 
                             }
@@ -835,7 +823,8 @@ public class TableOperations {
 
                         
                         pOpToSend=pOperadorCond.toArray(pOpToSend);
-
+                        
+                        
                         
                         int[] condisLogtoSend = convertIntegers(pCondisLog);
                         if(condisLogtoSend[0]==-1){
@@ -869,7 +858,7 @@ public class TableOperations {
                         
                        // return salida;
 
-                    }
+                    
 
                 }
 
