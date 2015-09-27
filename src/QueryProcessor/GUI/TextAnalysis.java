@@ -54,7 +54,7 @@ public class TextAnalysis extends Observable {
                 int largoComparar = pComparar.length();
 
                 if ((i + largoComparar) < largo) {
-
+                    
                     if (pComparar.equals(pText.substring(i, i + largoComparar))) {
                         x = i;
                         y = i + largoComparar - 1;

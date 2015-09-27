@@ -49,6 +49,7 @@ public class ErrorsWindow extends javax.swing.JFrame {
             new Object [][] {
                 {"900", "Lexical error."},
                 {"901", "Syntax error."},
+                {"902", "urSQL components doesnt init"},
                 {"903", "Semantic error."},
                 {"904", "Index cannot be created."},
                 {"1007", "Database already exist."},
@@ -66,7 +67,6 @@ public class ErrorsWindow extends javax.swing.JFrame {
                 {"1217", "Referential integrity on delete opertation."},
                 {"1232", "Incopatible types."},
                 {"1637", "Concurrency error."},
-                {null, null},
                 {null, null}
             },
             new String [] {

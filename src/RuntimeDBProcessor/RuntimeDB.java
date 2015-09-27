@@ -30,12 +30,17 @@ public class RuntimeDB {
     public static boolean getStart(){
         return _flagStart;
     }
-             
+    
+    public static void setStart(){
+        _flagStart=true;
+    }      
+    
     public static String getJson(){
         return _json;
     }
      
     public void CreateDB(String pDBName){
+        
         _queryPlan.queryCreateDatabase();
         int i = (_clp.createDatabase(pDBName)); 
         CommunicationProtocol respuesta = new CommunicationProtocol();

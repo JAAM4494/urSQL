@@ -63,6 +63,7 @@
                 <Column editable="false" title="Error Code" type="java.lang.String">
                   <Data value="900"/>
                   <Data value="901"/>
+                  <Data value="902"/>
                   <Data value="903"/>
                   <Data value="904"/>
                   <Data value="1007"/>
@@ -81,11 +82,11 @@
                   <Data value="1232"/>
                   <Data value="1637"/>
                   <Data value="null"/>
-                  <Data value="null"/>
                 </Column>
                 <Column editable="false" title="Description" type="java.lang.String">
                   <Data value="Lexical error."/>
                   <Data value="Syntax error."/>
+                  <Data value="urSQL components doesnt init"/>
                   <Data value="Semantic error."/>
                   <Data value="Index cannot be created."/>
                   <Data value="Database already exist."/>
@@ -103,7 +104,6 @@
                   <Data value="Referential integrity on delete opertation."/>
                   <Data value="Incopatible types."/>
                   <Data value="Concurrency error."/>
-                  <Data value="null"/>
                   <Data value="null"/>
                 </Column>
               </Table>

@@ -76,7 +76,9 @@ class client_handler extends Thread {
             //Now start reading input from client
             while ((line = in.readLine()) != null && !line.equals(".")) {
                 //reply with the same message, adding some text
-
+                if(line.equals("")){
+                    continue;
+                }
                 RuntimePreParser prueba = new RuntimePreParser();
                 try {
                     
@@ -86,16 +88,27 @@ class client_handler extends Thread {
                         continue;
                     }
                     if(line.equals("plan")){
+                        System.out.println("PLAN "+QueryPlan.getQueryPlan());
                         out.println(QueryPlan.getQueryPlan());
                         continue;
                     }
-                    prueba.recievemsg(line);
+                    if(line.equals("START")){
+                        RuntimeDB.setStart();
+                        CommunicationProtocol respuesta = new CommunicationProtocol();
+                        respuesta.setStatus("0", "0");
+                        respuesta.setFormat("default");
+                        out.println(respuesta.getReturnObj());
+                        continue;
+                    }
                     if(RuntimeDB.getStart()){
+                        prueba.recievemsg(line);
+                        System.out.println("SERVER "+RuntimeDB.getJson());
                         out.println(RuntimeDB.getJson());
                     }
                     else{
                         CommunicationProtocol respuesta = new CommunicationProtocol();
-                        respuesta.setStatus("904", "0");
+                        respuesta.setStatus("902", "0");
+                        respuesta.setFormat("default");
                         out.println(respuesta.getReturnObj());
                     }
                 } catch (RecognitionException ex) {
