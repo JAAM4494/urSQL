@@ -31,13 +31,13 @@ public class CLPCommands {
             t.insert(Constants.DATABASE+Constants.DB, tp, false);
             typeData[] r1 = {new VARCHAR("CREATE_DATABASE"), new VARCHAR(pDBName), 
                     new VARCHAR("Correct")};
-            t.insert(Constants.DATABASE+pDBName+"\\"+Constants.HISTORY_CATALOG, r1, false);
+            t.insert(Constants.DATABASE+pDBName+"/"+Constants.HISTORY_CATALOG, r1, false);
             String[] cols1 = {"tableFK-VARCHAR-NOT NULL", "colFK-VARCHAR-NOT NULL", "tableREF-VARCHAR-NOT NULL", "colREF-VARCHAR-NOT NULL"};
             String[] cols2 = {"Comando-VARCHAR-NOT NULL", "Argumento-VARCHAR-NOT NULL", "Estado-VARCHAR-NOT NULL"};
             String[] cols3 = {"NombreIndex-INTEGER-NOT NULL", "Tabla-VARCHAR-NOT NULL", "Columna-VARCHAR-NOT NULL"};
-            t.updateMETADATA(Constants.CONSTRAIT_CATALOG, Constants.DATABASE+pDBName+"\\", cols1, ""); 
-            t.updateMETADATA(Constants.HISTORY_CATALOG, Constants.DATABASE+pDBName+"\\", cols2, "");
-            t.updateMETADATA(Constants.INDEX_CATALOG, Constants.DATABASE+pDBName+"\\", cols3, ""); 
+            t.updateMETADATA(Constants.CONSTRAIT_CATALOG, Constants.DATABASE+pDBName+"/", cols1, ""); 
+            t.updateMETADATA(Constants.HISTORY_CATALOG, Constants.DATABASE+pDBName+"/", cols2, "");
+            t.updateMETADATA(Constants.INDEX_CATALOG, Constants.DATABASE+pDBName+"/", cols3, ""); 
             return 0;
         }
         

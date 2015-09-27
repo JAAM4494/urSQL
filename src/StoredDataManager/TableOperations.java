@@ -1434,7 +1434,7 @@ public class TableOperations {
     }
     
     public String getArbolMetadata(){
-        
+        System.out.println("hasjbdsjkbu");
         ArrayList<String> databases = getDatabases();
         CommunicationProtocol respuesta = new CommunicationProtocol();
         if (!databases.isEmpty()){
@@ -1445,7 +1445,7 @@ public class TableOperations {
                 
                 JSONArray arrayRaiz = new JSONArray();
                 
-                File file = new File(Constants.DATABASE+databases.get(i)+"\\"+Constants.METADATA);
+                File file = new File(Constants.DATABASE+databases.get(i)+"/"+Constants.METADATA);
                 
                 try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
 
@@ -1456,13 +1456,13 @@ public class TableOperations {
                     JSONObject tabla = new JSONObject();
                     JSONArray columnasTabla = new JSONArray();
                     String tableActual = null;
-                    for (int j = 9; j < tail; j++){
+                    for (int j = 13; j < tail; j++){
                         
                         Metadata md = primary.ceilingEntry(j).getValue();
                         
                         if(md._typeData.equals("TABLE")){
                             
-                            if(j==9){
+                            if(j==13){
                                 tableActual = md._name;
                                 continue;
                             }  
@@ -1501,6 +1501,7 @@ public class TableOperations {
             
         }
         respuesta.setStatus("0", "0");
+        System.out.println(respuesta.getReturnObj());
         return respuesta.getReturnObj();
     }
     
@@ -1526,8 +1527,8 @@ public class TableOperations {
                 JSONArray columna4 = new JSONArray();
                 JSONArray columna5 = new JSONArray();
                     
-                File file = new File(Constants.DATABASE+databases.get(j)+"\\"+Constants.METADATA);
-                File file2 = new File(Constants.DATABASE+databases.get(j)+"\\"+Constants.CONSTRAIT_CATALOG);
+                File file = new File(Constants.DATABASE+databases.get(j)+"/"+Constants.METADATA);
+                File file2 = new File(Constants.DATABASE+databases.get(j)+"/"+Constants.CONSTRAIT_CATALOG);
                 
                 try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()) {
 

@@ -49,7 +49,7 @@ public class RuntimePreParser {
         
         
         //t.getArbolMetadata();
-       //Funciones.recorrerArchivo(Constants.DATABASE+"TecDB\\"+Constants.CONSTRAIT_CATALOG);
+       Funciones.recorrerArchivo2(Constants.DATABASE+"TecDB/"+Constants.METADATA);
         //Funciones.recorrerArchivo(Constants.DATABASE+"TecDB\\Cursos");
         /*System.out.println("HISTORY CATALOG");
         Funciones.recorrerArchivo(Constants.HISTORY_CATALOG);
