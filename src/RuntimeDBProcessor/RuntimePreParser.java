@@ -45,7 +45,8 @@ public class RuntimePreParser {
         
        // Funciones.recorrerArchivo(Constants.DATABASE+"TecDB\\Est");
         
-        prueba.recievemsg("DISPLAY DATABASE TecDB");  
+        //prueba.recievemsg("SELECT Nombre,Carne FROM Est WHERE ID=1 ");  
+       // prueba.recievemsg("DISPLAY DATABASE TecDB");  
 
         
         //t.getArbolMetadata();
