@@ -393,11 +393,8 @@ public class RuntimeDB {
                         
                         respuesta.setStatus("0", "0");
                         respuesta.setFormat("default");
-                        
-                        //Verif
-                        
+                                                
                         _json = newJBuilder.getStringJSON();
-                        System.out.println("Printing JSON"+respuesta.getReturnObj());     
                         return ;
                         
                     }
@@ -412,7 +409,6 @@ public class RuntimeDB {
 
                         newXMLB.addElement(newXMLEl);   
                         
-                        System.out.println("PRINTING XML"+newXMLB.toString());
                         return ;
                         
                     }
@@ -730,7 +726,7 @@ public class RuntimeDB {
                 
                 System.out.println("table 2"+table2);
                 
-                System.out.println("Columns Conditions" +columnasCondiciones.get(0));
+                //System.out.println("Columns Conditions" +columnasCondiciones.get(0));
                 
                 
                 
