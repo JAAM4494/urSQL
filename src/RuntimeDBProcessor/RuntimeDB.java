@@ -681,15 +681,15 @@ public class RuntimeDB {
                     return ;
                 }
                 
-                System.out.println("Column to Select Array1"+columnsToSelectArr1[0]);
+        //        System.out.println("Column to Select Array1"+columnsToSelectArr1[0]);
                 
-                System.out.println("Column to Select Array2"+columnsToSelectArr2.length);
+      //          System.out.println("Column to Select Array2"+columnsToSelectArr2.length);
                 
-                System.out.println("table 1"+table1);
+    //            System.out.println("table 1"+table1);
                 
-                System.out.println("table 2"+table2);
+  //              System.out.println("table 2"+table2);
                 
-                System.out.println("Columns Conditions" +columnasCondiciones.get(0));
+//                System.out.println("Columns Conditions" +columnasCondiciones.get(0));
                 
                 
                 
