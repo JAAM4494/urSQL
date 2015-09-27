@@ -1539,7 +1539,7 @@ public class TableOperations {
                             .keySerializer(BTreeKeySerializer.INTEGER)
                             .makeOrGet();
                     int tail = primary.size();
-                    for (int k = 9; k < tail; k++){
+                    for (int k = 13; k < tail; k++){
                         
                         Metadata md = primary.ceilingEntry(k).getValue();
                         columna1.put(md._id);
