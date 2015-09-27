@@ -73,9 +73,10 @@ public class RuntimeDB {
         System.out.println("JSON DROP DB "+_json);
     }
     
-    public void GetStatus(){
-        _json=_clp.GetStatus(_flagStart);
+    public static String GetStatus(){
+        _json=CLPCommands.GetStatus(_flagStart);
         System.out.println("JSON GET STATUS "+_json);
+        return _json;
     }
 
     public void ListDB(){

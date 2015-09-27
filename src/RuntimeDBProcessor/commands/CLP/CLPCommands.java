@@ -72,7 +72,7 @@ public class CLPCommands {
         
     }
     
-    public String GetStatus(boolean pFlag){
+    public static String GetStatus(boolean pFlag){
         
         CommunicationProtocol respuesta = new CommunicationProtocol();
         JSONArray array1 = new JSONArray();

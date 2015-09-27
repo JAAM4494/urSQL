@@ -1482,7 +1482,7 @@ public class TableOperations {
                             columnasTabla.put(md._name);
                         }
                     }
-                    if(tail>9){
+                    if(tail>13){
                         tabla.put(tableActual, columnasTabla);
                         arrayRaiz.put(tabla);
                     }
