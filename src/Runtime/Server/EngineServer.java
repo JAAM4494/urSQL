@@ -21,11 +21,11 @@ public class EngineServer {
     public static void main(String args[]) {
         ServerSocket s = null;
         Socket conn = null;
-
+        
         try {
-            //1. creating a server socket - 1st parameter is port number and 2nd is the backlog
             s = new ServerSocket(8080, 10);
-
+            
+            
             //2. Wait for an incoming connection
             echo("Server socket created.Waiting for connection...");
 
@@ -46,7 +46,8 @@ public class EngineServer {
         //5. close the connections and stream
         try {
             s.close();
-        } catch (IOException ioException) {
+        } 
+        catch (IOException ioException) {
             System.err.println("Unable to close. IOexception");
         }
     }
@@ -67,7 +68,8 @@ class client_handler extends Thread {
     @Override
     public void run() {
         String line, input = "";
-
+        
+        
         try {
             //get socket writing and reading streams
             DataInputStream in = new DataInputStream(conn.getInputStream());
