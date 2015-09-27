@@ -61,10 +61,11 @@ public class INTEGER extends typeData {
 
     @Override
     public boolean verificarTipo(String pDate) {
-
+        System.out.println("VERIFICANDO INT "+pDate);
         try {
-            //if (pDate.equals("NULL"))
-            //return false;
+            if (pDate.equals("NULL")){
+            return false;
+            }
             Integer.parseInt(pDate);
             return true;
         } catch (Exception e) {

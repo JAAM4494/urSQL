@@ -36,8 +36,8 @@ public class RuntimeDB {
         return _flagStart;
     }
     
-    public static void setStart(){
-        _flagStart=true;
+    public static void setStart(boolean valor){
+        _flagStart=valor;
     }      
     
     public static String getJson(){

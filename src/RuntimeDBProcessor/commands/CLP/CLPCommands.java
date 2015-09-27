@@ -58,8 +58,8 @@ public class CLPCommands {
         
         TableOperations t = new TableOperations();
         if(t.borrarDatabase(pDBName)){
-            File file = new File(Constants.DATABASE+pDBName);
-            file.deleteOnExit();
+//            File file = new File(Constants.DATABASE+pDBName);
+//            file.deleteOnExit();
             /*typeData[] r1 = {new VARCHAR("DROP_DATABASE"), new VARCHAR(pDBName), 
                     new VARCHAR("Correct")};
             t.insert(Constants.DATABASE+pDBName+"\\"+Constants.HISTORY_CATALOG, r1, false);*/

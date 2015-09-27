@@ -368,7 +368,13 @@ public class TableOperations {
 
                 for (int i=0; i<tail; i++){
                     typeData[] register = primary.ceilingEntry(i).getValue();
+                    int l = register.length;
+                    for (int j = 0; j < l; j++) {
+                        System.out.print(register[j].getDate()+"  ");
+                    }
+                    
                     boolean w = where(register, md[0], pColumnasCondiciones, pDatosCondiciones, pOpes, pTipoCondiciones);
+                    System.out.println("WHERE "+w+"  FIN");
                     if(w){
  
                         int larDates = md[0].length;
@@ -920,6 +926,9 @@ public class TableOperations {
     public int update(String pCol, String pValor, String pSchema, String pTable, String[] pColumnasCondiciones,
             String[] pDatosCondiciones,String[] pOpes, int[] pTipoCondiciones){
         
+        for (int i = 0; i < pDatosCondiciones.length; i++) {
+            System.out.println(pColumnasCondiciones[i]+"   "+pDatosCondiciones[i]+"   "+pOpes[i]);
+        }
         //Verifica la IR
         String[] pColumns = { pCol };
         String[] pValues = { pValor };
@@ -948,7 +957,13 @@ public class TableOperations {
                     return -1068;//Error de la llave primaria el dato esta repetido
                 }                           
             }
-            
+            System.out.println("////////////////////////////");
+            System.out.print(pSchema+pTable+" ");
+            int l = pColumns.length;
+            for (int i = 0; i < l; i++) {
+                System.out.print(pColumns[i]+" ");
+            }
+            System.out.println("////////////////////////////");
             if(!verificarREF(pSchema, pTable, pColumns)){
                 typeData[] r_a = {new NULL(), new INTEGER("1217"), new VARCHAR("UPDATE"), 
                      new VARCHAR("Error la col a actualizar es referenciada en otra tabla")};
@@ -1059,7 +1074,13 @@ public class TableOperations {
         String[][] md = getMetaDataTable(pSchema, pTable);
         int nR=0;
         if (md!=null){
-
+            System.out.println("////////////////////////////");
+            System.out.print(pSchema+pTable+" ");
+            int l = md[0].length;
+            for (int i = 0; i < l; i++) {
+                System.out.print(md[0][i]+" ");
+            }
+            System.out.println("////////////////////////////");
             if(!verificarREF(pSchema, pTable, md[0])){
                 typeData[] r_a = {new NULL(), new INTEGER("1217"), new VARCHAR("UPDATE"), 
                     new VARCHAR("Error en la IR, posee columnas referenciadas")};
@@ -1447,7 +1468,9 @@ public class TableOperations {
             for (int i=0; i<largoDB; i++){
                 
                 JSONArray arrayRaiz = new JSONArray();
-                
+                if (databases.get(i).equals("NULL")){
+                    continue;
+                }
                 File file = new File(Constants.DATABASE+databases.get(i)+"/"+Constants.METADATA);
                 
                 try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
@@ -1459,13 +1482,15 @@ public class TableOperations {
                     JSONObject tabla = new JSONObject();
                     JSONArray columnasTabla = new JSONArray();
                     String tableActual = null;
+                    boolean primeraIte  = true;
                     for (int j = 13; j < tail; j++){
                         
                         Metadata md = primary.ceilingEntry(j).getValue();
                         
                         if(md._typeData.equals("TABLE")){
                             
-                            if(j==13){
+                            if(primeraIte){
+                                primeraIte = false;
                                 tableActual = md._name;
                                 continue;
                             }  

@@ -98,8 +98,16 @@ class client_handler extends Thread {
                         out.println(QueryPlan.getQueryPlan());
                         continue;
                     }
+                    if(line.equals("STOP")){
+                        RuntimeDB.setStart(false);
+                        CommunicationProtocol respuesta = new CommunicationProtocol();
+                        respuesta.setStatus("0", "0");
+                        respuesta.setFormat("default");
+                        out.println(respuesta.getReturnObj());
+                        continue;
+                    }
                     if(line.equals("START")){
-                        RuntimeDB.setStart();
+                        RuntimeDB.setStart(true);
                         CommunicationProtocol respuesta = new CommunicationProtocol();
                         JSONArray array1 = new JSONArray();
                         JSONArray array2 = new JSONArray();

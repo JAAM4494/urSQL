@@ -89,7 +89,7 @@ public class DMLCommands {
             _tableOp.insert(Constants.DATABASE+Constants.LOG_ERRORS, r, true);
             return -1046;
         }
-        int salida = _tableOp.update(pCol, pValor, schema, pTable, pColumnasCondiciones, pDatosCondiciones, pOpes, pTipoCondiciones);
+        int salida = _tableOp.update(pCol, pValor, schema, pTable, pDatosCondiciones, pColumnasCondiciones, pOpes, pTipoCondiciones);
         if (salida>0){
             typeData[] r1 = {new VARCHAR("UPDATE"), new VARCHAR(pTable), new VARCHAR("Correct")};
              _tableOp.insert(schema+Constants.HISTORY_CATALOG, r1, false);
@@ -126,7 +126,7 @@ public class DMLCommands {
             _tableOp.insert(Constants.DATABASE+Constants.LOG_ERRORS, r, true);
             return -1046;
         }
-        int salida = _tableOp.delete(schema, pTable, pColumnasCondiciones, pDatosCondiciones, pOpes, pTipoCondiciones);
+        int salida = _tableOp.delete(schema, pTable, pDatosCondiciones, pColumnasCondiciones, pOpes, pTipoCondiciones);
         if (salida>0){
             typeData[] r1 = {new VARCHAR("DELETE"), new NULL(), new VARCHAR("Correct")};
              _tableOp.insert(schema+Constants.HISTORY_CATALOG, r1, false);
