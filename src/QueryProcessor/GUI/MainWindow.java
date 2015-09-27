@@ -26,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
@@ -164,7 +165,7 @@ public class MainWindow extends JFrame implements Observer, Runnable {
                 fis = new FileInputStream(selectedFile);
                 InputStreamReader in
                         = new InputStreamReader(fis, Charset.forName("UTF-8"));
-                char[] buffer = new char[1024];
+                char[] buffer = new char[4096];
                 int n = in.read(buffer);
                 String text = new String(buffer, 0, n);
 
@@ -173,9 +174,13 @@ public class MainWindow extends JFrame implements Observer, Runnable {
                 Font font = newScriptPane.getFont();
                 float size = font.getSize() + 4.0f;
                 newScriptPane.setFont(font.deriveFont(size));
+                
                 newScriptPane.setText(text);
-
-                jTabbedPane1.addTab("urSQL File " + Integer.toString(numScripts += 1), newScriptPane);
+                
+                JScrollPane sp = new JScrollPane(newScriptPane);
+                jTabbedPane1.add(sp);
+               
+                jTabbedPane1.addTab("urSQL File " + Integer.toString(numScripts += 1), sp);
                 jTabbedPane1.setSelectedIndex(numTabs += 1);
 
                 paneList.add(newScriptPane);
@@ -286,8 +291,11 @@ public class MainWindow extends JFrame implements Observer, Runnable {
         Font font = newScriptPane.getFont();
         float size = font.getSize() + 4.0f;
         newScriptPane.setFont(font.deriveFont(size));
+        
+        JScrollPane sp = new JScrollPane(newScriptPane);
+        jTabbedPane1.add(sp);
 
-        jTabbedPane1.addTab("urSQL File " + Integer.toString(numScripts += 1), newScriptPane);
+        jTabbedPane1.addTab("urSQL File " + Integer.toString(numScripts += 1), sp);
         jTabbedPane1.setSelectedIndex(numTabs += 1);
 
         paneList.add(newScriptPane);
@@ -618,7 +626,7 @@ public class MainWindow extends JFrame implements Observer, Runnable {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(1, 1, 1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -633,17 +641,17 @@ public class MainWindow extends JFrame implements Observer, Runnable {
                     .addComponent(loadFileBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(getPlanBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1))
-                    .addComponent(jTabbedPane1))
+                        .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
