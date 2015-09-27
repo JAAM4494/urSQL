@@ -24,7 +24,7 @@ public class Main {
          urSQLLexer lexer = new urSQLLexer(in);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         urSQLParser parserP = new urSQLParser(tokens);
-        parserP.createDB();
+        parserP.createDB();g
          //System.out.println("prueba");*/
         
         

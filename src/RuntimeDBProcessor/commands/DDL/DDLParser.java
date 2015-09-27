@@ -79,4 +79,17 @@ public class DDLParser {
         return respuesta.getReturnObj();
     }
     
+    public String parserCreateIndex(String pName, String pTable, String pTableColumn){
+        int i = _ddl.createIndex(pName, pTable, pTableColumn, true);
+        CommunicationProtocol respuesta = new CommunicationProtocol();
+        if(i==0){
+            respuesta.setStatus("0", "0");
+        }
+        else{
+            respuesta.setStatus(Integer.toString(Math.abs(i)), "0");
+        }
+        respuesta.setFormat("default");
+        return respuesta.getReturnObj();
+        
+    }
 }

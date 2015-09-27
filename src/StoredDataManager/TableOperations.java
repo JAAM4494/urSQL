@@ -1,6 +1,7 @@
 package StoredDataManager;
 
 import Runtime.Server.CommunicationProtocol;
+import RuntimeDBProcessor.commands.DDL.DDLCommands;
 import SystemCatalog.Metadata;
 import java.io.File;
 import java.util.ArrayList;
@@ -195,7 +196,18 @@ public class TableOperations {
             
         }
         if(insert(pSchema+pTable,salida,false)){
-             return 0;//0 -> proceso satisfactorio
+            
+            String[] cols = {"NombreIndex","Tabla", "Columna"};
+            String[] colsCondis = {"Tabla"};
+            String[] datosCondis = {pTable};
+            String[] opes = {"="};
+            int[] condis = {};
+            ArrayList<String[]> datos = select(cols, pSchema, Constants.INDEX_CATALOG, colsCondis, datosCondis, opes, condis);
+            if(!datos.isEmpty()){
+                DDLCommands ddl = new DDLCommands();
+                ddl.createIndex(datos.get(0)[0], datos.get(0)[1], datos.get(0)[2], true);
+            }
+            return 0;//0 -> proceso satisfactorio
         }
         else{
             typeData[] r_a = {new NULL(), new INTEGER("1637"), new VARCHAR("INSERT_INTO"), 
@@ -325,20 +337,21 @@ public class TableOperations {
     
     public ArrayList<String[]> select(String[] pColSelect, String pSchema, String pTable, String[] pColumnasCondiciones,
             String[] pDatosCondiciones, String[] pOpes, int[] pTipoCondiciones){
+        
         String[][] md = getMetaDataTable(pSchema, pTable);
         ArrayList<String[]> salida = new ArrayList<>();
         
-        
-
-        
         if (md!=null){
+
             File file = new File(pSchema+pTable);
+            System.out.println(pSchema+pTable);
             try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
                 BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
                         .keySerializer(BTreeKeySerializer.INTEGER)
                         .makeOrGet();
 
                 int tail = primary.size();
+                System.out.println("tail"+tail);
                 if(tail==0){
                     for (String md1 : md[0]) {
                         if (md1.equals(pColSelect[0])) {
@@ -992,6 +1005,18 @@ public class TableOperations {
                         }
 
                     }
+                    if(md[0][0].equals(pCol)){
+                        String[] cols = {"NombreIndex","Tabla", "Columna"};
+                        String[] colsCondis = {"Tabla"};
+                        String[] datosCondis = {pTable};
+                        String[] opes = {"="};
+                        int[] condis = {};
+                        ArrayList<String[]> datos = select(cols, pSchema, Constants.INDEX_CATALOG, colsCondis, datosCondis, opes, condis);
+                        if(!datos.isEmpty() && nR>0){
+                            DDLCommands ddl = new DDLCommands();
+                            ddl.createIndex(datos.get(0)[0], datos.get(0)[1], datos.get(0)[2], true);
+                        }
+                    }
                     return nR;
                 }
                 else{
@@ -1064,6 +1089,16 @@ public class TableOperations {
                         thedb.commit();
                         nR++;
                     }
+                }
+                String[] cols = {"NombreIndex","Tabla", "Columna"};
+                String[] colsCondis = {"Tabla"};
+                String[] datosCondis = {pTable};
+                String[] opes = {"="};
+                int[] condis = {};
+                ArrayList<String[]> datos = select(cols, pSchema, Constants.INDEX_CATALOG, colsCondis, datosCondis, opes, condis);
+                if(!datos.isEmpty() && nR>0){
+                    DDLCommands ddl = new DDLCommands();
+                    ddl.createIndex(datos.get(0)[0], datos.get(0)[1], datos.get(0)[2], true);
                 }
                 return nR;
                 
@@ -1373,7 +1408,7 @@ public class TableOperations {
                     break;
                 }
             }
-            if (!plan.equals("NULO") && Integer.parseInt(plan)>2){
+            if (!plan.equals("NULO") && Integer.parseInt(plan)>3){
                 
                 String planActual=plan;
                 Metadata m = new Metadata("NULL", "NULL", "NULL", "NULL", "NULL");
@@ -1402,7 +1437,7 @@ public class TableOperations {
     }
     
     public String getArbolMetadata(){
-        
+        System.out.println("hasjbdsjkbu");
         ArrayList<String> databases = getDatabases();
         CommunicationProtocol respuesta = new CommunicationProtocol();
         if (!databases.isEmpty()){
@@ -1413,7 +1448,7 @@ public class TableOperations {
                 
                 JSONArray arrayRaiz = new JSONArray();
                 
-                File file = new File(Constants.DATABASE+databases.get(i)+"\\"+Constants.METADATA);
+                File file = new File(Constants.DATABASE+databases.get(i)+"/"+Constants.METADATA);
                 
                 try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
 
@@ -1424,13 +1459,13 @@ public class TableOperations {
                     JSONObject tabla = new JSONObject();
                     JSONArray columnasTabla = new JSONArray();
                     String tableActual = null;
-                    for (int j = 9; j < tail; j++){
+                    for (int j = 13; j < tail; j++){
                         
                         Metadata md = primary.ceilingEntry(j).getValue();
                         
                         if(md._typeData.equals("TABLE")){
                             
-                            if(j==9){
+                            if(j==13){
                                 tableActual = md._name;
                                 continue;
                             }  
@@ -1450,7 +1485,7 @@ public class TableOperations {
                             columnasTabla.put(md._name);
                         }
                     }
-                    if(tail>9){
+                    if(tail>13){
                         tabla.put(tableActual, columnasTabla);
                         arrayRaiz.put(tabla);
                     }
@@ -1469,6 +1504,7 @@ public class TableOperations {
             
         }
         respuesta.setStatus("0", "0");
+        System.out.println(respuesta.getReturnObj());
         return respuesta.getReturnObj();
     }
     
@@ -1494,8 +1530,8 @@ public class TableOperations {
                 JSONArray columna4 = new JSONArray();
                 JSONArray columna5 = new JSONArray();
                     
-                File file = new File(Constants.DATABASE+databases.get(j)+"\\"+Constants.METADATA);
-                File file2 = new File(Constants.DATABASE+databases.get(j)+"\\"+Constants.CONSTRAIT_CATALOG);
+                File file = new File(Constants.DATABASE+databases.get(j)+"/"+Constants.METADATA);
+                File file2 = new File(Constants.DATABASE+databases.get(j)+"/"+Constants.CONSTRAIT_CATALOG);
                 
                 try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()) {
 

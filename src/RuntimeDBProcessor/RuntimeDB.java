@@ -7,7 +7,6 @@ import RuntimeDBProcessor.commands.DDL.DDLCommands;
 import RuntimeDBProcessor.commands.DDL.DDLParser;
 import RuntimeDBProcessor.commands.DML.DMLParser;
 import StoredDataManager.TableOperations;
-import SystemCatalog.Metadata;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -81,9 +80,10 @@ public class RuntimeDB {
         System.out.println("JSON DROP DB "+_json);
     }
     
-    public void GetStatus(){
-        _json=_clp.GetStatus(_flagStart);
+    public static String GetStatus(){
+        _json=CLPCommands.GetStatus(_flagStart);
         System.out.println("JSON GET STATUS "+_json);
+        return _json;
     }
 
     public void ListDB(){
@@ -136,15 +136,13 @@ public class RuntimeDB {
     public void dropTable(String pTable){
         _queryPlan.queryDropTable();
         _json = _ddlP.parserDropTable(pTable);
-        System.out.println(_json);
+        System.out.println("JSON DROP TABLE "+_json);
     }
     
     public void createIndex(ArrayList<String> pCreateIndex){
-           // _jsonResponse=_clp.Stop();
-            
-           //for (int i = 0; i < pCreateIndex.size(); i++) {
-           //       System.out.println(" El:" +pCreateIndex.get(i));  
-            //    }
+        _queryPlan.queryIndex();
+        _json = _ddlP.parserCreateIndex(pCreateIndex.get(0), pCreateIndex.get(0), pCreateIndex.get(0));
+        System.out.println("JSON INDEX "+_json);
             
     }
     
@@ -197,9 +195,8 @@ public class RuntimeDB {
         }
         
     }
-         
-       
-     public void select (ArrayList<String> pSelect){
+            
+    public void select (ArrayList<String> pSelect){
             ArrayList<String> tablesJoin= new ArrayList<>();
             ArrayList<String> columnasCondiciones=new ArrayList<>();
             ArrayList<String> datosCondiciones=new ArrayList<>();
@@ -775,6 +772,8 @@ public class RuntimeDB {
                 }*/
                 
                 
+                
+                
                     for (int j = 0; j < metadataTableSel.get(0).length; j++) {
                         respuesta.accumulateData(metadataTableSel.get(0)[j], toSendJson.get(j) );
 
@@ -794,8 +793,7 @@ public class RuntimeDB {
             }
         }
      
-     
-     private  ArrayList<String> verifyColumn(String[][] metadata,String [] pColumntoCompare){
+    private  ArrayList<String> verifyColumn(String[][] metadata,String [] pColumntoCompare){
          if(metadata==null){
             ArrayList<String> errorDetected= new ArrayList<>();
             errorDetected.add("1146");

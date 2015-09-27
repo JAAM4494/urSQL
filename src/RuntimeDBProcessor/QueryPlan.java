@@ -191,5 +191,28 @@ public class QueryPlan {
         _queryPlan = respuesta.getReturnObj();
         
     }
+    
+    public void queryIndex(){
+        
+        CommunicationProtocol respuesta = new CommunicationProtocol();
+        JSONArray array1 =  new JSONArray();
+        JSONArray array2 =  new JSONArray();
+        array1.put("Get");
+        array1.put("Verify");
+        array1.put("Verify");
+        array1.put("Verify");
+        array1.put("CREATE");
+        array2.put("Metadata of table");
+        array2.put("Exists table");
+        array2.put("Column does not accept repeated");
+        array2.put("Index not create before");
+        array2.put("Index");
+        respuesta.accumulateData("Action", array1);
+        respuesta.accumulateData("Description", array2);
+        respuesta.setStatus("0", "0");
+        respuesta.setFormat("default");
+        _queryPlan = respuesta.getReturnObj();
+        
+    }
 
 }

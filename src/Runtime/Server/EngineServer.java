@@ -89,6 +89,10 @@ class client_handler extends Thread {
                         out.println(tp.getArbolMetadata());
                         continue;
                     }
+                    if(line.equals("GET STATUS")){
+                        out.println(RuntimeDB.GetStatus());
+                        continue;
+                    }
                     if(line.equals("plan")){
                         System.out.println("PLAN "+QueryPlan.getQueryPlan());
                         out.println(QueryPlan.getQueryPlan());
