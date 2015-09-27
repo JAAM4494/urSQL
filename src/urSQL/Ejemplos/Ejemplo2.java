@@ -18,14 +18,12 @@ public class Ejemplo2 {
         DMLCommands dml = new DMLCommands();
         DDLCommands ddl = new DDLCommands();
         CLPCommands clp = new CLPCommands();
-        
+        ddl.setDatabase("TEC");
+        System.out.println(ddl.createIndex("hola", "Est", "Carne", false));
         //clp.createDatabase("TEC_DB");   
         //System.out.println(ddl.setDatabase("TEC_DB"));
         //Funciones.recorrerArchivo(Constants.DB);
-        CommunicationProtocol respuesta = new CommunicationProtocol();
-        respuesta.setFormat("default");
-        respuesta.setStatus("0", "0");
-        System.out.println(respuesta.getReturnObj());
+        
         /*
         String[] str = {"Carne-INTEGER-NOT NULL", "Nombre-VARCHAR-NULL", "Edad-INTEGER-NOT NULL"};
         System.out.println("CREATE TABLE "+ddl.createTable("Estudiantes", str , "Carne"));
@@ -67,13 +65,13 @@ public class Ejemplo2 {
         //System.out.println(dml.insert("Cursos", colsc, datosC2c));
         //System.out.println(dml.insert("Cursos", colsc, datosC3c));
         */
-        
-        Funciones.recorrerArchivo("Estudiantes");
-        System.out.println("");
+        //Funciones.recorrerArchivo2(Constants.DATABASE+"TEC\\metadata");
+        Funciones.recorrerArchivo(Constants.DATABASE+"TEC\\pg_index");
+        /*System.out.println("");
         Funciones.recorrerArchivo(Constants.CONSTRAIT_CATALOG);
         System.out.println("");
         Funciones.recorrerArchivo(Constants.LOG_ERRORS);
-        
+        */
         
         
         

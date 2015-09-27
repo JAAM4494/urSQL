@@ -1,6 +1,7 @@
 package StoredDataManager;
 
 import Runtime.Server.CommunicationProtocol;
+import RuntimeDBProcessor.commands.DDL.DDLCommands;
 import SystemCatalog.Metadata;
 import java.io.File;
 import java.util.ArrayList;
@@ -195,7 +196,18 @@ public class TableOperations {
             
         }
         if(insert(pSchema+pTable,salida,false)){
-             return 0;//0 -> proceso satisfactorio
+            
+            String[] cols = {"NombreIndex","Tabla", "Columna"};
+            String[] colsCondis = {"Tabla"};
+            String[] datosCondis = {pTable};
+            String[] opes = {"="};
+            int[] condis = {};
+            ArrayList<String[]> datos = select(cols, pSchema, Constants.INDEX_CATALOG, colsCondis, datosCondis, opes, condis);
+            if(!datos.isEmpty()){
+                DDLCommands ddl = new DDLCommands();
+                ddl.createIndex(datos.get(0)[0], datos.get(0)[1], datos.get(0)[2], true);
+            }
+            return 0;//0 -> proceso satisfactorio
         }
         else{
             typeData[] r_a = {new NULL(), new INTEGER("1637"), new VARCHAR("INSERT_INTO"), 
@@ -325,20 +337,21 @@ public class TableOperations {
     
     public ArrayList<String[]> select(String[] pColSelect, String pSchema, String pTable, String[] pColumnasCondiciones,
             String[] pDatosCondiciones, String[] pOpes, int[] pTipoCondiciones){
+        
         String[][] md = getMetaDataTable(pSchema, pTable);
         ArrayList<String[]> salida = new ArrayList<>();
         
-        
-
-        
         if (md!=null){
+
             File file = new File(pSchema+pTable);
+            System.out.println(pSchema+pTable);
             try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
                 BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
                         .keySerializer(BTreeKeySerializer.INTEGER)
                         .makeOrGet();
 
                 int tail = primary.size();
+                System.out.println("tail"+tail);
                 if(tail==0){
                     for (String md1 : md[0]) {
                         if (md1.equals(pColSelect[0])) {
@@ -992,6 +1005,18 @@ public class TableOperations {
                         }
 
                     }
+                    if(md[0][0].equals(pCol)){
+                        String[] cols = {"NombreIndex","Tabla", "Columna"};
+                        String[] colsCondis = {"Tabla"};
+                        String[] datosCondis = {pTable};
+                        String[] opes = {"="};
+                        int[] condis = {};
+                        ArrayList<String[]> datos = select(cols, pSchema, Constants.INDEX_CATALOG, colsCondis, datosCondis, opes, condis);
+                        if(!datos.isEmpty() && nR>0){
+                            DDLCommands ddl = new DDLCommands();
+                            ddl.createIndex(datos.get(0)[0], datos.get(0)[1], datos.get(0)[2], true);
+                        }
+                    }
                     return nR;
                 }
                 else{
@@ -1064,6 +1089,16 @@ public class TableOperations {
                         thedb.commit();
                         nR++;
                     }
+                }
+                String[] cols = {"NombreIndex","Tabla", "Columna"};
+                String[] colsCondis = {"Tabla"};
+                String[] datosCondis = {pTable};
+                String[] opes = {"="};
+                int[] condis = {};
+                ArrayList<String[]> datos = select(cols, pSchema, Constants.INDEX_CATALOG, colsCondis, datosCondis, opes, condis);
+                if(!datos.isEmpty() && nR>0){
+                    DDLCommands ddl = new DDLCommands();
+                    ddl.createIndex(datos.get(0)[0], datos.get(0)[1], datos.get(0)[2], true);
                 }
                 return nR;
                 
@@ -1373,7 +1408,7 @@ public class TableOperations {
                     break;
                 }
             }
-            if (!plan.equals("NULO") && Integer.parseInt(plan)>2){
+            if (!plan.equals("NULO") && Integer.parseInt(plan)>3){
                 
                 String planActual=plan;
                 Metadata m = new Metadata("NULL", "NULL", "NULL", "NULL", "NULL");

@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import urSQL.Constants.Constants;
 import StoredDataManager.TableOperations;
+import java.io.File;
+import org.mapdb.BTreeKeySerializer;
+import org.mapdb.BTreeMap;
+import org.mapdb.DB;
+import org.mapdb.DBMaker;
 import urSQL.tipos.INTEGER;
 import urSQL.tipos.NULL;
 import urSQL.tipos.VARCHAR;
@@ -230,7 +235,33 @@ public class DDLCommands {
           
     } 
     
-    public int createIndex(String pTable, String pTableColumn){
+    public int createIndex(String pName, String pTable, String pTableColumn, boolean pUpdate){
+        
+        int salida = createIndexAux(pName, pTable, pTableColumn, pUpdate);
+        TableOperations t = new TableOperations();
+        if (salida==0){       
+            typeData[] r1 = {new VARCHAR("CREATE_INDEX"), new VARCHAR(pName), new VARCHAR("Correct")};
+            t.insert(_schema+Constants.HISTORY_CATALOG, r1, false);     
+            if(!pUpdate){
+            typeData[] value = {new VARCHAR(pName), new VARCHAR(pTable), new VARCHAR(pTableColumn)};
+            t.insert(_schema+Constants.INDEX_CATALOG, value, false);
+            }
+        }
+        else{
+            typeData[] r1 = {new VARCHAR("CREATE_INDEX"), new VARCHAR(pName), new VARCHAR("Error "+Integer.toString(TableOperations.getTail()))};
+            t.insert(_schema+Constants.HISTORY_CATALOG, r1, false);
+            
+        }
+        
+        typeData[] r2 = {new VARCHAR("ON"), new VARCHAR(pTable+"."+pTableColumn), new NULL()};
+        t.insert(_schema+Constants.HISTORY_CATALOG, r2, false);        
+                
+        
+        return salida;
+        
+    }
+    
+    public int createIndexAux(String pName, String pTable, String pTableColumn, boolean pUpdate){
         
         TableOperations t = new TableOperations();
         if (_schema.equals("NULA")){
@@ -242,6 +273,48 @@ public class DDLCommands {
         String[][] metadata = t.getMetaDataTable(_schema, pTable);
         if(metadata!=null){
             if (pTableColumn.equals(metadata[0][0])){
+                
+                if(!pUpdate){
+                    String[] colsCondis = {"Tabla", "Columna"};
+                    String[] datosCondis = {pTable,pTableColumn};
+                    String[] opes = {"=", "="};
+                    int[] condis = {1};
+                    ArrayList<String[]> datos = t.select(colsCondis, _schema, Constants.INDEX_CATALOG, colsCondis, datosCondis, opes, condis);
+  
+                    if (!datos.isEmpty()){
+                        typeData[] r = {new NULL(), new INTEGER("-1082"), new VARCHAR("ALTER_TABLE"), 
+                        new VARCHAR("El indice existe")};
+                        t.insert(Constants.DATABASE+Constants.LOG_ERRORS, r, true);
+                        return -1082;
+                    }
+                }
+                
+                String[] vacio = {};
+                int[] intVacio = {};
+                String[] colSel = {metadata[0][0]};
+                ArrayList<String[]> datos = t.select(colSel, _schema, pTable, vacio, vacio, vacio, intVacio);
+                
+                File file = new File(_schema+"index_"+pName);
+        
+                try(DB thedb = DBMaker.fileDB(file).closeOnJvmShutdown().make()){
+                    BTreeMap <Integer,typeData[]> primary = thedb.treeMapCreate("pri")
+                            .keySerializer(BTreeKeySerializer.INTEGER)
+                            .makeOrGet();
+                    
+                    primary.clear();
+                    int largo = datos.size();
+                    for (int i = 0; i < largo; i++) {
+                        typeData[] tp = {new VARCHAR(datos.get(i)[0]), new INTEGER(Integer.toString(i))};
+                        primary.put(i, tp);
+                    }
+                    thedb.commit();
+                }
+                catch(Exception e){
+                    typeData[] r_a = {new NULL(), new INTEGER("1637"), new VARCHAR("ALTER_TABLE"), 
+                    new VARCHAR("Concurrencia")};
+                    t.insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
+                    return -1637;
+                }
                 
             }
             else{
@@ -257,24 +330,7 @@ public class DDLCommands {
             t.insert(Constants.DATABASE+Constants.LOG_ERRORS, r_a, true);
             return  -1146 ;
         }
-       /* TableOperations t = new TableOperations();
-        typeData[] r1 = {new VARCHAR("CREATE_INDEX"), new VARCHAR(pTable)};
-        t.insert(Constants.INDEX_CATALOG, r1, false);
-        typeData[] r2 = {new VARCHAR("ON"), new VARCHAR(pTableColumn)};
-        t.insert(Constants.INDEX_CATALOG, r2, false);   
-        return false;
-        //Falta meterla en la tabla de index   
-               */
         return 0;
     }
-    
-    public ArrayList<typeData[]> getDates(String pTable, String pCol){
         
-        TableOperations t = new TableOperations();
-        
-        
-        String[][] metadata = t.getMetaDataTable(_schema, pTable);
-        return null;
-    }
-      
 }
