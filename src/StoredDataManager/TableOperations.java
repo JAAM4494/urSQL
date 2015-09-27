@@ -791,7 +791,8 @@ public class TableOperations {
                     
                    // System.out.println("ColumnToJoinVerif"+columnToJoinVerif);
 
-                 
+                    
+                    
                     
                         
                         //System.out.println("DATOS TABLA 2" + primarytoJoin.ceilingEntry(0).getValue()._register[posColumnToJoin]);
@@ -801,11 +802,18 @@ public class TableOperations {
                                 ColumnsToSelect,typesToSelect, thedb);
                         
                         
+                        
                         if (pColCond.isEmpty()==true) {
-                            System.out.println("Verif en vacio");
+                            System.out.println("Entra en pColCond");
                             for (int i = 0; i < myJoinSelect.size(); i++) {
                                 salida.add(myJoinSelect.ceilingEntry(i).getValue()); 
                             }
+                            
+                            
+                            
+                            
+                            
+                            
                             return salida;  
                         }
                         

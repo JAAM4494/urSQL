@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import urSQL.Ejemplos.Funciones;
 import urSQL.tipos.typeData;
+import JsonXMLBuilder.*;
 
 /**
  *
@@ -209,6 +210,8 @@ public class RuntimeDB {
             ArrayList<String> columnsJoin = new ArrayList<>();
             ArrayList<String> ColumnsToSelect1 = new ArrayList<>();
             ArrayList<String> ColumnsToSelect2 = new ArrayList<>();
+            
+            ArrayList<String> forJSONXml = new ArrayList<>();
 
             
             Boolean inWhere=false;     
@@ -234,13 +237,17 @@ public class RuntimeDB {
                         condisLog.add(1);
                   }
                   
+                   else if(pSelect.get(i).equals("FOR JSON")|| pSelect.get(i).equals("FOR XML")){
+                        forJSONXml.add(pSelect.get(i));
+                        
+                  }
                   
                   else if(pSelect.get(i).equals("Aggregate Function")){
                       inAggregate=true;
                       
                   }
                   
-                  else if(pSelect.get(i).equals("")){
+                  else if(pSelect.get(i).equals("Join Finish")){
                       joinIndex=0;
                       inJoin=false;
                   }
@@ -270,6 +277,7 @@ public class RuntimeDB {
                       inWhere=false; 
                       whereIndex++;
                   }
+                  
                   
                   else if (inAggregate){
                       String aggregateFunctionStr=pSelect.get(i);
@@ -341,7 +349,7 @@ public class RuntimeDB {
                 String schema = DDLCommands.getSchema();
                 CommunicationProtocol respuesta = new CommunicationProtocol();
 
-                if(schema.equals("NULA")){
+                if(schema.equals("NULL")){
                     respuesta.setStatus("1046", "0");
                     respuesta.setFormat("default");
                     _json= respuesta.getReturnObj();
@@ -359,6 +367,21 @@ public class RuntimeDB {
                     System.out.println(respuesta.getReturnObj());
 
                     return ;
+                }
+                
+                if(forJSONXml.isEmpty()!=false){
+                    if (forJSONXml.equals("FOR JSON")){
+                        JSONBuilder newJBuilder= new JSONBuilder(aggregateFunction.get(0));
+                       // newJBuilder.addElement(aggregateFunction.get(0), table2);
+                        
+                        
+                    }
+                    else{
+                        
+                        
+                    }
+                    
+                    
                 }
                 
 
@@ -456,6 +479,7 @@ public class RuntimeDB {
                 
                 inWhere=false;
 
+                
                 for (int i = 0; i < pSelect.size(); i++) {
                     if(pSelect.get(i).equals("*")){
                         String[] all={"="} ;
@@ -464,7 +488,7 @@ public class RuntimeDB {
                          String schema = DDLCommands.getSchema();
                          CommunicationProtocol respuesta = new CommunicationProtocol();
 
-                         if(schema.equals("NULA")){
+                         if(schema.equals("NULL")){
                              respuesta.setStatus("1046", "0");
                              respuesta.setFormat("default");
                              _json = respuesta.getReturnObj();
@@ -538,7 +562,7 @@ public class RuntimeDB {
                             
                             //System.out.println("Columns to Select"+pColCondToSend[0]);
                             String schema = DDLCommands.getSchema();
-                            if (schema.equals("NULA")) {
+                            if (schema.equals("NULL")) {
 
                             }
                             String[][] metaDataVerification = newOperation.getMetaDataTable(schema, table1);
@@ -552,13 +576,11 @@ public class RuntimeDB {
                                 System.out.println(respuesta.getReturnObj());
                                 return ;
                                 
-                            }
-                            
+                            }  
                             if (pColCondToSend.length != 0) {
                                 String[][] metadataToVerify = newOperation.getMetaDataTable(schema, table1);
                                 ArrayList<String> verifyingColumns = verifyColumn(metadataToVerify, pColCondToSend);
-                                System.out.println("Entra");
-                                
+                                System.out.println("Entra");       
                                 
                                 if (verifyingColumns != null) {
                                     CommunicationProtocol respuesta = new CommunicationProtocol();
@@ -569,9 +591,7 @@ public class RuntimeDB {
                                     System.out.println(respuesta.getReturnObj());
                                     return;
                                 }
-
                             }
-
                              System.out.println("Revisando EL"+
                                     newOperation.select(coltoSelecttoSend,schema,table1,
                                             pColCondToSend,pDatosToSend,pOpToSend,condisLogicArr).get(0)[0]);
@@ -631,7 +651,7 @@ public class RuntimeDB {
                 // datosCondiciones, condisLog, "").get(0)[0].getDate() );
                 
                 String schema = DDLCommands.getSchema();
-                if (schema.equals("NULl")) {
+                if (schema.equals("NULL")) {
                     CommunicationProtocol respuesta = new CommunicationProtocol();
 
                     respuesta.setStatus("1046", "0");
@@ -674,7 +694,7 @@ public class RuntimeDB {
                 
                 System.out.println("table 2"+table2);
                 
-                //System.out.println("Columns Join"+columnsJoinArr[0]);
+                System.out.println("Columns Conditions" +columnasCondiciones.get(0));
                 
                 
                 
@@ -682,10 +702,11 @@ public class RuntimeDB {
                  schema, table1, table2, columnsJoinArr, columnasCondiciones, operadorCondiciones, 
                  datosCondiciones, condisLog, "");
                 
-                System.out.println("Later");
-                if(selectedJoin.size()==0){
-                    
-                    
+                if(selectedJoin.size()==0||selectedJoin==null){
+                    CommunicationProtocol respuesta = new CommunicationProtocol();
+                    respuesta.setStatus("1072", "0");
+                    respuesta.setFormat("default");
+                    _json = respuesta.getReturnObj();
                     return ;
                 }
                 
